@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+echo 'Running pre-commit hook'
+echo
+
+echo 'Running tests'
+yarn test
+if [[ $? != '0' ]]; then
+    echo 'Tests failed'
+    exit 1
+fi
+echo
+
+echo 'Success'
