@@ -1,3 +1,7 @@
+import LoadingSpinner from './LoadingSpinner';
 import Moment from './Moment';
 
-export {Moment};
+export {
+    LoadingSpinner,
+    Moment,
+};

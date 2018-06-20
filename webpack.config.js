@@ -17,6 +17,7 @@ module.exports = {
             react: 'react',
             'react-moment': 'react-moment',
             'react-native': 'react-native',
+            'react-native-spinkit': 'react-native-spinkit',
         },
     ],
     module: {
