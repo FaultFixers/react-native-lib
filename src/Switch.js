@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Switch as NativeSwitch} from 'react-native';
 import PropTypes from 'prop-types';
-import {coreColors} from 'faultfixers-js-lib';
+import {coreColors, getTint} from 'faultfixers-js-lib';
 
 const offColor = '#cccccc';
 const onColor = coreColors.pink;
@@ -20,7 +20,7 @@ export default class Switch extends Component {
                 onValueChange={this.props.onValueChange}
                 tintColor={offColor}
                 onTintColor={onColor}
-                thumbTintColor={this.props.value ? onColor : offColor}
+                thumbTintColor={getTint(this.props.value ? onColor : offColor, 40)}
                 style={this.props.style}
             />
         );

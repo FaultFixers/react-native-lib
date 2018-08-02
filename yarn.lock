@@ -2447,9 +2447,11 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-faultfixers-js-lib@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/faultfixers-js-lib/-/faultfixers-js-lib-0.0.9.tgz#f428458c16678a0008601a81cff277de5a5408e3"
+faultfixers-js-lib@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/faultfixers-js-lib/-/faultfixers-js-lib-0.0.14.tgz#685edff8c05ac78aa02114783e865181bcb1bd8d"
+  dependencies:
+    values.js "^1.0.3"
 
 fb-watchman@^2.0.0:
   version "2.0.0"
@@ -5920,6 +5922,10 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+values.js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/values.js/-/values.js-1.0.3.tgz#492a372a8184dad9cf06829668be450836ac532e"
 
 vary@~1.0.1:
   version "1.0.1"
