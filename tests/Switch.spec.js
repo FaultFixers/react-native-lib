@@ -36,4 +36,14 @@ describe('Switch', function() {
         const thumbColor = numberFromHex(tree.props.thumbTintColor);
         expect(thumbColor).toBeLessThan(switchColor);
     });
+
+    it('should allow the "on" color to be customized', function() {
+        const tree = renderer.create(<Switch value={true} onValueChange={noop} onColor='#abc123' />).toJSON();
+
+        const switchColorHex = tree.props.onTintColor;
+        const switchColorNumber = numberFromHex(switchColorHex);
+        const thumbColorNumber = numberFromHex(tree.props.thumbTintColor);
+        expect(switchColorHex).toBe('#abc123');
+        expect(thumbColorNumber).toBeGreaterThan(switchColorNumber);
+    });
 });
