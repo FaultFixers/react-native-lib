@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= website.name %></title>
+        <link rel="stylesheet" href="/css/main.css" />
+        <% if (favicon) { %>
+        <link rel="icon shortcut" href="<%= favicon.compressedUrl %>" />
+        <link rel="apple-touch-icon" href="<%= favicon.compressedUrl %>" />
+        <% } %>
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="<%= website.name %>" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="<%= account.primaryColorHex %>" />
+        <meta name="msapplication-navbutton-color" content="<%= account.primaryColorHex %>" />
+        <meta name="application-name" content="<%= website.name %>" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+        <style>
+            :root {
+                --primary-color: <%= account.primaryColorHex %>;
+                --text-over-primary-color: <%= account.textOverPrimaryColorHex %>;
+                --highlight-color: <%= account.highlightColorHex %>;
+                --text-over-highlight-color: <%= account.textOverHighlightColorHex %>;
+                --reporter-app-bottom-nav-active-color: <%= account.reporterAppBottomNavActiveColorHex %>;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="/js/main.js"></script>
+    </head>
+    <body>
+        <nav id="main-menu">
+            <ul>
+                <li <% if (mainNavActiveTab === 'report') {%>class="active"<% } %>"><a href="/">Report Issue</a></li>
+                <li <% if (mainNavActiveTab === 'tickets') {%>class="active"<% } %>"><a href="/my-tickets">My Tickets</a></li>
+                <li <% if (mainNavActiveTab === 'account') {%>class="active"<% } %>"><a href="/account">My Account</a></li>
+                <li <% if (mainNavActiveTab === 'other') {%>class="active"<% } %>"><a href="/other">Other</a></li>
+            </ul>
+        </nav>

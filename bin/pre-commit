@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+echo 'Running pre-commit hook'
+echo
+
+echo 'Running ESLint'
+yarn lint
+if [[ $? != '0' ]]; then
+    echo 'ESLint failed'
+    echo 'Review the output of ESLint and commit your fixes'
+    exit 1
+fi
+echo
+
+echo 'Running .editorconfig checker'
+editorconfig-cli check src config tests bin README.md
+if [[ $? != '0' ]]; then
+    echo '.editorconfig checker failed'
+    echo 'Review the output then commit your fixes'
+    exit 1
+fi
+echo
+
+echo 'Success'

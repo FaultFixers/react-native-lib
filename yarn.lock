@@ -279,6 +279,14 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+faultfixers-js-lib@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/faultfixers-js-lib/-/faultfixers-js-lib-0.0.18.tgz#4a033945b5c562640d9fdaa9e4937a36a098ad5c"
+  integrity sha512-exvlEgMUaBOTA7mBlqIqTVGWvnGIBWvMe2gG2nH0rVTSZ595s27AaT1cjpLVufR+pAGenEYdgy+8JEyP2ViTCA==
+  dependencies:
+    local-date-time "^0.0.9"
+    values.js "^1.0.3"
+
 finalhandler@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.1.tgz#eebf4ed840079c83f4249038c9d703008301b105"
@@ -471,6 +479,11 @@ less@~2.7.1:
     promise "^7.1.1"
     request "2.81.0"
     source-map "^0.5.3"
+
+local-date-time@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/local-date-time/-/local-date-time-0.0.9.tgz#d86fba938c38b6d35fd1c5da0f1122baf93db4f3"
+  integrity sha512-RbatohwwQPnFvzSp+GhWaX1A1IXjqnrQ+yCeXks9LhxNy7bQFzrpg0r1ZsKB1pF/GytNRr0dRkS5TBl7Lyiv+g==
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -786,6 +799,11 @@ uuid@^3.0.0:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
+
+values.js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/values.js/-/values.js-1.0.3.tgz#492a372a8184dad9cf06829668be450836ac532e"
+  integrity sha1-SSo3KoGE2tnPBoKWaL5FCDasUy4=
 
 vary@~1.1.2:
   version "1.1.2"

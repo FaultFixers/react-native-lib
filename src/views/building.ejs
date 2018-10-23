@@ -1,0 +1,11 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: building.name}) %>
+
+<div class="page-content" id="building-page">
+    <img src="<%= squareLogo.compressedUrl %>" />
+
+    <h1><%= building.name %></h1>
+</div>
+
+<%- include('partials/copyright-footer') %>

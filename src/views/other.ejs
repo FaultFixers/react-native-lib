@@ -1,0 +1,22 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: website.name}) %>
+
+<div class="page-content" id="other-page">
+    <div class="bordered-box">
+        <ul>
+            <li><a href="/privacy">Privacy policy</a></li>
+            <li><a href="https://faultfixers.com/">More about FaultFixers</a></li>
+
+            <% if (isLoggedIn) { %>
+                <li>
+                    <form action="/log-out" method="POST" id="log-out-form">
+                        <input type="submit" class="fake-link" value="Log out" />
+                    </form>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

@@ -1,0 +1,53 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Account Settings'}) %>
+
+<div class="page-content" id="account-settings-page">
+    <form id="personal-details-form" class="bordered-box">
+        <h2>Personal Details</h2>
+
+        <p>
+            <label for="account-email">Your email address:</label>
+            <input id="account-email" type="email" name="email" value="<%= user.email %>" size="30" />
+        </p>
+
+        <p>
+            <label for="account-name">Your full name:</label>
+            <input id="account-name" type="text" name="full-name" value="<%= user.name %>" size="30" />
+        </p>
+
+        <p>
+            <label for="account-phone">Your phone number:</label>
+            <input id="account-phone" type="text" name="phone-number" value="<%= user.phoneNumber %>" size="15" />
+        </p>
+
+        <p class="no-bottom-margin">
+            <input type="submit" value="Save" />
+        </p>
+    </form>
+
+    <form id="change-password-form" class="bordered-box">
+        <h2>Change Password</h2>
+
+        <p>
+            <label for="account-old-password">Your current password:</label>
+            <input id="account-old-password" type="password" name="old-password" />
+        </p>
+
+        <p>
+            <label for="account-new-password">Choose a new password:</label>
+            <input id="account-new-password" type="password" name="new-password" />
+        </p>
+
+        <p>
+            <label for="account-new-password-confirmation">Enter new password again:</label>
+            <input id="account-new-password-confirmation" type="password" name="new-password-confirmation" />
+        </p>
+
+        <p class="no-bottom-margin">
+            <input type="submit" value="Save" />
+        </p>
+    </form>
+</div>
+
+<%- include('partials/copyright-footer') %>

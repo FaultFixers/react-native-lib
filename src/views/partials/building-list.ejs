@@ -1,0 +1,5 @@
+<ul>
+    <% buildings.forEach(building => { %>
+        <li><a href="/buildings/<%= building.id %>"><%= building.name %></a></li>
+    <% }) %>
+</ul>
