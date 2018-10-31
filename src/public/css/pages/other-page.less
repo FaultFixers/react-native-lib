@@ -9,12 +9,25 @@
         margin-bottom: 0;
 
         li {
-            padding: 15px;
+            padding: 0;
             margin-bottom: 0;
             border-bottom: 1px solid #ccc;
 
+            a,
+            form,
+            input[type="submit"].fake-link {
+                display: block;
+            }
+            a,
+            form {
+                padding: 15px;
+            }
+
             &:last-of-type {
                 border-bottom: none;
+            }
+            &:hover {
+                background-color: #f3f3f3;
             }
         }
     }

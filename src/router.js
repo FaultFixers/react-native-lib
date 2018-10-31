@@ -24,6 +24,7 @@ addRoute('GET', '/login', controllers.viewLogin);
 addRoute('GET', '/account', controllers.viewAccount);
 addRoute('GET', '/other', controllers.viewOther);
 addRoute('GET', '/privacy', controllers.viewPrivacy);
+addRoute('GET', '/debug-info', controllers.viewDebugInfo);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
 addRoute('POST', '/api/login', controllers.doLogin);
 addRoute('POST', '/api/personal-details', controllers.doUpdatePersonalDetails);

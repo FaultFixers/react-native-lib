@@ -1,0 +1,17 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Debug Info'}) %>
+
+<div class="page-content" id="debug-info-page">
+    <div class="bordered-box">
+        <p>User ID: <%= user.id %></p>
+        <p>User email: <%= user.email %></p>
+        <p>Website ID: <%= website.id %></p>
+        <p>Website name: <%= website.name %></p>
+        <p>Account ID: <%= account.id %></p>
+        <p>Account name: <%= account.name %></p>
+        <p>API: <%= apiHostname %></p>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

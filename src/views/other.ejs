@@ -6,7 +6,10 @@
     <div class="bordered-box">
         <ul>
             <li><a href="/privacy">Privacy policy</a></li>
-            <li><a href="https://faultfixers.com/">More about FaultFixers</a></li>
+
+            <% if (isLoggedIn && user.isBetaTester) { %>
+                <li><a href="/debug-info">Debug info</a></li>
+            <% } %>
 
             <% if (isLoggedIn) { %>
                 <li>
@@ -15,6 +18,8 @@
                     </form>
                 </li>
             <% } %>
+
+            <li><a href="https://faultfixers.com/">More about FaultFixers</a></li>
         </ul>
     </div>
 </div>

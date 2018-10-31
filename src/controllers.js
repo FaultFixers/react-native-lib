@@ -1,6 +1,7 @@
 const api = require('./services/api');
 const {getTag} = require('./services/tags');
 const {getActiveBuildings, getActiveBuildingById} = require('./services/buildings');
+const config = require('../config/load');
 
 function getErrorCodes(response) {
     const codes = [];
@@ -81,6 +82,17 @@ async function viewPrivacy(req, res) {
     });
 }
 
+async function viewDebugInfo(req, res) {
+    if (!res.locals.isLoggedIn) {
+        return res.redirect('/login?continue=/debug-info');
+    }
+
+    res.render('debug-info', {
+        mainNavActiveTab: 'other',
+        apiHostname: config.apiHostname,
+    });
+}
+
 async function doCheckCode(req, res) {
     // const code = req.query.code;
     // const tag = await getTag(req, code);
@@ -154,6 +166,7 @@ module.exports = {
     viewAccount,
     viewOther,
     viewPrivacy,
+    viewDebugInfo,
     doCheckCode,
     doLogin,
     doUpdatePersonalDetails,
