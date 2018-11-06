@@ -49,6 +49,10 @@ async function loadWebsiteByDomain(req, res, next) {
     res.locals.squareLogo = response.squareLogo;
 
     res.locals.ensureIsCorrectAccount = function ensureIsCorrectAccount(otherAccount) {
+        if (!otherAccount) {
+            throw new Error('Not given an account');
+        }
+
         if (otherAccount.id !== response.account.id) {
             throw new Error('The data given is not for ' + req.hostname);
         }

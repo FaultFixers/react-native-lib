@@ -1,0 +1,17 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Tickets'}) %>
+
+<div class="page-content">
+    <div class="bordered-box">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
+
+        <h2><%= building.name %></h2>
+
+        <p>This building is not in use at the moment. If you think this is a mistake, please contact your building manager.</p>
+
+        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: false}) %>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

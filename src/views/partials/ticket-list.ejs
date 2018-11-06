@@ -1,0 +1,9 @@
+<% if (tickets.length) { %>
+    <ul>
+        <% tickets.forEach(ticket => { %>
+            <li><a href="/tickets/<%= ticket.id %>"><%= ticket.friendlyId %></a></li>
+        <% }) %>
+    </ul>
+<% } else if (showNoTicketsMessage) { %>
+    <p><%= showNoTicketsMessage %></p>
+<% } %>

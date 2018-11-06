@@ -3,8 +3,8 @@
 <%- include('partials/page-header', {title: website.name}) %>
 
 <div class="page-content" id="home-page">
-    <div class="bordered-box">
-        <img src="<%= squareLogo.compressedUrl %>" />
+    <div class="bordered-box clearfix">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
 
         <%- paragraphs(website.description) %>
 

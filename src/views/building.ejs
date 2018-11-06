@@ -1,11 +1,23 @@
 <%- include('partials/global-header') %>
 
-<%- include('partials/page-header', {title: building.name}) %>
+<%- include('partials/page-header', {title: 'Tickets'}) %>
 
 <div class="page-content" id="building-page">
-    <img src="<%= squareLogo.compressedUrl %>" />
+    <div class="bordered-box clearfix">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
 
-    <h1><%= building.name %></h1>
+        <h2><%= building.name %></h2>
+
+        <% if (building.formattedAddress) { %>
+            <p><%= building.formattedAddress %></p>
+        <% } %>
+
+        <p>
+            <a href="/report?building=<%= building.id %>" class="button">Report Fault</a>
+        </p>
+
+        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No faults have been reported here yet.'}) %>
+    </div>
 </div>
 
 <%- include('partials/copyright-footer') %>

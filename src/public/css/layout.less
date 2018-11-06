@@ -44,6 +44,10 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        h1 {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -91,8 +95,11 @@ h4 {
     padding-top: 20px;
     padding-bottom: 20px;
 
-    p, h1, h2, h3, h4, h5, h6, ul, ol {
+    p, ul, ol {
         margin-bottom: 1em;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0.5em;
     }
     ul, ol {
         list-style-type: disc;
@@ -177,4 +184,11 @@ i, em {
     .copyright-footer {
         order: 4;
     }
+}
+
+.side-logo {
+    float: right;
+    max-width: 150px;
+    max-height: 150px;
+    margin-left: 1em;
 }

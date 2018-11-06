@@ -1,6 +1,6 @@
 const api = require('./services/api');
 const {getTag} = require('./services/tags');
-const {getActiveBuildings, getActiveBuildingById} = require('./services/buildings');
+const {getActiveBuildings} = require('./services/buildings');
 const config = require('../config/load');
 
 function hasHttpStatus(response, expectedStatus) {
@@ -49,14 +49,19 @@ async function viewIndex(req, res) {
 
 async function viewBuilding(req, res) {
     const buildingId = req.params.buildingId;
-    // const buildingResponse = await api.as(req, buildingId);
-    // res.locals.ensureIsCorrectAccount(buildingResponse.account);
 
-    // const building = buildingResponse.building;
+    const buildingResponse = await api.asUser(req).get('/buildings/' + buildingId + '?includeTickets=1');
+    res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
 
-    // res.render('building', {
-    //     building,
-    // });
+    const building = buildingResponse.json.building;
+    const tickets = buildingResponse.json.tickets.map(row => row.ticket);
+
+    const view = building.status === 'ACTIVE' ? 'building' : 'inactive-building';
+    res.render(view, {
+        mainNavActiveTab: 'report',
+        building,
+        tickets,
+    });
 }
 
 async function viewLogin(req, res) {
