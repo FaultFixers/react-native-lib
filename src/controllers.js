@@ -19,7 +19,6 @@ function getErrorCodes(response) {
     const codes = [];
     for (let i = 0; i < response.json.errors.length; i++) {
         const error = response.json.errors[i];
-        console.log('error', error);
         if (error.codes) {
             for (let ii = 0; ii < error.codes.length; ii++) {
                 codes.push(error.codes[ii]);
@@ -119,6 +118,18 @@ async function viewForgotPassword(req, res) {
     });
 }
 
+async function viewResetPassword(req, res) {
+    if (res.locals.isLoggedIn) {
+        return res.redirect('/');
+    }
+
+    res.render('reset-password', {
+        mainNavActiveTab: 'other',
+        userId: req.query.userId,
+        changePasswordToken: req.query.changePasswordToken,
+    });
+}
+
 async function doCheckCode(req, res) {
     // const code = req.query.code;
     // const tag = await getTag(req, code);
@@ -129,7 +140,6 @@ async function doCheckCode(req, res) {
 }
 
 async function doLogin(req, res) {
-    const ONE_DAY_IN_MS = 86400000;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -139,10 +149,10 @@ async function doLogin(req, res) {
     }
 
     try {
-        const response = await api.asIntegration().post('/authentication/login', {email, password});
+        const loginResponse = await api.asIntegration().post('/authentication/login', {email, password});
         console.log('Logged in', {email});
-        res.cookie('authToken', response.json.authenticationToken, {maxAge: ONE_DAY_IN_MS * 365});
-        res.json({user: response.json.user});
+        setAuthTokenCookie(res, loginResponse.json.authenticationToken);
+        res.json({user: loginResponse.json.user});
     } catch (error) {
         console.log('Failed to login', {error, email});
         res.status(401).json({});
@@ -184,7 +194,7 @@ async function doRequestPasswordReset(req, res) {
     const email = req.body.email;
 
     try {
-        await api.asIntegration().post('/authentication/request-password-reset', {email});
+        await api.asIntegration().post('/authentication/request-password-reset', {email, reportingWebsite: res.locals.website.id});
         console.log('Requested password reset for ' + email);
         res.json({});
     } catch (error) {
@@ -193,6 +203,33 @@ async function doRequestPasswordReset(req, res) {
             isInvalidEmail: hasHttpStatus(error, 404),
         });
     }
+}
+
+async function doResetPassword(req, res) {
+    const newPassword = req.body.newPassword;
+    const userId = req.body.userId;
+    const changePasswordToken = req.body.changePasswordToken;
+
+    try {
+        const resetResponse = await api.asIntegration().post('/authentication/set-password', {newPassword, userId, changePasswordToken});
+        console.log('Reset password', {userId});
+        setAuthTokenCookie(res, resetResponse.json.authenticationToken);
+        res.json({});
+    } catch (error) {
+        console.error('Failed to reset password', {userId, changePasswordToken, error});
+        res.status(422).json({
+            isNewPasswordTooShort: containsErrorCode(error, 'Size.newPassword'),
+        });
+    }
+}
+
+function setAuthTokenCookie(res, token) {
+    if (!token) {
+        throw new Error('No token given');
+    }
+
+    const ONE_DAY_IN_MS = 86400000;
+    res.cookie('authToken', token, {maxAge: ONE_DAY_IN_MS * 365});
 }
 
 async function doLogOut(req, res) {
@@ -209,10 +246,12 @@ module.exports = {
     viewPrivacy,
     viewDebugInfo,
     viewForgotPassword,
+    viewResetPassword,
     doCheckCode,
     doLogin,
     doUpdatePersonalDetails,
     doChangePassword,
     doRequestPasswordReset,
+    doResetPassword,
     doLogOut,
 };

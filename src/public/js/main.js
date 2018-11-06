@@ -179,7 +179,7 @@ $(document).ready(function() {
             error(response) {
                 console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isNewPasswordTooShort) {
-                    showAlert('Uh-oh!', 'Your new password is too short.');
+                    showAlert('Uh-oh!', 'Your new password is too short. Please enter a password at least 6 characters long.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
@@ -217,6 +217,44 @@ $(document).ready(function() {
                 console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isInvalidEmail) {
                     showAlert('Uh-oh!', 'The email given doesn\'t exist.');
+                } else {
+                    showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
+                }
+                hideLoadingAnimation();
+            },
+        });
+    });
+
+    const resetPasswordForm = $('#reset-password-form');
+    resetPasswordForm.submit(function(event) {
+        event.preventDefault();
+
+        const newPasswordInput = resetPasswordForm.find('input[name="newPassword"]');
+
+        const newPassword = newPasswordInput.val();
+        if (!newPassword) {
+            showAlert('Not yet!', 'Please enter a new password.');
+            return;
+        }
+
+        const userId = resetPasswordForm.find('input[name="userId"]').val();
+        const changePasswordToken = resetPasswordForm.find('input[name="changePasswordToken"]').val();
+
+        showLoadingAnimation();
+
+        $.ajax({
+            url: '/api/reset-password',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({newPassword, userId, changePasswordToken}),
+            contentType: 'application/json',
+            success() {
+                window.location = '/';
+            },
+            error(response) {
+                console.log('response', response.responseJSON);
+                if (response.responseJSON && response.responseJSON.isNewPasswordTooShort) {
+                    showAlert('Uh-oh!', 'Your new password is too short. Please enter a password at least 6 characters long.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
