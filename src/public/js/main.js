@@ -26,12 +26,31 @@ $(document).ready(function() {
             return;
         }
 
+        console.debug('Checking code', code);
+
         showLoadingAnimation();
 
         $.get('/api/check-code?code=' + code)
             .then(response => {
-                console.log('Got code', response);
-                // @todo - handle success.
+                const tag = response.tag;
+                switch (tag.type) {
+                case 'SINGLE_LOCATION':
+                    // @todo - handle.
+                    break;
+                case 'SINGLE_BUILDING':
+                    window.location = '/buildings/' + response.building.id;
+                    break;
+                case 'SINGLE_ACCOUNT':
+                    // @todo - handle.
+                    break;
+                case 'MULTIPLE_BUILDING_OPTIONS':
+                    // @todo - handle.
+                    break;
+                case 'UNASSIGNED':
+                    showAlert('No longer in use', `The code you entered (${code}) is no longer in use.`);
+                    hideLoadingAnimation();
+                    break;
+                }
             })
             .catch(error => {
                 showAlert('Nope!', `The code you entered (${code}) is not valid`);
