@@ -10,3 +10,6 @@ insert_final_newline = true
 
 [src/public/css/main.css]
 ignore = true
+
+[src/public/generated]
+ignore = true

@@ -1,0 +1,55 @@
+<div class="ticket-update">
+    <%
+    title = getUpdateTitle(update)
+    icon = getUpdateIcon(update)
+    commentVisibility = getUpdateCommentVisibility(update)
+    updater = getUpdateUpdaterDescription(update, isOwnTicket)
+    %>
+
+    <div class="top-row">
+        <% if (icon) { %>
+            <i class="ff-icon <%= icon %>"></i>
+        <% } %>
+
+        <p class="title">
+            <%= (update.hasComment && commentVisibility) ? commentVisibility : title %><!--
+            --><%= updater ? `, by ${updater}` : '' %>
+        </p>
+
+        <p class="date">
+            <%= formatDateTime(update.createdAt) %>
+        </p>
+    </div>
+
+    <% if (update.hasComment) { %>
+        <p class="update-content comment-text">
+            "<i><%= update.comment %></i>"
+        </p>
+    <% } %>
+
+    <% if (update.hasDueDateOrTimeChanged) { %>
+        <p class="update-content comment-text">
+            Due:
+            <%= formatLocalDateTime(update.newDueDate, update.newDueTime) %>
+        </p>
+    <% } %>
+
+    <% if (update.hasPriorityChanged) { %>
+        <p class="update-content comment-text">
+            Priority is:
+            <%= formatTicketPriority(update.newPriority).toLowerCase() %>
+        </p>
+    <% } %>
+
+    <% if (update.hasInternalAction && update.internalActionValue) { %>
+        <p class="update-content comment-text"><%= update.internalActionValue %></p>
+    <% } %>
+
+    <% if (update.hasInternalAction && update.internalActionImage) { %>
+        <div class="update-content comment-image-container">
+            <a href="<%= update.internalActionImage.untouchedUrl %>" target="_blank">
+                <img height="100" class="comment-image" src="<%= update.internalActionImage.compressedUrl %>" />
+            </a>
+        </div>
+    <% } %>
+</div>

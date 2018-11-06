@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="303px" height="25px" viewBox="0 0 303 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>progress-bar-NEW</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="-2.22044605e-14%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#CECECE" offset="0%"></stop>
+            <stop stop-color="#4463F7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New">
+            <g id="progress-bar-NEW">
+                <path d="M13.5,12.5 L292.5,12.5" id="Line" stroke="#C9C9C9" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M13.5,12.5 L76.5,12.5" id="Line---blue-fade" stroke="url(#linearGradient-1)" stroke-width="3" stroke-linecap="round"></path>
+                <circle id="3-gray-oval" fill="#C9C9C9" cx="290.5" cy="12.5" r="12.5"></circle>
+                <circle id="2-gray-oval" fill="#C9C9C9" cx="151.5" cy="12.5" r="12.5"></circle>
+                <g id="Red-plus">
+                    <circle id="1-red-plus-bg" fill="#FF0047" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="11" y="6" width="2.67094017" height="12.8410585" rx="1.33547009"></rect>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="6" y="11" width="13.3547009" height="2.5682117" rx="1.28410585"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

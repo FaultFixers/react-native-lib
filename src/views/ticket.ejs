@@ -1,0 +1,151 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Ticket'}) %>
+
+<div class="page-content" id="ticket-page">
+    <div class="details-section bordered-box">
+        <p>
+            <b>Fault Category:</b> <%= faultCategory.name %>
+        </p>
+
+        <p>
+            <b>Description:</b> <%= ticket.description %>
+        </p>
+
+        <p>
+            <b>Location:</b> <%= locationText %>
+        </p>
+
+        <% additionalQuestionAnswers.filter(a => a.hasAnswer).forEach(answer => { %>
+            <p>
+                <b><%= formatQuestionLabel(answer.questionLabel) %></b>
+                <%= answer.answers.join(', ') %>
+            </p>
+        <% }); %>
+
+        <p>
+            <b>Reported:</b>
+            <%= formatDateTime(ticket.createdAt) %>
+        </p>
+    </div>
+
+    <% if (isStatusEnabled) { %>
+        <div class="progress-section">
+            <h3>Progress</h3>
+
+            <div class="progress-container">
+                <img class="progress-image" src="<%= progressBarPath %>" />
+
+                <div class="progress-text-container">
+                    <div class="progress-text">REPORTED</div>
+                    <div class="progress-text">IN PROGRESS</div>
+                    <div class="progress-text">RESOLVED</div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <% if (isStatusEnabled || areCommentsEnabled) { %>
+        <div class="notifications-section bordered-box">
+            <h3>Notifications</h3>
+
+            <p>Would you like to receive progress updates through notifications and emails?</p>
+
+            <div class="switch-container">
+                <!-- @todo - handle turning this on/off. -->
+                <label class="switch-toggle">
+                    <input type="checkbox" <%= isSubscribedToUpdates ? 'checked="checked"' : '' %> />
+                    <span class="slider"></span>
+                </label>
+                <label class="switch-label">
+                    <%= isSubscribedToUpdates ? 'Yes' : 'No' %>
+                </label>
+            </div>
+        </div>
+    <% } %>
+
+    <div class="image-section">
+        <h3>Fault Photo</h3>
+
+        <% if (images.length > 0) { %>
+            <img src="<%= images[0].compressedUrl %>" />
+        <% } else { %>
+            <p>No photo was taken of this fault.</p>
+        <% } %>
+    </div>
+
+    <div class="updates-section bordered-box <%= updates.length > 0 ? 'has-updates' : 'no-updates' %>">
+        <h3>Updates</h3>
+
+        <% if (updates.length === 0) { %>
+            <p>There aren't any updates yet!</p>
+        <% } else { %>
+            <%- include('partials/ticket-update-list', {updates, isOwnTicket}) %>
+        <% } %>
+
+        <% if (isOwnTicket && areCommentsEnabled) { %>
+            <div class="add-comment-form">
+                @todo - comments.
+                {!this.state.isCommentFormOpen &&
+                    <button
+                        class="addCommentButton"
+                        activeOpacity={0.5}
+                        onPress={this.openCommentForm}
+                    >
+                        <i class="ff-icon ff-comment"></i>
+                        Add Comment
+                    </button>
+                }
+
+                {this.state.isCommentFormOpen &&
+                    <div>
+                        <Text class="{fontWeight" 'bold', fontSize: 15}}>
+                            {'Comment (private between you and the repairs team):'}
+                        </Text>
+
+                        <TextInput
+                            placeholder={'Comment here...'}
+                            placeholderTextColor={DEFAULT_INPUT_PLACEHOLDER_FONT_COLOR}
+                            multiline={true}
+                            onChangeText={text => this.setState({newComment: text})}
+                            autoFocus={true}
+                            class="addCommentTextInput"
+                            underlineColorAndroid={'transparent'}
+                            ref={ref => {
+                                // Sometimes ref is null for some reason.
+                                if (ref) {
+                                    this.commentElRef = ref;
+                                }
+                            }}
+                        />
+
+                        <button
+                            class="addCommentButton"
+                            activeOpacity={0.5}
+                            onPress={this.sendComment}
+                        >
+                            <i class="ff-icon ff-comment"></i>
+                            Send Comment
+                        </button>
+                    </div>
+                }
+            </div>
+        <% } %>
+    </div>
+
+    <!-- @todo - allow ticket to be re-opened. -->
+    <% if (canBeReopened && isStatusEnabled) { %>
+        <div class="reopen-section">
+            Unsatisfied? Re-Open Ticket
+        </div>
+    <% } %>
+
+    <!-- @todo - allow ticket to be closed. -->
+    <% if (ticket.status === 'CLOSED' && isOwnTicket && isStatusEnabled) { %>
+        <div class="close-section">
+            No Longer Relevant? Close Ticket
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/copyright-footer') %>

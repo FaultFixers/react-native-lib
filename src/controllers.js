@@ -374,6 +374,64 @@ async function viewAccountTicketsOptions(req, res) {
     });
 }
 
+const PROGRESS_BAR_IMAGES_SOURCES = {
+    NEW: '/images/progress-bar-NEW.svg',
+    IN_PROGRESS: '/images/progress-bar-IN_PROGRESS.svg',
+    CLOSED: '/images/progress-bar-CLOSED.svg',
+};
+
+async function viewTicket(req, res) {
+    const id = req.params.ticketId;
+    const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
+    if (!canBrowse) {
+        return res.redirect('/login?continueTo=/tickets/' + id);
+    }
+
+    const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
+    const ticketResponse = await apiAuth.get('/tickets/' + id)
+    if (ticketResponse.statusCode !== 200) {
+        throw new Error(`Could not get ticket ${id}`);
+    }
+
+    res.locals.ensureIsCorrectAccount(ticketResponse.json.account);
+
+    const ticket = ticketResponse.json.ticket;
+    const faultCategory = ticketResponse.json.faultCategory;
+    const images = ticketResponse.json.images;
+    const building = ticketResponse.json.building;
+    const location = ticketResponse.json.location;
+    const updates = ticketResponse.json.updates;
+
+    let locationText = location ? location.name : ticket.locationDescription;
+    if (building) {
+        if (locationText) {
+            locationText += ', ' + building.name;
+        } else {
+            locationText = building.name;
+        }
+    }
+
+    const progressBarPath = PROGRESS_BAR_IMAGES_SOURCES[ticket.status];
+
+    res.render('ticket', {
+        mainNavActiveTab: 'report',
+        ticket,
+        faultCategory,
+        images,
+        building,
+        location,
+        updates,
+        locationText,
+        additionalQuestionAnswers: ticketResponse.json.ticket.additionalQuestionAnswers ? ticketResponse.json.ticket.additionalQuestionAnswers : [],
+        progressBarPath,
+        isStatusEnabled: ticketResponse.json.isStatusEnabled,
+        areCommentsEnabled: ticketResponse.json.areCommentsEnabled,
+        isSubscribedToUpdates: ticketResponse.json.isActiveUserSubscribedToUpdates,
+        isOwnTicket: ticketResponse.json.isActiveUserReporter,
+        canBeReopened: ticketResponse.json.canBeReopened,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -388,6 +446,7 @@ module.exports = {
     viewResetPassword,
     viewBuildingOptions,
     viewAccountTicketsOptions,
+    viewTicket,
     doCheckCode,
     doLogin,
     doRegister,

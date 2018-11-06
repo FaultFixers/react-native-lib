@@ -61,4 +61,5 @@ typings/
 .next
 
 src/public/css/main.css
+src/public/generated
 config/

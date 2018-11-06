@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>priority-circled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="priority-circled">
+            <circle id="circle" fill="#11BF96" cx="12.5" cy="12.5" r="12.5"></circle>
+            <polygon id="Path-3" fill="#FFFFFF" points="5.40452184 5.31020092 5.40452184 8.68830359 14.1714792 8.68830359 16.4634371 6.99925226 14.1714792 5.31020092"></polygon>
+            <polygon id="Path-3" fill="#FFFFFF" points="5.40452184 10.8046035 5.40452184 14.1953965 16.7157035 14.1953965 19.0235827 12.5 16.7157035 10.8046035"></polygon>
+            <polygon id="Path-3" fill="#FFFFFF" points="5.40452184 16 5.40452184 19.390793 18.955393 19.390793 21.5996393 17.6953965 18.955393 16"></polygon>
+        </g>
+    </g>
+</svg>

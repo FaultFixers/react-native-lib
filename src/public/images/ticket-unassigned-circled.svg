@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>ticket-unassigned-circled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ticket-unassigned-circled">
+            <circle id="circle" fill="#11BF96" cx="12.5" cy="12.5" r="12.5"></circle>
+            <g id="ticket-unassigned" transform="translate(2.066083, 6.488126)" fill="#FFFFFF">
+                <g id="Group" stroke-width="1" transform="translate(9.333333, 0.000000)">
+                    <ellipse id="Oval" cx="5.33333333" cy="2.40287146" rx="2.66666667" ry="2.40287146"></ellipse>
+                    <path d="M5.33333333,6.66666667 C3.76377983,7.05356539 2.65153588,7.48969144 1.99660147,7.97504481 C1.33951293,8.46199454 0.493444411,9.03928987 0,9.88244285 L0,12 L10.6666667,12 L10.6666667,9.88244285 C9.68866459,8.73920342 8.91508476,7.99300247 8.34592718,7.64384001 C7.77676961,7.29467754 6.77257166,6.9689531 5.33333333,6.66666667 Z" id="Path-14"></path>
+                </g>
+                <rect id="Combined-Shape" x="0" y="4.99013637" width="8" height="2.01972727" rx="1.00986363"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

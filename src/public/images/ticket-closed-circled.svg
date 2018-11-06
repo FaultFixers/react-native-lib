@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>ticket-closed</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ticket-closed">
+            <circle id="Oval---3" fill="#00C74E" cx="12.5" cy="12.5" r="12.5"></circle>
+            <path d="M6.1391266,13.1347533 L5.64123038,13.6326495 C5.25070609,14.0231738 5.25070609,14.6563388 5.64123038,15.0468631 L9.95761192,19.3632446 C10.3481362,19.7537689 10.9813012,19.7537689 11.3718255,19.3632446 L20.576406,10.1586641 C20.9669303,9.76813982 20.9669303,9.13497484 20.576406,8.74445055 L19.965809,8.13385353 C19.5752847,7.74332924 18.9421197,7.74332924 18.5515954,8.13385353 L10.9055713,15.7798777 C10.7103091,15.9751398 10.3937266,15.9751398 10.1984645,15.7798777 L7.55334016,13.1347533 C7.16281587,12.744229 6.52965089,12.744229 6.1391266,13.1347533 Z" id="Path-7" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

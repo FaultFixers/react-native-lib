@@ -1,0 +1,5 @@
+<div class="ticket-update-list">
+    <% updates.forEach(update => { %>
+        <%- include('ticket-update', {update, isOwnTicket}) %>
+    <% }) %>
+</div>

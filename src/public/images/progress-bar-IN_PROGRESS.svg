@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="303px" height="25px" viewBox="0 0 303 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>progress-bar-IN_PROGRESS</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="-2.22044605e-14%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#CECECE" offset="0%"></stop>
+            <stop stop-color="#4463F7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New" transform="translate(0.000000, -31.000000)">
+            <g id="progress-bar-IN_PROGRESS" transform="translate(0.000000, 31.000000)">
+                <path d="M10,13 L151.5,13" id="Line" stroke="#4463F7" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M151,13 L292.5,13" id="Line" stroke="#C9C9C9" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M153.5,13 L216.5,13" id="Line---blue-fade" stroke="url(#linearGradient-1)" stroke-width="3" stroke-linecap="round"></path>
+                <circle id="3-gray-oval" fill="#C9C9C9" cx="290.5" cy="12.5" r="12.5"></circle>
+                <g id="Yellow-zap" transform="translate(139.000000, 0.000000)">
+                    <circle id="Mask" fill="#DCAE05" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <g id="Group-45" transform="translate(6.944444, 4.861111)" fill="#FFFFFF" stroke="#FFFFFF" stroke-linejoin="round">
+                        <polygon id="Stroke-193" points="11.1111111 6.25 4.16666667 15.9722222 5.55555556 9.72222222 0 9.72222222 6.94444444 0 5.55555556 6.25"></polygon>
+                    </g>
+                </g>
+                <g id="Red-plus">
+                    <circle id="Mask" fill="#FF0047" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="11.1111111" y="5.55555556" width="2.77777778" height="13.8888889" rx="1.38888889"></rect>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="5.55555556" y="11.1111111" width="13.8888889" height="2.77777778" rx="1.38888889"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

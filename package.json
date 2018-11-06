@@ -12,8 +12,12 @@
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "faultfixers-js-lib": "^0.0.18",
+    "grunt": "^1.0.3",
+    "grunt-webfont": "^1.7.2",
     "http-errors": "~1.6.2",
     "less-middleware": "~2.2.1",
+    "load-grunt-tasks": "^4.0.0",
+    "moment": "^2.22.2",
     "morgan": "~1.9.0"
   }
 }

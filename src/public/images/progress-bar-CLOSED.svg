@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="303px" height="25px" viewBox="0 0 303 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>progress-bar-CLOSED</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New" transform="translate(0.000000, -61.000000)">
+            <g id="progress-bar-CLOSED" transform="translate(0.000000, 61.000000)">
+                <path d="M10,13 L288,13" id="Line" stroke="#4463F7" stroke-width="3" stroke-linecap="round"></path>
+                <g id="Green-tick" transform="translate(278.000000, 0.000000)">
+                    <circle id="Oval---3" fill="#00C74E" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <path d="M20,8.75 L10.1010499,18.0785757 L6.25,14.1809415" id="Path-2" stroke="#FFFFFF" stroke-width="2"></path>
+                </g>
+                <g id="Yellow-zap" transform="translate(139.000000, 0.000000)">
+                    <circle id="Mask" fill="#DCAE05" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <g id="Group-45" transform="translate(6.944444, 4.861111)" fill="#FFFFFF" stroke="#FFFFFF" stroke-linejoin="round">
+                        <polygon id="Stroke-193" points="11.1111111 6.25 4.16666667 15.9722222 5.55555556 9.72222222 0 9.72222222 6.94444444 0 5.55555556 6.25"></polygon>
+                    </g>
+                </g>
+                <g id="Red-plus">
+                    <circle id="Mask" fill="#FF0047" cx="12.5" cy="12.5" r="12.5"></circle>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="11.1111111" y="5.55555556" width="2.77777778" height="13.8888889" rx="1.38888889"></rect>
+                    <rect id="Rectangle-2" fill="#FFFFFF" x="5.55555556" y="11.1111111" width="13.8888889" height="2.77777778" rx="1.38888889"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
