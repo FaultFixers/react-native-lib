@@ -26,7 +26,7 @@ $(document).ready(function() {
             return;
         }
 
-        // @todo - show loading animation
+        showLoadingAnimation();
 
         $.get('/api/check-code?code=' + code)
             .then(response => {
@@ -35,6 +35,7 @@ $(document).ready(function() {
             })
             .catch(error => {
                 showAlert('Nope!', `The code you entered (${code}) is not valid`);
+                hideLoadingAnimation();
                 console.error('Error checking code', error);
             });
     });

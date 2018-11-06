@@ -8,24 +8,26 @@
 
         <%- paragraphs(website.description) %>
 
-        <% if (website.homeConfiguration === 'SELECT_BUILDING') { %>
-            <p>To get started, choose a building:</p>
+        <% if (canBrowse) { %>
+            <% if (website.homeConfiguration === 'SELECT_BUILDING') { %>
+                <p>To get started, choose a building:</p>
 
-            <%- include('partials/building-list', {buildings}) %>
-        <% } else if (website.homeConfiguration === 'ENTER_CODE') { %>
-            <p>To get started, enter your building code:</p>
+                <%- include('partials/building-list', {buildings}) %>
+            <% } else if (website.homeConfiguration === 'ENTER_CODE') { %>
+                <p>To get started, enter your building code:</p>
 
-            <%- include('partials/enter-code') %>
-        <% } else if (website.homeConfiguration === 'SELECT_BUILDING_OR_ENTER_CODE') { %>
-            <p>To get started, choose a building or enter a building code.</p>
+                <%- include('partials/enter-code') %>
+            <% } else if (website.homeConfiguration === 'SELECT_BUILDING_OR_ENTER_CODE') { %>
+                <p>To get started, choose a building or enter a building code.</p>
 
-            <h2>Building</h2>
+                <h2>Buildings</h2>
 
-            <%- include('partials/building-list', {buildings}) %>
+                <%- include('partials/building-list', {buildings}) %>
 
-            <h2>Enter Code</h2>
+                <h2>Enter Code</h2>
 
-            <%- include('partials/enter-code') %>
+                <%- include('partials/enter-code') %>
+            <% } %>
         <% } %>
     </div>
 </div>

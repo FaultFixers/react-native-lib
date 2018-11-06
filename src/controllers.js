@@ -1,6 +1,4 @@
 const api = require('./services/api');
-const {getTag} = require('./services/tags');
-const {getActiveBuildings} = require('./services/buildings');
 const config = require('../config/load');
 
 function hasHttpStatus(response, expectedStatus) {
@@ -34,23 +32,39 @@ function containsErrorCode(response, expectedCode) {
 }
 
 async function viewIndex(req, res) {
-    const isAuthenticationRequiredToBrowse = res.locals.website.isAuthenticationRequiredToBrowse;
+    const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
     let buildings;
-    if (isAuthenticationRequiredToBrowse) {
-        buildings = await getActiveBuildings(req, res);
+    if (canBrowse) {
+        const domain = req.hostname;
+        const buildingsResponse = await api.asIntegration().get(`/reporting-websites/${domain}/buildings`);
+        if (buildingsResponse.statusCode !== 200) {
+            throw new Error(`Could not get buildings for ${domain}`);
+        }
+
+        buildings = buildingsResponse.json.results
+            .map(result => result.building)
+            .filter(building => building.status === 'ACTIVE')
+            .sort((a, b) => a.name.localeCompare(b.name));
     }
 
     res.render('index', {
-        isAuthenticationRequiredToBrowse,
-        buildings,
         mainNavActiveTab: 'report',
+        canBrowse,
+        buildings,
     });
 }
 
 async function viewBuilding(req, res) {
     const buildingId = req.params.buildingId;
 
-    const buildingResponse = await api.asUser(req).get('/buildings/' + buildingId + '?includeTickets=1');
+    const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
+    if (!canBrowse) {
+        return res.redirect('/login?continueTo=/buildings/' + buildingId);
+    }
+
+    const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
+
+    const buildingResponse = await apiAuth.get('/buildings/' + buildingId + '?includeTickets=1');
     res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
 
     const building = buildingResponse.json.building;
@@ -149,12 +163,21 @@ async function viewResetPassword(req, res) {
 }
 
 async function doCheckCode(req, res) {
-    // const code = req.query.code;
-    // const tag = await getTag(req, code);
+    const code = req.query.code;
 
-    // res.locals.ensureIsCorrectAccount(tag.account);
+    const apiResponse = await api.asIntegration().get('/tags/' + code);
+    if (apiResponse.statusCode !== 200) {
+        throw new Error(`Code "${code}" is invalid`);
+    }
 
-    // res.json({tag});
+    res.locals.ensureIsCorrectAccount(apiResponse.json.account);
+
+    res.json({
+        tag: apiResponse.json.tag,
+        location: apiResponse.json.location,
+        building: apiResponse.json.building,
+        account: apiResponse.json.account,
+    });
 }
 
 async function doLogin(req, res) {
