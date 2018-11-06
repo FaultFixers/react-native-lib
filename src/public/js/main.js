@@ -35,7 +35,7 @@ $(document).ready(function() {
                 const tag = response.tag;
                 switch (tag.type) {
                 case 'SINGLE_LOCATION':
-                    // @todo - handle.
+                    window.location = '/locations/' + response.location.id;
                     break;
                 case 'SINGLE_BUILDING':
                     window.location = '/buildings/' + response.building.id;

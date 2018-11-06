@@ -78,6 +78,32 @@ async function viewBuilding(req, res) {
     });
 }
 
+async function viewLocation(req, res) {
+    const locationId = req.params.locationId;
+
+    const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
+    if (!canBrowse) {
+        return res.redirect('/login?continueTo=/locations/' + locationId);
+    }
+
+    const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
+
+    const locationResponse = await apiAuth.get('/locations/' + locationId + '?includeTickets=1');
+    res.locals.ensureIsCorrectAccount(locationResponse.json.account);
+
+    const location = locationResponse.json.location;
+    const building = locationResponse.json.building;
+    const tickets = locationResponse.json.tickets.map(row => row.ticket);
+
+    const view = location.status === 'ACTIVE' ? 'location' : 'inactive-location';
+    res.render(view, {
+        mainNavActiveTab: 'report',
+        location,
+        building,
+        tickets,
+    });
+}
+
 async function viewLogin(req, res) {
     const continueTo = req.query.continueTo;
 
@@ -305,6 +331,7 @@ async function doLogOut(req, res) {
 module.exports = {
     viewIndex,
     viewBuilding,
+    viewLocation,
     viewLogin,
     viewRegister,
     viewAccount,

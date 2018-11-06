@@ -1,0 +1,21 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Tickets'}) %>
+
+<div class="page-content" id="location-page">
+    <div class="bordered-box clearfix">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
+
+        <h2><%= building.name %></h2>
+
+        <h3><%= location.name %></h3>
+
+        <p>
+            <a href="/report?location=<%= location.id %>" class="button">Report Fault</a>
+        </p>
+
+        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No faults have been reported here yet.'}) %>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

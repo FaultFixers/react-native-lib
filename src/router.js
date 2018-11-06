@@ -20,6 +20,7 @@ function addRoute(method, path, handler) {
 
 addRoute('GET', '/', controllers.viewIndex);
 addRoute('GET', '/buildings/:buildingId', controllers.viewBuilding);
+addRoute('GET', '/locations/:locationId', controllers.viewLocation);
 addRoute('GET', '/login', controllers.viewLogin);
 addRoute('GET', '/register', controllers.viewRegister);
 addRoute('GET', '/account', controllers.viewAccount);
