@@ -23,7 +23,7 @@ addRoute('GET', '/buildings/:buildingId', controllers.viewBuilding);
 addRoute('GET', '/locations/:locationId', controllers.viewLocation);
 addRoute('GET', '/login', controllers.viewLogin);
 addRoute('GET', '/register', controllers.viewRegister);
-addRoute('GET', '/account', controllers.viewAccount);
+addRoute('GET', '/my-account', controllers.viewMyAccount);
 addRoute('GET', '/other', controllers.viewOther);
 addRoute('GET', '/privacy', controllers.viewPrivacy);
 addRoute('GET', '/debug-info', controllers.viewDebugInfo);

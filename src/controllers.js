@@ -133,13 +133,13 @@ async function viewRegister(req, res) {
     });
 }
 
-async function viewAccount(req, res) {
+async function viewMyAccount(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continueTo=/account');
+        return res.redirect('/login?continueTo=/my-account');
     }
 
-    res.render('account', {
-        mainNavActiveTab: 'account',
+    res.render('my-account', {
+        mainNavActiveTab: 'my-account',
     });
 }
 
@@ -352,7 +352,7 @@ module.exports = {
     viewLocation,
     viewLogin,
     viewRegister,
-    viewAccount,
+    viewMyAccount,
     viewOther,
     viewPrivacy,
     viewDebugInfo,
