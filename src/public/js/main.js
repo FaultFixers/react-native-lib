@@ -41,7 +41,7 @@ $(document).ready(function() {
                     window.location = '/buildings/' + response.building.id;
                     break;
                 case 'SINGLE_ACCOUNT':
-                    // @todo - handle.
+                    window.location = '/account-tickets';
                     break;
                 case 'MULTIPLE_BUILDING_OPTIONS':
                     const ids = response.buildingOptions.map(building => building.id);

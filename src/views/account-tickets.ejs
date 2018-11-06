@@ -1,0 +1,18 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Tickets'}) %>
+
+<div class="page-content">
+    <div class="bordered-box clearfix">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
+
+        <%-
+        include('partials/ticket-list', {
+            tickets,
+            showNoTicketsMessage: 'No faults have been reported yet for ' + account.name + '.',
+        })
+        %>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

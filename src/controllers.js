@@ -346,6 +346,34 @@ async function viewBuildingOptions(req, res) {
     });
 }
 
+async function viewAccountTicketsOptions(req, res) {
+    const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
+    if (!canBrowse) {
+        return res.redirect('/login?continueTo=/account-tickets');
+    }
+
+    const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
+    const accountResponse = await apiAuth.get('/accounts/' + res.locals.account.id + '?includeTickets=1')
+    if (accountResponse.statusCode !== 200) {
+        throw new Error(`Could not get tickets for ${res.locals.account.name}`);
+    }
+
+    const tickets = accountResponse.json.tickets
+        .map(result => {
+            const ticket = result.ticket;
+            ticket.building = result.building;
+            ticket.location = result.location;
+            ticket.faultCategory = result.faultCategory;
+            ticket.images = result.images;
+            return ticket;
+        });
+
+    res.render('account-tickets', {
+        mainNavActiveTab: 'report',
+        tickets,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -359,6 +387,7 @@ module.exports = {
     viewForgotPassword,
     viewResetPassword,
     viewBuildingOptions,
+    viewAccountTicketsOptions,
     doCheckCode,
     doLogin,
     doRegister,
