@@ -82,6 +82,58 @@ $(document).ready(function() {
         });
     });
 
+    const registerForm = $('#register-form');
+    registerForm.submit(function(event) {
+        event.preventDefault();
+
+        const email = registerForm.find('input[name="email"]').val();
+        if (!email) {
+            showAlert('Not yet!', 'Please enter your email address.');
+            return;
+        }
+
+        const name = registerForm.find('input[name="name"]').val();
+        if (!name) {
+            showAlert('Not yet!', 'Please enter your full name.');
+            return;
+        }
+
+        const password = registerForm.find('input[name="password"]').val();
+        if (!password) {
+            showAlert('Not yet!', 'Please enter your password.');
+            return;
+        }
+
+        showLoadingAnimation();
+
+        $.ajax({
+            url: '/api/register',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({email, name, password}),
+            contentType: 'application/json',
+            success() {
+                const continueTo = registerForm.find('input[name="continueTo"]').val();
+                if (continueTo) {
+                    window.location = continueTo;
+                } else {
+                    window.location = '/';
+                }
+            },
+            error(error) {
+                let message;
+                if (error.responseJSON && error.responseJSON.isUserAlreadyExistsError) {
+                    message = 'The email you entered is already registered to an account on our system. Please login instead.';
+                } else {
+                    message = 'Please double check the details you entered and try again.';
+                }
+                showAlert('Registration failed', message);
+                hideLoadingAnimation();
+                console.error('Error registering', {response: error.responseJSON, email, name});
+            },
+        });
+    });
+
     const personalDetailsForm = $('#personal-details-form');
     personalDetailsForm.submit(function(event) {
         event.preventDefault();

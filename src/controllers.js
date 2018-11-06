@@ -75,6 +75,19 @@ async function viewLogin(req, res) {
     });
 }
 
+async function viewRegister(req, res) {
+    const continueTo = req.query.continueTo;
+
+    if (res.locals.isLoggedIn) {
+        return res.redirect(continueTo ? continueTo : '/');
+    }
+
+    res.render('register', {
+        mainNavActiveTab: 'other',
+        continueTo,
+    });
+}
+
 async function viewAccount(req, res) {
     if (!res.locals.isLoggedIn) {
         return res.redirect('/login?continueTo=/account');
@@ -156,6 +169,30 @@ async function doLogin(req, res) {
     } catch (error) {
         console.log('Failed to login', {error, email});
         res.status(401).json({});
+    }
+}
+
+async function doRegister(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+    const name = req.body.name;
+
+    if (!email || !password || !name) {
+        res.status(422).json({});
+        return;
+    }
+
+    try {
+        const registerResponse = await api.asIntegration().post('/authentication/register', {email, password, name});
+        console.log('Registered', {email, name});
+        setAuthTokenCookie(res, registerResponse.json.authenticationToken);
+        res.json({});
+    } catch (error) {
+        console.log('Failed to register', {error, email, name});
+
+        res.status(422).json({
+            isUserAlreadyExistsError: !!error.json.isUserAlreadyExistsError,
+        });
     }
 }
 
@@ -241,6 +278,7 @@ module.exports = {
     viewIndex,
     viewBuilding,
     viewLogin,
+    viewRegister,
     viewAccount,
     viewOther,
     viewPrivacy,
@@ -249,6 +287,7 @@ module.exports = {
     viewResetPassword,
     doCheckCode,
     doLogin,
+    doRegister,
     doUpdatePersonalDetails,
     doChangePassword,
     doRequestPasswordReset,

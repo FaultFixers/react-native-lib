@@ -21,6 +21,7 @@ function addRoute(method, path, handler) {
 addRoute('GET', '/', controllers.viewIndex);
 addRoute('GET', '/buildings/:buildingId', controllers.viewBuilding);
 addRoute('GET', '/login', controllers.viewLogin);
+addRoute('GET', '/register', controllers.viewRegister);
 addRoute('GET', '/account', controllers.viewAccount);
 addRoute('GET', '/other', controllers.viewOther);
 addRoute('GET', '/privacy', controllers.viewPrivacy);
@@ -29,6 +30,7 @@ addRoute('GET', '/forgot-password', controllers.viewForgotPassword);
 addRoute('GET', '/reset-password', controllers.viewResetPassword);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
 addRoute('POST', '/api/login', controllers.doLogin);
+addRoute('POST', '/api/register', controllers.doRegister);
 addRoute('POST', '/api/personal-details', controllers.doUpdatePersonalDetails);
 addRoute('POST', '/api/change-password', controllers.doChangePassword);
 addRoute('POST', '/api/request-password-reset', controllers.doRequestPasswordReset);

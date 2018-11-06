@@ -1,0 +1,37 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Register For ' + website.name}) %>
+
+<div class="page-content" id="login-page">
+    <div class="bordered-box">
+        <h1>Register</h1>
+
+        <p>Fill in your details below, and we'll get you started.</p>
+
+        <form id="register-form">
+            <p>
+                <input type="email" name="email" placeholder="Your email address..." />
+            </p>
+
+            <p>
+                <input type="text" name="name" placeholder="Your full name..." />
+            </p>
+
+            <p>
+                <input type="password" name="password" placeholder="Choose a password..." />
+            </p>
+
+            <p>
+                <input type="submit" value="Let's go!" />
+            </p>
+
+            <input type="hidden" name="continueTo" value="<%= continueTo %>" />
+        </form>
+    </div>
+
+    <p>
+        <a href="/login?continueTo=<%= continueTo %>" class="button">Already registered? Log in here</a>
+    </p>
+</div>
+
+<%- include('partials/copyright-footer') %>
