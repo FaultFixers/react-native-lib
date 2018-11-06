@@ -44,7 +44,8 @@ $(document).ready(function() {
                     // @todo - handle.
                     break;
                 case 'MULTIPLE_BUILDING_OPTIONS':
-                    // @todo - handle.
+                    const ids = response.buildingOptions.map(building => building.id);
+                    window.location = '/building-options?ids=' + ids.join(',');
                     break;
                 case 'UNASSIGNED':
                     showAlert('No longer in use', `The code you entered (${code}) is no longer in use.`);

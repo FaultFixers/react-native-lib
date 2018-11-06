@@ -40,6 +40,7 @@ module.exports = {
         "prefer-rest-params": 0,
         "prefer-template": 0,
         "no-use-before-define": 0,
-        "no-console": 0
+        "no-console": 0,
+        "no-case-declarations": 0
     }
 };

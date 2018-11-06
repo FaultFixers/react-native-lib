@@ -1,0 +1,15 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Buildings'}) %>
+
+<div class="page-content">
+    <div class="bordered-box clearfix">
+        <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
+
+        <p>Choose a building:</p>
+
+        <%- include('partials/building-list', {buildings}) %>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

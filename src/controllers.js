@@ -203,6 +203,7 @@ async function doCheckCode(req, res) {
         location: apiResponse.json.location,
         building: apiResponse.json.building,
         account: apiResponse.json.account,
+        buildingOptions: apiResponse.json.buildingOptions,
     });
 }
 
@@ -328,6 +329,23 @@ async function doLogOut(req, res) {
     res.redirect(301, '/');
 }
 
+async function viewBuildingOptions(req, res) {
+    const ids = req.query.ids.split(/,/);
+    const buildingPromises = ids.map(async (id) => await api.asIntegration().get('/buildings/' + id));
+    const buildings = (await Promise.all(buildingPromises))
+        .map(response => {
+            res.locals.ensureIsCorrectAccount(response.json.account);
+            return response.json.building;
+        })
+        .filter(building => building.status === 'ACTIVE')
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    res.render('multiple-building-options', {
+        mainNavActiveTab: 'report',
+        buildings,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -340,6 +358,7 @@ module.exports = {
     viewDebugInfo,
     viewForgotPassword,
     viewResetPassword,
+    viewBuildingOptions,
     doCheckCode,
     doLogin,
     doRegister,
