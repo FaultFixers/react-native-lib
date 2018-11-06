@@ -3,16 +3,26 @@ const {getTag} = require('./services/tags');
 const {getActiveBuildings, getActiveBuildingById} = require('./services/buildings');
 const config = require('../config/load');
 
+function hasHttpStatus(response, expectedStatus) {
+    if (response && typeof response.statusCode === 'number') {
+        return response.statusCode === expectedStatus;
+    } else {
+        return false;
+    }
+}
+
 function getErrorCodes(response) {
+    if (!response || !response.json || !response.json.errors) {
+        return [];
+    }
+
     const codes = [];
-    if (response.json && response.json.errors) {
-        for (let i = 0; i < response.json.errors.length; i++) {
-            const error = response.json.errors[i];
-            console.log('error', error);
-            if (error.codes) {
-                for (let ii = 0; ii < error.codes.length; ii++) {
-                    codes.push(error.codes[ii]);
-                }
+    for (let i = 0; i < response.json.errors.length; i++) {
+        const error = response.json.errors[i];
+        console.log('error', error);
+        if (error.codes) {
+            for (let ii = 0; ii < error.codes.length; ii++) {
+                codes.push(error.codes[ii]);
             }
         }
     }
@@ -51,18 +61,24 @@ async function viewBuilding(req, res) {
 }
 
 async function viewLogin(req, res) {
+    const continueTo = req.query.continueTo;
+
     if (res.locals.isLoggedIn) {
-        res.redirect('/');
-    } else {
-        res.render('login', {
-            mainNavActiveTab: 'other',
-        });
+        return res.redirect(continueTo ? continueTo : '/');
     }
+
+    const email = req.query.email;
+
+    res.render('login', {
+        mainNavActiveTab: 'other',
+        email,
+        continueTo,
+    });
 }
 
 async function viewAccount(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continue=/account');
+        return res.redirect('/login?continueTo=/account');
     }
 
     res.render('account', {
@@ -84,12 +100,22 @@ async function viewPrivacy(req, res) {
 
 async function viewDebugInfo(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continue=/debug-info');
+        return res.redirect('/login?continueTo=/debug-info');
     }
 
     res.render('debug-info', {
         mainNavActiveTab: 'other',
         apiHostname: config.apiHostname,
+    });
+}
+
+async function viewForgotPassword(req, res) {
+    if (res.locals.isLoggedIn) {
+        return res.redirect('/');
+    }
+
+    res.render('forgot-password', {
+        mainNavActiveTab: 'other',
     });
 }
 
@@ -154,6 +180,21 @@ async function doChangePassword(req, res) {
     }
 }
 
+async function doRequestPasswordReset(req, res) {
+    const email = req.body.email;
+
+    try {
+        await api.asIntegration().post('/authentication/request-password-reset', {email});
+        console.log('Requested password reset for ' + email);
+        res.json({});
+    } catch (error) {
+        console.error('Failed to request password reset', {email, error});
+        res.status(422).json({
+            isInvalidEmail: hasHttpStatus(error, 404),
+        });
+    }
+}
+
 async function doLogOut(req, res) {
     res.clearCookie('authToken');
     res.redirect(301, '/');
@@ -167,9 +208,11 @@ module.exports = {
     viewOther,
     viewPrivacy,
     viewDebugInfo,
+    viewForgotPassword,
     doCheckCode,
     doLogin,
     doUpdatePersonalDetails,
     doChangePassword,
+    doRequestPasswordReset,
     doLogOut,
 };

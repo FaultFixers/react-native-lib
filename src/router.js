@@ -25,10 +25,12 @@ addRoute('GET', '/account', controllers.viewAccount);
 addRoute('GET', '/other', controllers.viewOther);
 addRoute('GET', '/privacy', controllers.viewPrivacy);
 addRoute('GET', '/debug-info', controllers.viewDebugInfo);
+addRoute('GET', '/forgot-password', controllers.viewForgotPassword);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
 addRoute('POST', '/api/login', controllers.doLogin);
 addRoute('POST', '/api/personal-details', controllers.doUpdatePersonalDetails);
 addRoute('POST', '/api/change-password', controllers.doChangePassword);
+addRoute('POST', '/api/request-password-reset', controllers.doRequestPasswordReset);
 addRoute('POST', '/log-out', controllers.doLogOut);
 
 module.exports = router;

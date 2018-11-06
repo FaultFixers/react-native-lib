@@ -9,7 +9,7 @@
         <form id="login-form">
             <p>
                 <label for="login-email">Email Address:</label>
-                <input type="email" id="login-email" name="email" />
+                <input type="email" id="login-email" name="email" value="<%= email %>" />
             </p>
 
             <p>
@@ -20,6 +20,8 @@
             <p>
                 <input type="submit" value="Log In" />
             </p>
+
+            <input type="hidden" name="continueTo" value="<%= continueTo %>" />
         </form>
     </div>
 

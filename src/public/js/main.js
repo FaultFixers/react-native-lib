@@ -55,6 +55,8 @@ $(document).ready(function() {
             return;
         }
 
+        const continueTo = loginForm.find('input[name="continueTo"]').val();
+
         showLoadingAnimation();
 
         $.ajax({
@@ -64,8 +66,11 @@ $(document).ready(function() {
             data: JSON.stringify({email, password}),
             contentType: 'application/json',
             success() {
-                // @todo - continue to whatever the user wanted to do.
-                window.location = '/';
+                if (continueTo) {
+                    window.location = continueTo;
+                } else {
+                    window.location = '/';
+                }
             },
             error() {
                 showAlert(
@@ -175,6 +180,43 @@ $(document).ready(function() {
                 console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isNewPasswordTooShort) {
                     showAlert('Uh-oh!', 'Your new password is too short.');
+                } else {
+                    showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
+                }
+                hideLoadingAnimation();
+            },
+        });
+    });
+
+    const forgotPasswordForm = $('#forgot-password-form');
+    forgotPasswordForm.submit(function(event) {
+        event.preventDefault();
+
+        const emailInput = forgotPasswordForm.find('input[name="email"]');
+
+        const email = emailInput.val();
+        if (!email) {
+            showAlert('Not yet!', 'Please enter your email address.');
+            return;
+        }
+
+        showLoadingAnimation();
+
+        $.ajax({
+            url: '/api/request-password-reset',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({email}),
+            contentType: 'application/json',
+            success() {
+                showAlert('Check Your Email', 'We have emailed you a link to set a new password.');
+                window.location = '/login?email=' + window.encodeURIComponent(email);
+                hideLoadingAnimation();
+            },
+            error(response) {
+                console.log('response', response.responseJSON);
+                if (response.responseJSON && response.responseJSON.isInvalidEmail) {
+                    showAlert('Uh-oh!', 'The email given doesn\'t exist.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
