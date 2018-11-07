@@ -16,6 +16,48 @@ function hideLoadingAnimation() {
     setLoadingAnimationDisplay('none');
 }
 
+function doApiRequest(method, path, config, success, error) {
+    config.method = method;
+    config.url = window.API_BASE_URL + path;
+    config.success = success;
+    config.error = error;
+    config.headers = {
+        'Accept': 'application/vnd.faultfixers.v5+json',
+    };
+
+    if (window.API_AUTHORIZATION) {
+        config.headers['Authorization'] = window.API_AUTHORIZATION;
+    }
+
+    $.ajax(config);
+}
+
+function doApiFileUpload(file, success, error) {
+    if (!file) {
+        throw new Error('Not given a file');
+    }
+
+    const postData = new FormData();
+    postData.append('file', file);
+
+    const config = {
+        data: postData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        enctype: 'multipart/form-data',
+    };
+    doApiRequest('POST', '/files', config, success, error);
+}
+
+function doApiPostRequest(path, data, success, error) {
+    const config = {
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+    };
+    doApiRequest('POST', path, config, success, error);
+}
+
 $(document).ready(function() {
     const enterCodeForm = $('#enter-code-form');
     enterCodeForm.submit(function(event) {
@@ -341,6 +383,158 @@ $(document).ready(function() {
         const confirmed = window.confirm('Are you sure you want to log out?');
         if (!confirmed) {
             event.preventDefault();
+        }
+    });
+
+    const reportForm = $('#report-form');
+    const privacyOptionButtons = reportForm.find('button.ticket-privacy-option');
+    privacyOptionButtons.click(function(event) {
+        privacyOptionButtons.removeClass('active');
+
+        const button = $(event.target);
+        button.addClass('active');
+
+        $('.ticket-privacy-note').text(button.attr('note'));
+    });
+    reportForm.submit(function(event) {
+        event.preventDefault();
+
+        const accountId = reportForm.find('input[name="accountId"]').val();
+        const buildingId = reportForm.find('input[name="buildingId"]').val();
+        const locationId = reportForm.find('input[name="locationId"]').val();
+
+        let privacy;
+        if (privacyOptionButtons.length > 0) {
+            privacy = privacyOptionButtons.filter('.active').attr('value');
+            if (!privacy) {
+                showAlert('Not yet!', 'Please choose whether this is a communal or private issue.');
+                return;
+            }
+        }
+
+        let locationDescription;
+        if (!locationId) {
+            locationDescription = reportForm.find('textarea[name="locationDescription"]').val();
+            if (!locationDescription) {
+                showAlert('Not yet!', 'Please enter where the fault is located.');
+                return;
+            }
+        }
+
+        const description = reportForm.find('textarea[name="description"]').val();
+        if (!description) {
+            showAlert('Not yet!', 'Please enter a quick description of the fault.');
+            return;
+        }
+
+        const faultCategoryId = reportForm.find('select[name="faultCategoryId"]').val();
+        if (!faultCategoryId) {
+            showAlert('Not yet!', 'Please choose a fault category. Tap "Other" if you can\'t decide which is most approriate.');
+            return;
+        }
+
+        const additionalQuestionAnswers = reportForm.find('input[type="hidden"].questionId')
+            .toArray()
+            .map(questionId => {
+                questionId = questionId.getAttribute('value');
+                const answers = reportForm.find('input[name="question-' + questionId + '"]:checked')
+                    .toArray()
+                    .map(input => input.getAttribute('data-option') + ': ' + input.getAttribute('data-header'));
+                return {
+                    question: questionId,
+                    answers: answers,
+                };
+            });
+
+        const fileList = document.querySelector('input[name="image"]').files;
+        let imageFile;
+        if (fileList.length > 0) {
+            imageFile = fileList[0];
+        } else {
+            const confirmToContinue = window.confirm('Are you sure you want to continue without adding a photo?');
+            if (!confirmToContinue) {
+                console.log('User chose to not continue without adding an image');
+                return;
+            }
+        }
+
+        const openedAt = Number(reportForm.find('input[name="openedAt"]').val());
+
+        let imageId;
+
+        function createTicket() {
+            const postBody = {
+                description: description ? description : null,
+                locationDescription: locationDescription ? locationDescription : null,
+                additionalQuestionAnswers: additionalQuestionAnswers ? additionalQuestionAnswers : [],
+                privacy: privacy ? privacy : null,
+                images: imageId ? [imageId] : null,
+                location: locationId ? locationId : null,
+                building: buildingId ? buildingId : null,
+                account: accountId ? accountId : null,
+                faultCategory: faultCategoryId ? faultCategoryId : null,
+                timeToCreateTicketInMs: Date.now() - openedAt,
+            };
+
+            doApiPostRequest(
+                '/tickets',
+                postBody,
+                function(response) {
+                    hideLoadingAnimation();
+
+                    const successModal = $('#report-success-modal');
+                    if (response.textAfterTicketCreation) {
+                        const newHtml = '<p>' + response.textAfterTicketCreation.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br />') + '</p>';
+                        successModal.html(newHtml);
+                    }
+                    successModal.modal();
+
+                    console.log('Created ticket', response.ticket.id);
+
+                    const goToTicket = () => window.location = '/tickets/' + response.ticket.friendlyId;
+
+                    setTimeout(goToTicket, 3000);
+                    successModal.click(goToTicket);
+                },
+                function(error) {
+                    let errorMessage;
+                    if (error.status === -1) {
+                        errorMessage = 'We couldn\'t report the fault. Please check you are connected to the Internet.';
+                    } else {
+                        errorMessage = 'An unexpected error occurred - please try again.';
+                    }
+                    showAlert('Problem Reporting Fault', errorMessage);
+                    hideLoadingAnimation();
+                    console.error('Error reporting fault', error);
+                }
+            );
+        }
+
+        showLoadingAnimation();
+
+        if (imageFile) {
+            console.log('User has chosen a fault image to upload');
+            doApiFileUpload(
+                imageFile,
+                response => {
+                    imageId = response.image.id;
+                    console.log('Uploaded fault image', {imageId});
+                    createTicket();
+                },
+                error => {
+                    let message;
+                    if (error.responseJSON.exception === 'MaxUploadSizeExceededException') {
+                        message = 'Sorry, the photo you added is too large.';
+                    } else {
+                        message = 'Sorry, something went wrong. Please try again.';
+                    }
+                    showAlert('Error!', message);
+                    hideLoadingAnimation();
+                }
+            );
+        } else {
+            console.log('No fault image to upload');
+            createTicket();
         }
     });
 });

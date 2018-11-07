@@ -1,6 +1,3 @@
-const fs = require('fs');
-const config = require('./config/load.js');
-
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 

@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
 const moment = require('moment');
+const fs = require('fs');
+const {promisify} = require('util');
 const router = require('./router');
 const {
     formatLocalDateTime,
@@ -33,8 +35,33 @@ app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(loadWebsiteByDomain);
 app.use(loadUserByCookie);
+app.use((req, res, next) => {
+    res.locals.cookies = req.cookies;
+    next();
+});
+
+const readFile = promisify(fs.readFile);
+
+async function sendConcatOfFiles(res, files) {
+    let readPromises = files.map(async (file) => {
+        return await readFile('./' + file, 'utf8');
+    });
+    readPromises = (await Promise.all(readPromises));
+    const concat = readPromises.join('\n');
+    res.type('.js').send(concat);
+}
+
 app.use('/', router);
 
+app.use('/js/all.js', async (req, res) => {
+    sendConcatOfFiles(res, [
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/jquery-modal/jquery.modal.min.js',
+        'src/public/js/main.js',
+    ]);
+});
+
+app.locals.config = config;
 app.locals.paragraphs = paragraphs;
 app.locals.moment = moment;
 app.locals.formatDateTime = date => moment(date).format('D MMM YYYY, h:mma');

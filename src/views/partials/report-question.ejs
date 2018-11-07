@@ -1,0 +1,37 @@
+<%
+isTable = question.type === 'TABLE_SINGLE_CHOICE' || question.type === 'TABLE_MULTIPLE_CHOICE'
+%>
+
+<h3><%= question.label %></h3>
+
+<% if (isTable) { %>
+    <table class="report-question-table">
+        <thead>
+            <tr>
+                <th></th>
+                <% question.tableColumnHeaders.forEach(header => { %>
+                    <th><%= header %></th>
+                <% }) %>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% question.tableRowOptions.forEach(option => { %>
+                <tr>
+                    <th><%= option %></th>
+
+                    <% question.tableColumnHeaders.forEach(header => { %>
+                        <td>
+                            <input
+                                type="<%= question.type === 'TABLE_SINGLE_CHOICE' ? 'radio' : 'checkbox' %>"
+                                name="question-<%= question.id %>"
+                                data-header="<%= header %>"
+                                data-option="<%= option %>"
+                            />
+                        </td>
+                    <% }) %>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>

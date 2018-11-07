@@ -1,0 +1,90 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Report Issue'}) %>
+
+<div class="page-content" id="report-page">
+    <form id="report-form" enctype="multipart/form-data">
+        <div class="fieldset bordered-box">
+            <h3>Add Photo</h3>
+
+            <input name="image" type="file" accept="image/*" capture="camera" />
+        </div>
+
+        <% if (promptForTicketPrivacy) { %>
+            <div class="fieldset bordered-box">
+                <h3>Ticket Privacy</h3>
+
+                <button
+                    class="ticket-privacy-option"
+                    value="COMMUNAL"
+                    type="button"
+                    note="Any user will be able to see this ticket"
+                    >Communal</button>
+
+                <button
+                    class="ticket-privacy-option"
+                    value="PRIVATE"
+                    type="button"
+                    note="This ticket will be private to you and the maintenance team"
+                    >Private</button>
+
+                <span class="ticket-privacy-note"></span>
+            </div>
+        <% } %>
+
+        <% if (!location) { %>
+            <div class="fieldset bordered-box">
+                <h3>Where Is The Fault?</h3>
+
+                <textarea name="locationDescription" placeholder="For example 'Flat 34' or 'Stairwell B'..."></textarea>
+            </div>
+        <% } %>
+
+        <div class="fieldset bordered-box">
+            <h3>Fault Description</h3>
+
+            <textarea name="description" placeholder="Enter details of the fault..."></textarea>
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Fault Category</h3>
+
+            <select name="faultCategoryId">
+                <option value="">Choose a category...</option>
+                <% faultCategoryOptions.forEach(category => { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <% additionalQuestions.forEach(question => { %>
+            <div class="fieldset bordered-box">
+                <%- include('partials/report-question', {question}) %>
+
+                <input type="hidden" class="questionId" value="<%= question.id %>" />
+            </div>
+        <% }) %>
+
+        <input type="submit" value="Report It!" />
+
+        <input type="hidden" name="accountId" value="<%= account.id %>" />
+        <input type="hidden" name="openedAt" value="<%= Date.now() %>" />
+        <% if (location) { %>
+            <input type="hidden" name="locationId" value="<%= location.id %>" />
+        <% } %>
+        <% if (building) { %>
+            <input type="hidden" name="buildingId" value="<%= building.id %>" />
+        <% } %>
+    </form>
+</div>
+
+<div id="report-success-modal" class="modal">
+    <i class="ff-icon ff-tick"></i>
+
+    <div id="report-success-modal-text">
+        <p>The fault has been logged.</p>
+        <p>We'll keep you updated!</p>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

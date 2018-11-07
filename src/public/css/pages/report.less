@@ -1,0 +1,55 @@
+#report-page {
+    button {
+        background-color: #dddddd;
+        border-color: #cdcdcd;
+        color: black;
+        font-weight: normal;
+        margin-right: 8px;
+        margin-bottom: 8px;
+
+        &.active {
+            background-color: var(--highlight-color);
+            border-color: var(--highlight-color);
+            color: var(--text-over-highlight-color);
+        }
+    }
+
+    .ticket-privacy-note {
+        display: block;
+    }
+
+    @media screen and (max-width: 600px) {
+        .fieldset {
+            text-align: center;
+        }
+        textarea,
+        input[type="text"],
+        select {
+            width: 100%;
+        }
+        input[type="submit"] {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table.report-question-table {
+            margin: 0 auto;
+        }
+    }
+}
+
+#report-success-modal {
+    text-align: center;
+    padding: 50px;
+    font-size: 25px;
+
+    .ff-tick {
+        color: #17c829;
+        font-size: 65px;
+        margin-bottom: 15px;
+    }
+
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+}

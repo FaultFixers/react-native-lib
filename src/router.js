@@ -32,6 +32,7 @@ addRoute('GET', '/reset-password', controllers.viewResetPassword);
 addRoute('GET', '/building-options', controllers.viewBuildingOptions);
 addRoute('GET', '/account-tickets', controllers.viewAccountTicketsOptions);
 addRoute('GET', '/tickets/:ticketId', controllers.viewTicket);
+addRoute('GET', '/report', controllers.viewReport);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
 addRoute('POST', '/api/login', controllers.doLogin);
 addRoute('POST', '/api/register', controllers.doRegister);

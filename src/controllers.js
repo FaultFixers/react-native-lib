@@ -432,6 +432,51 @@ async function viewTicket(req, res) {
     });
 }
 
+async function viewReport(req, res) {
+    if (!res.locals.isLoggedIn) {
+        return res.redirect('/login?continueTo=' + req.url);
+    }
+
+    let optionsUrl = '/new-ticket-options?',
+        building,
+        location;
+    if (req.query.building) {
+        optionsUrl += '&building=' + req.query.building;
+        const buildingResponse = await api.asIntegration().get('/buildings/' + req.query.building);
+        if (buildingResponse.statusCode !== 200) {
+            throw new Error('Could not get building ' + req.query.building);
+        }
+        res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
+        building = buildingResponse.json.building;
+    } else if (req.query.location) {
+        optionsUrl += '&location=' + req.query.location;
+        const locationResponse = await api.asIntegration().get('/locations/' + req.query.location);
+        if (locationResponse.statusCode !== 200) {
+            throw new Error('Could not get location ' + req.query.location);
+        }
+        res.locals.ensureIsCorrectAccount(locationResponse.json.account);
+        location = locationResponse.json.location;
+    } else {
+        throw new Error('No building or location ID given');
+    }
+
+    const response = await api.asUser(req).get(optionsUrl);
+    if (response.statusCode !== 200) {
+        throw new Error('Could not get new ticket options from ' + optionsUrl);
+    }
+
+    res.render('report', {
+        mainNavActiveTab: 'report',
+        building,
+        location,
+        buildingOptions: response.json.buildingOptions,
+        locationOptions: response.json.locationOptions,
+        faultCategoryOptions: response.json.faultCategoryOptions,
+        additionalQuestions: response.json.additionalQuestions,
+        promptForTicketPrivacy: !!response.json.promptForTicketPrivacy,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -447,6 +492,7 @@ module.exports = {
     viewBuildingOptions,
     viewAccountTicketsOptions,
     viewTicket,
+    viewReport,
     doCheckCode,
     doLogin,
     doRegister,

@@ -24,8 +24,11 @@
                 --reporter-app-bottom-nav-active-color: <%= account.reporterAppBottomNavActiveColorHex %>;
             }
         </style>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="/js/main.js"></script>
+        <script>
+            window.API_BASE_URL = 'https://<%= config.apiHostname %>';
+            window.API_AUTHORIZATION = <%- cookies.authToken ? '"User ' + cookies.authToken + '"' : 'null' %>;
+        </script>
+        <script src="/js/all.js"></script>
     </head>
     <body>
         <nav id="main-menu">
