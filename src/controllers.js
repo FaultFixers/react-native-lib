@@ -477,6 +477,35 @@ async function viewReport(req, res) {
     });
 }
 
+async function viewMyTickets(req, res) {
+    if (!res.locals.isLoggedIn) {
+        return res.redirect('/login?continueTo=' + req.url);
+    }
+
+    const response = await api.asUser(req).get('/tickets/own-reported');
+    if (response.statusCode !== 200) {
+        throw new Error('Could not get user\'s tickets');
+    }
+
+    const tickets = response.json.results
+        .map(result => {
+            const ticket = result.ticket;
+            ticket.faultCategory = result.faultCategory;
+            ticket.location = result.location;
+            ticket.building = result.building;
+            ticket.images = result.images;
+            ticket.updates = result.updates;
+            ticket.account = result.account;
+            return ticket;
+        })
+        .filter(ticket => ticket.account.id === res.locals.account.id);
+
+    res.render('my-tickets', {
+        mainNavActiveTab: 'tickets',
+        tickets,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -493,6 +522,7 @@ module.exports = {
     viewAccountTicketsOptions,
     viewTicket,
     viewReport,
+    viewMyTickets,
     doCheckCode,
     doLogin,
     doRegister,
