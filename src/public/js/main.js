@@ -47,7 +47,7 @@ $(document).ready(function() {
             return;
         }
 
-        console.debug('Checking code', code);
+        Logger.debug('Checking code', code);
 
         showLoadingAnimation();
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
             .catch(error => {
                 showAlert('Nope!', `The code you entered (${code}) is not valid`);
                 hideLoadingAnimation();
-                console.error('Error checking code', error);
+                Logger.error('Error checking code', error);
             });
     });
 
@@ -171,7 +171,7 @@ $(document).ready(function() {
                 }
                 showAlert('Registration failed', message);
                 hideLoadingAnimation();
-                console.error('Error registering', {response: error.responseJSON, email, name});
+                Logger.error('Error registering', {response: error.responseJSON, email, name});
             },
         });
     });
@@ -271,13 +271,13 @@ $(document).ready(function() {
                 hideLoadingAnimation();
             },
             error(response) {
-                console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isNewPasswordTooShort) {
                     showAlert('Uh-oh!', 'Your new password is too short. Please enter a password at least 6 characters long.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
                 hideLoadingAnimation();
+                Logger.error('Error changing password', response.responseJSON);
             },
         });
     });
@@ -309,13 +309,13 @@ $(document).ready(function() {
                 hideLoadingAnimation();
             },
             error(response) {
-                console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isInvalidEmail) {
                     showAlert('Uh-oh!', 'The email given doesn\'t exist.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
                 hideLoadingAnimation();
+                Logger.error('Error requesting password reset', response.responseJSON);
             },
         });
     });
@@ -347,13 +347,13 @@ $(document).ready(function() {
                 window.location = '/';
             },
             error(response) {
-                console.log('response', response.responseJSON);
                 if (response.responseJSON && response.responseJSON.isNewPasswordTooShort) {
                     showAlert('Uh-oh!', 'Your new password is too short. Please enter a password at least 6 characters long.');
                 } else {
                     showAlert('Uh-oh!', 'An error occurred. Please check the details you provided and try again.');
                 }
                 hideLoadingAnimation();
+                Logger.error('Error reseting password', response.responseJSON);
             },
         });
     });
@@ -433,7 +433,7 @@ $(document).ready(function() {
         } else {
             const confirmToContinue = window.confirm('Are you sure you want to continue without adding a photo?');
             if (!confirmToContinue) {
-                console.log('User chose to not continue without adding an image');
+                Logger.debug('User chose to not continue without adding an image');
                 return;
             }
         }
@@ -469,7 +469,7 @@ $(document).ready(function() {
                     }
                     successModal.modal();
 
-                    console.log('Created ticket', response.ticket.id);
+                    Logger.info('Created ticket', response.ticket.id);
 
                     const goToTicket = () => window.location = '/tickets/' + response.ticket.friendlyId;
 
@@ -485,7 +485,7 @@ $(document).ready(function() {
                     }
                     showAlert('Problem Reporting Fault', errorMessage);
                     hideLoadingAnimation();
-                    console.error('Error reporting fault', error);
+                    Logger.error('Error reporting fault', error);
                 }
             );
         }
@@ -493,12 +493,12 @@ $(document).ready(function() {
         showLoadingAnimation();
 
         if (imageFile) {
-            console.log('User has chosen a fault image to upload');
+            Logger.debug('User has chosen a fault image to upload');
             doApiFileUpload(
                 imageFile,
                 response => {
                     imageId = response.image.id;
-                    console.log('Uploaded fault image', {imageId});
+                    Logger.info('Uploaded fault image', {imageId});
                     createTicket();
                 },
                 error => {
@@ -513,7 +513,7 @@ $(document).ready(function() {
                 }
             );
         } else {
-            console.log('No fault image to upload');
+            Logger.debug('No fault image to upload');
             createTicket();
         }
     });

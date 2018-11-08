@@ -47,5 +47,6 @@ module.exports = {
         "doApiPostRequest": 0,
         "doApiFileUpload": 0,
         "doApiRequest": 0,
+        "Logger": 0,
     }
 };
