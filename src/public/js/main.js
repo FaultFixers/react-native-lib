@@ -1,6 +1,27 @@
-function showAlert(title, message) {
-    // @todo - replace with a nicer design.
-    window.alert(`${title}\n\n${message}`);
+function showAlert(title, message, onClose) {
+    if (!title) {
+        throw new Error('No title given for alert');
+    }
+    if (!message) {
+        throw new Error('No message given for alert');
+    }
+
+    const modal = $('#alert-modal');
+    modal.find('h1').text(title);
+    modal.find('p').text(message);
+    modal.find('button').click(() => {
+        $.modal.close();
+    });
+    modal.modal();
+
+    modal.unbind($.modal.CLOSE);
+
+    if (onClose) {
+        modal.on($.modal.CLOSE, function() {
+            onClose();
+            modal.unbind($.modal.CLOSE);
+        });
+    }
 }
 
 function setLoadingAnimationDisplay(value) {
@@ -324,8 +345,9 @@ $(document).ready(function() {
             data: JSON.stringify({email}),
             contentType: 'application/json',
             success() {
-                showAlert('Check Your Email', 'We have emailed you a link to set a new password.');
-                window.location = '/login?email=' + window.encodeURIComponent(email);
+                showAlert('Check Your Email', 'We have emailed you a link to set a new password.', function() {
+                    window.location = '/login?email=' + window.encodeURIComponent(email);
+                });
                 hideLoadingAnimation();
             },
             error(response) {
