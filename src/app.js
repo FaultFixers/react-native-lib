@@ -57,6 +57,7 @@ app.use('/js/all.js', async (req, res) => {
     sendConcatOfFiles(res, [
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/jquery-modal/jquery.modal.min.js',
+        'src/public/js/http.js',
         'src/public/js/main.js',
     ]);
 });

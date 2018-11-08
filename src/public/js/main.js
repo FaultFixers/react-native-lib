@@ -37,48 +37,6 @@ function hideLoadingAnimation() {
     setLoadingAnimationDisplay('none');
 }
 
-function doApiRequest(method, path, config, success, error) {
-    config.method = method;
-    config.url = window.API_BASE_URL + path;
-    config.success = success;
-    config.error = error;
-    config.headers = {
-        'Accept': 'application/vnd.faultfixers.v5+json',
-    };
-
-    if (window.API_AUTHORIZATION) {
-        config.headers['Authorization'] = window.API_AUTHORIZATION;
-    }
-
-    $.ajax(config);
-}
-
-function doApiFileUpload(file, success, error) {
-    if (!file) {
-        throw new Error('Not given a file');
-    }
-
-    const postData = new FormData();
-    postData.append('file', file);
-
-    const config = {
-        data: postData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        enctype: 'multipart/form-data',
-    };
-    doApiRequest('POST', '/files', config, success, error);
-}
-
-function doApiPostRequest(path, data, success, error) {
-    const config = {
-        data: JSON.stringify(data),
-        contentType: 'application/json; charset=utf-8',
-    };
-    doApiRequest('POST', path, config, success, error);
-}
-
 $(document).ready(function() {
     const enterCodeForm = $('#enter-code-form');
     enterCodeForm.submit(function(event) {

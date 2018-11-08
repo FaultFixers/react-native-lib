@@ -14,7 +14,7 @@ module.exports = {
         "arrow-body-style": 0,
         "object-curly-spacing": [2, "never"],
         "max-len": [
-          "error", {"code": 160},
+            "error", {"code": 160},
         ],
         "global-require": 0,
         "class-methods-use-this": 0,
@@ -42,5 +42,10 @@ module.exports = {
         "no-use-before-define": 0,
         "no-console": 0,
         "no-case-declarations": 0
+    },
+    "globals": {
+        "doApiPostRequest": 0,
+        "doApiFileUpload": 0,
+        "doApiRequest": 0,
     }
 };
