@@ -1,4 +1,5 @@
 const api = require('./services/api');
+const resize = require('./services/resize');
 const config = require('../config/load');
 
 function hasHttpStatus(response, expectedStatus) {
@@ -518,23 +519,16 @@ async function viewMyTickets(req, res) {
 }
 
 async function viewManifest(req, res) {
-    let icons;
+    const icons = [];
     if (res.locals.favicon) {
-        const faviconUrl = res.locals.favicon.compressedUrl;
-        icons = [
-            {
-                src: faviconUrl,
+        const sizes = [16, 32, 192, 512];
+        for (let size of sizes) {
+            icons.push({
+                src: '/favicon.png?width=' + size + '&height=' + size,
                 type: 'image/png',
-                sizes: '192x192',
-            },
-            {
-                src: faviconUrl,
-                type: 'image/png',
-                sizes: '512x512',
-            },
-        ];
-    } else {
-        icons = [];
+                sizes: size + 'x' + size,
+            });
+        }
     }
 
     res.json({
@@ -547,6 +541,21 @@ async function viewManifest(req, res) {
         scope: '/',
         theme_color: res.locals.account.primaryColorHex,
     });
+}
+
+async function viewFavicon(req, res) {
+    if (!res.locals.favicon) {
+        console.warn('No favicon for ' + res.locals.website.name);
+        return res.status(404).send();
+    }
+
+    const width = parseInt(req.query.width);
+    const height = parseInt(req.query.height);
+    const url = res.locals.favicon.compressedUrl;
+
+    res.type(`image/png`);
+    const resized = await resize(url, width, height, 'png');
+    resized.pipe(res);
 }
 
 module.exports = {
@@ -567,6 +576,7 @@ module.exports = {
     viewReport,
     viewMyTickets,
     viewManifest,
+    viewFavicon,
     doCheckCode,
     doLogin,
     doRegister,
