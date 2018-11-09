@@ -10,12 +10,10 @@
 
         <h3><%= location.name %></h3>
 
-        <p>
-            <a href="/report?location=<%= location.id %>" class="button">Report Fault</a>
-        </p>
-
-        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No faults have been reported here yet.'}) %>
+        <a href="/report?location=<%= location.id %>" class="button">Report Fault</a>
     </div>
+
+    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No faults have been reported here yet.'}) %>
 </div>
 
 <%- include('partials/copyright-footer') %>

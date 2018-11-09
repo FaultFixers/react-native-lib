@@ -11,9 +11,9 @@
         <h3><%= location.name %></h3>
 
         <p>This location is not in use at the moment. If you think this is a mistake, please contact your building manager.</p>
-
-        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: false}) %>
     </div>
+
+    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: false}) %>
 </div>
 
 <%- include('partials/copyright-footer') %>

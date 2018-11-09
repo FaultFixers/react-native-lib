@@ -1,9 +1,26 @@
 <% if (tickets.length) { %>
-    <ul>
-        <% tickets.forEach(ticket => { %>
-            <li><a href="/tickets/<%= ticket.friendlyId %>"><%= ticket.friendlyId %></a></li>
-        <% }) %>
-    </ul>
+    <%
+    newAndInProgress = tickets.filter(t => t.status === 'NEW' || t.status === 'IN_PROGRESS');
+    closed = tickets.filter(t => t.status === 'CLOSED');
+    %>
+
+    <div class="ticket-list">
+        <% if (newAndInProgress.length) { %>
+            <em class="title">Tickets Awaiting Resolution</em>
+
+            <% newAndInProgress.forEach(ticket => { %>
+                <%- include('ticket-list-item', {ticket}) %>
+            <% }) %>
+        <% } %>
+
+        <% if (closed.length) { %>
+            <em class="title">Closed Tickets</em>
+
+            <% closed.forEach(ticket => { %>
+                <%- include('ticket-list-item', {ticket}) %>
+            <% }) %>
+        <% } %>
+    </div>
 <% } else if (showNoTicketsMessage) { %>
     <p class="no-tickets-message"><%= showNoTicketsMessage %></p>
 <% } %>

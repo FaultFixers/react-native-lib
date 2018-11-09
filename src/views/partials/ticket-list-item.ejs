@@ -1,0 +1,15 @@
+<a href="/tickets/<%= ticket.id %>" class="ticket-list-item">
+    <div class="left-view">
+        <p class="fault-category"><%= ticket.faultCategory.name %></p>
+
+        <p class="created-at">
+            Reported <%= formatDateTime(ticket.createdAt) %>
+        </p>
+
+        <p class="description"><%= ticket.description %></p>
+    </div>
+
+    <% if (ticket.images.length > 0) { %>
+        <img class="image" src="<%= ticket.images[0].compressedUrl %>" />
+    <% } %>
+</a>

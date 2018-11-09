@@ -6,13 +6,17 @@
     <div class="bordered-box clearfix">
         <img src="<%= squareLogo.compressedUrl %>" class="side-logo" />
 
-        <%-
-        include('partials/ticket-list', {
-            tickets,
-            showNoTicketsMessage: 'No faults have been reported yet for ' + account.name + '.',
-        })
-        %>
+        <h2><%= account.name %></h2>
+
+        <p>Showing all tickets below.</p>
     </div>
+
+    <%-
+    include('partials/ticket-list', {
+        tickets,
+        showNoTicketsMessage: 'No faults have been reported yet for ' + account.name + '.',
+    })
+    %>
 </div>
 
 <%- include('partials/copyright-footer') %>

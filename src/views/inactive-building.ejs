@@ -9,9 +9,9 @@
         <h2><%= building.name %></h2>
 
         <p>This building is not in use at the moment. If you think this is a mistake, please contact your building manager.</p>
-
-        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: false}) %>
     </div>
+
+    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: false}) %>
 </div>
 
 <%- include('partials/copyright-footer') %>

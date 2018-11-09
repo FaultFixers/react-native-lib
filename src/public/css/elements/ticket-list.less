@@ -1,0 +1,50 @@
+.ticket-list {
+    em.title {
+        display: block;
+        font-style: normal;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+}
+
+.ticket-list-item {
+    color: inherit;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 4px solid var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    margin-bottom: 15px;
+    background-color: white;
+
+    .fault-category {
+        margin-bottom: 5px;
+        color: black;
+    }
+
+    .created-at {
+        margin-bottom: 5px;
+    }
+
+    .description {
+        max-height: 3em;
+        overflow: hidden;
+    }
+
+    .left-view {
+        padding: 15px;
+        flex: 1;
+
+        p:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    img {
+        width: 115px;
+        height: 115px;
+    }
+}

@@ -68,7 +68,12 @@ async function viewBuilding(req, res) {
     res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
 
     const building = buildingResponse.json.building;
-    const tickets = buildingResponse.json.tickets.map(row => row.ticket);
+    const tickets = buildingResponse.json.tickets.map(row => {
+        const ticket = row.ticket;
+        ticket.faultCategory = row.faultCategory;
+        ticket.images = row.images;
+        return ticket;
+    });
 
     const view = building.status === 'ACTIVE' ? 'building' : 'inactive-building';
     res.render(view, {

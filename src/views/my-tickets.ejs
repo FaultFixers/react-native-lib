@@ -3,9 +3,7 @@
 <%- include('partials/page-header', {title: 'My Tickets'}) %>
 
 <div class="page-content" id="my-tickets-page">
-    <div class="bordered-box">
-        <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'You haven\'t reported any faults yet.'}) %>
-    </div>
+    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'You haven\'t reported any faults yet.'}) %>
 </div>
 
 <%- include('partials/copyright-footer') %>
