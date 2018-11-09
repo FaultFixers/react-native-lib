@@ -416,6 +416,11 @@ async function viewTicket(req, res) {
         }
     }
 
+    let locationLink;
+    if (building) {
+        locationLink = '/buildings/' + building.id;
+    }
+
     const progressBarPath = PROGRESS_BAR_IMAGES_SOURCES[ticket.status];
 
     res.render('ticket', {
@@ -427,6 +432,7 @@ async function viewTicket(req, res) {
         location,
         updates,
         locationText,
+        locationLink,
         additionalQuestionAnswers: ticketResponse.json.ticket.additionalQuestionAnswers ? ticketResponse.json.ticket.additionalQuestionAnswers : [],
         progressBarPath,
         isStatusEnabled: ticketResponse.json.isStatusEnabled,

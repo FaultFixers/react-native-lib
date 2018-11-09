@@ -5,12 +5,6 @@
         }
     }
 
-    .ticket-update-list {
-        .ticket-update:last-of-type {
-            margin-bottom: 0;
-        }
-    }
-
     .ticket-update {
         display: flex;
         flex-direction: column;
@@ -103,5 +97,23 @@
         p {
             margin-bottom: 0;
         }
+    }
+
+    #add-comment-form-inputs {
+        display: none;
+    }
+
+    label[for='add-comment-text-value'] {
+        font-weight: bold;
+    }
+    #add-comment-text-value {
+        margin-bottom: 1em;
+    }
+
+    #reopen-section,
+    #close-section {
+        text-align: center;
+        margin: 0 auto;
+        cursor: pointer;
     }
 }

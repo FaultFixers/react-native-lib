@@ -2,6 +2,10 @@
 
 <%- include('partials/page-header', {title: 'Ticket'}) %>
 
+<script>
+    window.ticketId = '<%= ticket.id %>';
+</script>
+
 <div class="page-content" id="ticket-page">
     <div class="details-section bordered-box">
         <p>
@@ -13,7 +17,12 @@
         </p>
 
         <p>
-            <b>Location:</b> <%= locationText %>
+            <b>Location:</b>
+            <% if (locationLink) { %>
+                <a href="<%= locationLink %>"><%= locationText %></a>
+            <% } else { %>
+                <%= locationText %>
+            <% } %>
         </p>
 
         <% additionalQuestionAnswers.filter(a => a.hasAnswer).forEach(answer => { %>
@@ -51,8 +60,7 @@
 
             <p>Would you like to receive progress updates through notifications and emails?</p>
 
-            <div class="switch-container">
-                <!-- @todo - handle turning this on/off. -->
+            <div class="switch-container" id="is-subscribed-to-updates">
                 <label class="switch-toggle">
                     <input type="checkbox" <%= isSubscribedToUpdates ? 'checked="checked"' : '' %> />
                     <span class="slider"></span>
@@ -84,65 +92,39 @@
         <% } %>
 
         <% if (isOwnTicket && areCommentsEnabled) { %>
-            <div class="add-comment-form">
-                @todo - comments.
-                {!this.state.isCommentFormOpen &&
-                    <button
-                        class="addCommentButton"
-                        activeOpacity={0.5}
-                        onPress={this.openCommentForm}
-                    >
+            <div id="add-comment-form">
+                <button id="add-comment-button">
+                    <i class="ff-icon ff-comment"></i>
+                    Add Comment
+                </button>
+
+                <form id="add-comment-form-inputs">
+                    <label for="add-comment-text-value">
+                        Comment (private between you and the repairs team):
+                    </label>
+
+                    <textarea
+                        id="add-comment-text-value"
+                        placeholder='Comment here...'
+                        autofocus></textarea>
+
+                    <button id="send-comment-button">
                         <i class="ff-icon ff-comment"></i>
-                        Add Comment
+                        Send Comment
                     </button>
-                }
-
-                {this.state.isCommentFormOpen &&
-                    <div>
-                        <Text class="{fontWeight" 'bold', fontSize: 15}}>
-                            {'Comment (private between you and the repairs team):'}
-                        </Text>
-
-                        <TextInput
-                            placeholder={'Comment here...'}
-                            placeholderTextColor={DEFAULT_INPUT_PLACEHOLDER_FONT_COLOR}
-                            multiline={true}
-                            onChangeText={text => this.setState({newComment: text})}
-                            autoFocus={true}
-                            class="addCommentTextInput"
-                            underlineColorAndroid={'transparent'}
-                            ref={ref => {
-                                // Sometimes ref is null for some reason.
-                                if (ref) {
-                                    this.commentElRef = ref;
-                                }
-                            }}
-                        />
-
-                        <button
-                            class="addCommentButton"
-                            activeOpacity={0.5}
-                            onPress={this.sendComment}
-                        >
-                            <i class="ff-icon ff-comment"></i>
-                            Send Comment
-                        </button>
-                    </div>
-                }
+                </form>
             </div>
         <% } %>
     </div>
 
-    <!-- @todo - allow ticket to be re-opened. -->
     <% if (canBeReopened && isStatusEnabled) { %>
-        <div class="reopen-section">
+        <div id="reopen-section">
             Unsatisfied? Re-Open Ticket
         </div>
     <% } %>
 
-    <!-- @todo - allow ticket to be closed. -->
-    <% if (ticket.status === 'CLOSED' && isOwnTicket && isStatusEnabled) { %>
-        <div class="close-section">
+    <% if (ticket.status !== 'CLOSED' && isOwnTicket && isStatusEnabled) { %>
+        <div id="close-section">
             No Longer Relevant? Close Ticket
         </div>
     <% } %>

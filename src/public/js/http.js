@@ -39,3 +39,11 @@ window.doApiPostRequest = function(path, data, success, error) {
     };
     doApiRequest('POST', path, config, success, error);
 };
+
+window.doApiPutRequest = function(path, data, success, error) {
+    const config = {
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+    };
+    doApiRequest('PUT', path, config, success, error);
+};

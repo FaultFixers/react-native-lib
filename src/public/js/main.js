@@ -517,4 +517,99 @@ $(document).ready(function() {
             createTicket();
         }
     });
+
+    $('#is-subscribed-to-updates input').change(event => {
+        const isSubscribed = event.target.checked;
+        $('#is-subscribed-to-updates .switch-label').text(
+            isSubscribed ? 'Yes' : 'No'
+        );
+
+        doApiPutRequest('/tickets/' + window.ticketId, {isSubscribedToUpdates: isSubscribed});
+    });
+
+    const addCommentButton = $('#add-comment-button');
+    addCommentButton.click(function() {
+        addCommentButton.hide();
+        $('#add-comment-form-inputs').show();
+    });
+
+    $('#send-comment-button').click(function(event) {
+        event.preventDefault();
+
+        const comment = $('#add-comment-text-value').val();
+        if (!comment) {
+            return;
+        }
+
+        showLoadingAnimation();
+
+        doApiPutRequest(
+            '/tickets/' + window.ticketId,
+            {
+                comment: comment,
+                commentVisibility: 'PRIVATE_TO_REPORTER',
+            },
+            function() {
+                Logger.info('Added comment', {ticketId: window.ticketId, comment});
+                window.location.reload();
+            },
+            function(error) {
+                showAlert('Error!', 'Sorry, something went wrong. Please try again.');
+                hideLoadingAnimation();
+                Logger.error('Error adding comment', {ticketId: window.ticketId, comment, error});
+            }
+        );
+    });
+
+    $('#close-section').click(function() {
+        const confirmed = window.confirm('Are you sure you want to close this ticket?');
+        if (!confirmed) {
+            return;
+        }
+
+        showLoadingAnimation();
+
+        doApiPutRequest(
+            '/tickets/' + window.ticketId,
+            {status: 'CLOSED'},
+            function() {
+                Logger.info('Closed ticket', {ticketId: window.ticketId});
+                window.location.reload();
+            },
+            function(error) {
+                showAlert('Problem Closing Ticket', 'Sorry, something went wrong when closing the ticket. Please try again.');
+                hideLoadingAnimation();
+                Logger.error('Error closing ticket', {ticketId: window.ticketId, error});
+            }
+        );
+    });
+
+    $('#reopen-section').click(function() {
+        const reopenComment = window.prompt('We\'re sorry that the repair isn\'t satisfactory. Please describe what is wrong so we can re-open the ticket.');
+        if (!reopenComment) {
+            return;
+        }
+
+        showLoadingAnimation();
+
+        const changes = {
+            status: 'IN_PROGRESS',
+            comment: reopenComment,
+            commentVisibility: 'PRIVATE_TO_REPORTER',
+        };
+
+        doApiPutRequest(
+            '/tickets/' + window.ticketId,
+            changes,
+            function() {
+                Logger.info('Re-opened ticket', {ticketId: window.ticketId, comment: reopenComment});
+                window.location.reload();
+            },
+            function(error) {
+                showAlert('Problem Closing Ticket', 'Sorry, something went wrong when closing the ticket. Please try again.');
+                hideLoadingAnimation();
+                Logger.error('Error re-opening ticket', {ticketId: window.ticketId, error});
+            }
+        );
+    });
 });

@@ -45,6 +45,7 @@ module.exports = {
     },
     "globals": {
         "doApiPostRequest": 0,
+        "doApiPutRequest": 0,
         "doApiFileUpload": 0,
         "doApiRequest": 0,
         "Logger": 0,
