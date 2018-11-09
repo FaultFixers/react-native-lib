@@ -24,12 +24,13 @@ body {
 
 .page-content,
 .page-header > .container,
-.copyright-footer > .container, {
+.copyright-footer > .container,
+#main-menu > .container {
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .page-header {
@@ -47,6 +48,10 @@ body {
 
         h1 {
             margin-bottom: 0;
+        }
+
+        a {
+            margin-left: 10px;
         }
     }
 }
@@ -134,7 +139,7 @@ i, em {
     margin-bottom: 0 !important;
 }
 
-@media only screen and (max-height: 500px) {
+@media only screen and (max-width: 600px) {
     .page-header {
         display: flex;
         position: fixed;
@@ -149,7 +154,7 @@ i, em {
             justify-content: center;
         }
         h1 {
-            font-size: 20px;
+            font-size: 18px;
             text-align: center;
         }
     }
@@ -162,14 +167,24 @@ i, em {
         max-height: 55px;
     }
     .page-content {
-        padding: 75px 20px;
+        padding-top: 75px;
+        padding-bottom: 45px;
     }
     .copyright-footer {
         display: none;
     }
+    a.button.login {
+        padding: 5px 10px;
+    }
 }
 
-@media only screen and (min-height: 501px) {
+@media only screen and (max-width: 400px) {
+    .page-header .container.not-logged-in h1 {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (min-width: 601px) {
     .page-header {
         order: 1;
         h1 {

@@ -119,7 +119,7 @@ async function viewLogin(req, res) {
     const email = req.query.email;
 
     res.render('login', {
-        mainNavActiveTab: 'other',
+        mainNavActiveTab: null,
         email,
         continueTo,
     });
@@ -133,7 +133,7 @@ async function viewRegister(req, res) {
     }
 
     res.render('register', {
-        mainNavActiveTab: 'other',
+        mainNavActiveTab: null,
         continueTo,
     });
 }
@@ -177,7 +177,7 @@ async function viewForgotPassword(req, res) {
     }
 
     res.render('forgot-password', {
-        mainNavActiveTab: 'other',
+        mainNavActiveTab: null,
     });
 }
 
@@ -187,7 +187,7 @@ async function viewResetPassword(req, res) {
     }
 
     res.render('reset-password', {
-        mainNavActiveTab: 'other',
+        mainNavActiveTab: null,
         userId: req.query.userId,
         changePasswordToken: req.query.changePasswordToken,
     });
@@ -518,20 +518,29 @@ async function viewMyTickets(req, res) {
 }
 
 async function viewManifest(req, res) {
-    res.json({
-        name: res.locals.website.name,
-        icons: [
+    let icons;
+    if (res.locals.favicon) {
+        const faviconUrl = res.locals.favicon.compressedUrl;
+        icons = [
             {
-                src: res.locals.website.favicon,
+                src: faviconUrl,
                 type: 'image/png',
                 sizes: '192x192',
             },
             {
-                src: res.locals.website.favicon,
+                src: faviconUrl,
                 type: 'image/png',
                 sizes: '512x512',
             },
-        ],
+        ];
+    } else {
+        icons = [];
+    }
+
+    res.json({
+        name: res.locals.website.name,
+        short_name: res.locals.website.name,
+        icons,
         start_url: '/?source=pwa',
         background_color: res.locals.account.primaryColorHex,
         display: 'standalone',

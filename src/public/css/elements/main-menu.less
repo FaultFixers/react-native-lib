@@ -1,12 +1,19 @@
 #main-menu {
-    max-height: 40px;
-    min-height: 40px;
+    max-height: 50px;
+    min-height: 50px;
     background-color: #dddddd;
     color: var(--reporter-app-bottom-nav-active-color);
     display: flex;
 
     a {
         color: #333333;
+
+        @media screen and (max-width: 600px) {
+            font-size: 15px;
+        }
+        @media screen and (max-width: 400px) {
+            font-size: 14px;
+        }
     }
     li.active a {
         color: var(--reporter-app-bottom-nav-active-color);
