@@ -517,6 +517,29 @@ async function viewMyTickets(req, res) {
     });
 }
 
+async function viewManifest(req, res) {
+    res.json({
+        name: res.locals.website.name,
+        icons: [
+            {
+                src: res.locals.website.favicon,
+                type: 'image/png',
+                sizes: '192x192',
+            },
+            {
+                src: res.locals.website.favicon,
+                type: 'image/png',
+                sizes: '512x512',
+            },
+        ],
+        start_url: '/?source=pwa',
+        background_color: res.locals.account.primaryColorHex,
+        display: 'standalone',
+        scope: '/',
+        theme_color: res.locals.account.primaryColorHex,
+    });
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -534,6 +557,7 @@ module.exports = {
     viewTicket,
     viewReport,
     viewMyTickets,
+    viewManifest,
     doCheckCode,
     doLogin,
     doRegister,
