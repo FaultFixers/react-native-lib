@@ -5,6 +5,8 @@ function sendClientLogToApi(level, details) {
         level: level.toUpperCase(),
         details,
     }]);
+
+    console[level](...details);
 }
 
 window.Logger = {
