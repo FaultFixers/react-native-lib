@@ -90,6 +90,7 @@ app.use('/js/all.js', async (req, res) => {
             content = content.replace('module.exports = ObjectID;', 'window.ObjectID = ObjectID;');
             return content;
         },
+        'src/public/js/device-session-id.js',
         'src/public/js/http.js',
         'src/public/js/Logger.js',
         'src/public/js/main.js',
