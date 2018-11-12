@@ -66,7 +66,13 @@ const readFile = promisify(fs.readFile);
 
 async function sendConcatOfFiles(res, files) {
     let readPromises = files.map(async (file) => {
-        return await readFile('./' + file, 'utf8');
+        if (typeof file === 'string') {
+            return await readFile('./' + file, 'utf8');
+        } else if (typeof file === 'function') {
+            return file();
+        } else {
+            throw new Error('Unexpected type: ' + file);
+        }
     });
     readPromises = (await Promise.all(readPromises));
     const concat = readPromises.join('\n');
@@ -79,6 +85,11 @@ app.use('/js/all.js', async (req, res) => {
     sendConcatOfFiles(res, [
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/jquery-modal/jquery.modal.min.js',
+        async function() {
+            let content = await readFile('node_modules/bson-objectid/objectid.js', 'utf8');
+            content = content.replace('module.exports = ObjectID;', 'window.ObjectID = ObjectID;');
+            return content;
+        },
         'src/public/js/http.js',
         'src/public/js/Logger.js',
         'src/public/js/main.js',
