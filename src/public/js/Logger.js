@@ -1,5 +1,5 @@
 function sendClientLogToApi(level, details) {
-    doApiPostRequest('/client-logs', [{
+    const log = {
         source: 'REPORTER_WEB',
         date: (new Date()).toISOString().replace(/\.\d+/, ''),
         level: level.toUpperCase(),
@@ -9,7 +9,13 @@ function sendClientLogToApi(level, details) {
             sessionId: window.sessionId,
             deviceId: window.deviceId,
         },
-    }]);
+    };
+
+    if (window.userId) {
+        log.user = window.userId;
+    }
+
+    doApiPostRequest('/client-logs', [log]);
 
     console[level](...details);
 }

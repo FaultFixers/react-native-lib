@@ -12,21 +12,5 @@
             <p></p>
             <button>OK</button>
         </div>
-
-        <% if (config.enablePushNotifications) { %>
-            <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-app.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-messaging.js"></script>
-            <script>
-                var config = {
-                    apiKey: 'AIzaSyDFhldbhCptUVdW4WKwyTnCVrzNI2z6ZJk',
-                    authDomain: 'faultfixers-949cd.firebaseapp.com',
-                    databaseURL: 'https://faultfixers-949cd.firebaseio.com',
-                    projectId: 'faultfixers-949cd',
-                    storageBucket: 'faultfixers-949cd.appspot.com',
-                    messagingSenderId: '834435990355',
-                };
-                firebase.initializeApp(config);
-            </script>
-        <% } %>
     </body>
 </html>
