@@ -21,7 +21,7 @@ function addRoute(method, path, handler) {
 addRoute('GET', '/', controllers.viewIndex);
 addRoute('GET', '/buildings/:buildingId', controllers.viewBuilding);
 addRoute('GET', '/locations/:locationId', controllers.viewLocation);
-addRoute('GET', '/login', controllers.viewLogin);
+addRoute('GET', '/log-in', controllers.viewLogIn);
 addRoute('GET', '/register', controllers.viewRegister);
 addRoute('GET', '/my-account', controllers.viewMyAccount);
 addRoute('GET', '/other', controllers.viewOther);
@@ -37,7 +37,7 @@ addRoute('GET', '/my-tickets', controllers.viewMyTickets);
 addRoute('GET', '/manifest.json', controllers.viewManifest);
 addRoute('GET', '/favicon.png', controllers.viewFavicon);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
-addRoute('POST', '/api/login', controllers.doLogin);
+addRoute('POST', '/api/log-in', controllers.doLogIn);
 addRoute('POST', '/api/register', controllers.doRegister);
 addRoute('POST', '/api/personal-details', controllers.doUpdatePersonalDetails);
 addRoute('POST', '/api/change-password', controllers.doChangePassword);

@@ -81,28 +81,28 @@ $(document).ready(function() {
             });
     });
 
-    const loginForm = $('#login-form');
-    loginForm.submit(function(event) {
+    const logInForm = $('#log-in-form');
+    logInForm.submit(function(event) {
         event.preventDefault();
 
-        const email = loginForm.find('input[name="email"]').val();
+        const email = logInForm.find('input[name="email"]').val();
         if (!email) {
             showAlert('Not yet!', 'Please enter your email address.');
             return;
         }
 
-        const password = loginForm.find('input[name="password"]').val();
+        const password = logInForm.find('input[name="password"]').val();
         if (!password) {
             showAlert('Not yet!', 'Please enter your password.');
             return;
         }
 
-        const continueTo = loginForm.find('input[name="continueTo"]').val();
+        const continueTo = logInForm.find('input[name="continueTo"]').val();
 
         showLoadingAnimation();
 
         $.ajax({
-            url: '/api/login',
+            url: '/api/log-in',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify({email, password}),
@@ -116,7 +116,7 @@ $(document).ready(function() {
             },
             error() {
                 showAlert(
-                    'Login failed',
+                    'Log in failed',
                     'The email and password you gave don\'t match an account on our system. Please double check your email and password and try again.'
                 );
                 hideLoadingAnimation();
@@ -165,7 +165,7 @@ $(document).ready(function() {
             error(error) {
                 let message;
                 if (error.responseJSON && error.responseJSON.isUserAlreadyExistsError) {
-                    message = 'The email you entered is already registered to an account on our system. Please login instead.';
+                    message = 'The email you entered is already registered to an account on our system. Please log in instead.';
                 } else {
                     message = 'Please double check the details you entered and try again.';
                 }
@@ -304,7 +304,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success() {
                 showAlert('Check Your Email', 'We have emailed you a link to set a new password.', function() {
-                    window.location = '/login?email=' + window.encodeURIComponent(email);
+                    window.location = '/log-in?email=' + window.encodeURIComponent(email);
                 });
                 hideLoadingAnimation();
             },

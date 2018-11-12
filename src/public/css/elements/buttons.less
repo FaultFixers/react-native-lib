@@ -9,8 +9,12 @@ input[type="submit"] {
     color: @textOverHighlightColor;
     text-decoration: none;
     font-weight: bold;
-    box-shadow: 0 0px 1px @textOverHighlightColor;
     outline: none;
+
+    // Remove default button styling on iOS Safari.
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
     &:hover {
         position: relative;

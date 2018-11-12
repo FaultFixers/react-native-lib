@@ -60,7 +60,7 @@ async function viewBuilding(req, res) {
 
     const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
     if (!canBrowse) {
-        return res.redirect('/login?continueTo=/buildings/' + buildingId);
+        return res.redirect('/log-in?continueTo=/buildings/' + buildingId);
     }
 
     const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
@@ -89,7 +89,7 @@ async function viewLocation(req, res) {
 
     const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
     if (!canBrowse) {
-        return res.redirect('/login?continueTo=/locations/' + locationId);
+        return res.redirect('/log-in?continueTo=/locations/' + locationId);
     }
 
     const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
@@ -110,7 +110,7 @@ async function viewLocation(req, res) {
     });
 }
 
-async function viewLogin(req, res) {
+async function viewLogIn(req, res) {
     const continueTo = req.query.continueTo;
 
     if (res.locals.isLoggedIn) {
@@ -119,7 +119,7 @@ async function viewLogin(req, res) {
 
     const email = req.query.email;
 
-    res.render('login', {
+    res.render('log-in', {
         mainNavActiveTab: null,
         email,
         continueTo,
@@ -141,7 +141,7 @@ async function viewRegister(req, res) {
 
 async function viewMyAccount(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continueTo=/my-account');
+        return res.redirect('/log-in?continueTo=/my-account');
     }
 
     res.render('my-account', {
@@ -163,7 +163,7 @@ async function viewPrivacy(req, res) {
 
 async function viewDebugInfo(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continueTo=/debug-info');
+        return res.redirect('/log-in?continueTo=/debug-info');
     }
 
     res.render('debug-info', {
@@ -213,7 +213,7 @@ async function doCheckCode(req, res) {
     });
 }
 
-async function doLogin(req, res) {
+async function doLogIn(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
@@ -223,12 +223,12 @@ async function doLogin(req, res) {
     }
 
     try {
-        const loginResponse = await api.asIntegration().post('/authentication/login', {email, password});
+        const logInResponse = await api.asIntegration().post('/authentication/login', {email, password});
         console.log('Logged in', {email});
-        setAuthTokenCookie(res, loginResponse.json.authenticationToken);
-        res.json({user: loginResponse.json.user});
+        setAuthTokenCookie(res, logInResponse.json.authenticationToken);
+        res.json({user: logInResponse.json.user});
     } catch (error) {
-        console.log('Failed to login', {error, email});
+        console.log('Failed to log in', {error, email});
         res.status(401).json({});
     }
 }
@@ -355,7 +355,7 @@ async function viewBuildingOptions(req, res) {
 async function viewAccountTicketsOptions(req, res) {
     const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
     if (!canBrowse) {
-        return res.redirect('/login?continueTo=/account-tickets');
+        return res.redirect('/log-in?continueTo=/account-tickets');
     }
 
     const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
@@ -390,7 +390,7 @@ async function viewTicket(req, res) {
     const id = req.params.ticketId;
     const canBrowse = res.locals.isLoggedIn || !res.locals.website.isAuthenticationRequiredToBrowse;
     if (!canBrowse) {
-        return res.redirect('/login?continueTo=/tickets/' + id);
+        return res.redirect('/log-in?continueTo=/tickets/' + id);
     }
 
     const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
@@ -446,7 +446,7 @@ async function viewTicket(req, res) {
 
 async function viewReport(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continueTo=' + req.url);
+        return res.redirect('/log-in?continueTo=' + req.url);
     }
 
     let optionsUrl = '/new-ticket-options?',
@@ -508,7 +508,7 @@ async function viewReport(req, res) {
 
 async function viewMyTickets(req, res) {
     if (!res.locals.isLoggedIn) {
-        return res.redirect('/login?continueTo=' + req.url);
+        return res.redirect('/log-in?continueTo=' + req.url);
     }
 
     const response = await api.asUser(req).get('/tickets/own-reported');
@@ -579,7 +579,7 @@ module.exports = {
     viewIndex,
     viewBuilding,
     viewLocation,
-    viewLogin,
+    viewLogIn,
     viewRegister,
     viewMyAccount,
     viewOther,
@@ -595,7 +595,7 @@ module.exports = {
     viewManifest,
     viewFavicon,
     doCheckCode,
-    doLogin,
+    doLogIn,
     doRegister,
     doUpdatePersonalDetails,
     doChangePassword,

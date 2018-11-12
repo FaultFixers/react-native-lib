@@ -30,6 +30,8 @@
             <% } else if (website.homeConfiguration === 'REPORT_AGAINST_ACCOUNT') { %>
                 <a href="/report?againstAccount=1" class="button">Report Fault</a>
             <% } %>
+        <% } else if (!isLoggedIn) { %>
+            <a href="/log-in" class="button">Log In</a>
         <% } %>
     </div>
 </div>
