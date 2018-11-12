@@ -31,9 +31,31 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(lessMiddleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(loadWebsiteByDomain);
+app.use(lessMiddleware(
+    path.join(__dirname, 'public'),
+    {
+        force: true,
+        preprocess: {
+            less: function(less, req) {
+                if (!req.locals || !req.locals.account) {
+                    throw new Error('Account not in request');
+                }
+
+                const account = req.locals.account;
+                const colors = `
+                    @primaryColor: ${account.primaryColorHex};
+                    @textOverPrimaryColor: ${account.textOverPrimaryColorHex};
+                    @highlightColor: ${account.highlightColorHex};
+                    @textOverHighlightColor: ${account.textOverHighlightColorHex};
+                    @reporterAppBottomNavActiveColor: ${account.reporterAppBottomNavActiveColorHex};
+                `;
+                return colors + '\n' + less;
+            },
+        },
+    }
+));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(loadUserByCookie);
 app.use((req, res, next) => {
     res.locals.cookies = req.cookies;

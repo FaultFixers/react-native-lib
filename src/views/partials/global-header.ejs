@@ -16,15 +16,6 @@
         <meta name="application-name" content="<%= website.name %>" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
         <link rel="manifest" href="/manifest.json" />
-        <style>
-            :root {
-                --primary-color: <%= account.primaryColorHex %>;
-                --text-over-primary-color: <%= account.textOverPrimaryColorHex %>;
-                --highlight-color: <%= account.highlightColorHex %>;
-                --text-over-highlight-color: <%= account.textOverHighlightColorHex %>;
-                --reporter-app-bottom-nav-active-color: <%= account.reporterAppBottomNavActiveColorHex %>;
-            }
-        </style>
         <script>
             window.API_BASE_URL = 'https://<%= config.apiHostname %>';
             window.API_AUTHORIZATION = <%- cookies.authToken ? '"User ' + cookies.authToken + '"' : 'null' %>;

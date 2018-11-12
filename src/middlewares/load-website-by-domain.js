@@ -43,6 +43,11 @@ async function loadWebsiteByDomain(req, res, next) {
         return next(e);
     }
 
+    if (!req.locals) {
+        req.locals = {};
+    }
+    req.locals.account = response.account;
+
     res.locals.website = response.reportingWebsite;
     res.locals.account = response.account;
     res.locals.favicon = response.favicon;
