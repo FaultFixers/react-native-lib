@@ -477,6 +477,13 @@ async function viewReport(req, res) {
         throw new Error('Could not get new ticket options from ' + optionsUrl);
     }
 
+    const locationDescriptionLabel = response.json.locationDescriptionLabel
+        ? response.json.locationDescriptionLabel
+        : 'Where Is The Fault?';
+    const locationDescriptionPlaceholder = response.json.locationDescriptionPlaceholder
+        ? response.json.locationDescriptionPlaceholder
+        : 'For example \'Flat 34\' or \'Stairwell B\'...';
+
     res.render('report', {
         mainNavActiveTab: 'report',
         building,
@@ -486,6 +493,9 @@ async function viewReport(req, res) {
         faultCategoryOptions: response.json.faultCategoryOptions,
         additionalQuestions: response.json.additionalQuestions,
         promptForTicketPrivacy: !!response.json.promptForTicketPrivacy,
+        promptForLocationDescription: !!response.json.promptForLocationDescription,
+        locationDescriptionLabel,
+        locationDescriptionPlaceholder,
     });
 }
 

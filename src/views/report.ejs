@@ -32,11 +32,11 @@
             </div>
         <% } %>
 
-        <% if (!location) { %>
+        <% if (promptForLocationDescription) { %>
             <div class="fieldset bordered-box">
-                <h3>Where Is The Fault?</h3>
+                <h3><%= locationDescriptionLabel %></h3>
 
-                <textarea name="locationDescription" placeholder="For example 'Flat 34' or 'Stairwell B'..."></textarea>
+                <textarea name="locationDescription" placeholder="<%= locationDescriptionPlaceholder %>"></textarea>
             </div>
         <% } %>
 
