@@ -37,6 +37,34 @@ function hideLoadingAnimation() {
     setLoadingAnimationDisplay('none');
 }
 
+function getUserLocation() {
+    if (!navigator.geolocation) {
+        return;
+    }
+    if (!navigator.geolocation.getCurrentPosition) {
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function(location) {
+            const toLog = {
+                latitude: Number(location.coords.latitude),
+                longitude: Number(location.coords.longitude),
+            };
+            if (location.coords.altitude) {
+                toLog.altitude = Number(location.coords.altitude);
+            }
+            if (location.coords.accuracy) {
+                toLog.accuracy = Number(location.coords.accuracy);
+            }
+            Logger.info('Got user\'s location', toLog);
+        },
+        function(error) {
+            Logger.error('Error getting user location', error);
+        }
+    );
+}
+
 $(document).ready(function() {
     const enterCodeForm = $('#enter-code-form');
     enterCodeForm.submit(function(event) {
@@ -525,6 +553,8 @@ $(document).ready(function() {
         );
 
         doApiPutRequest('/tickets/' + window.ticketId, {isSubscribedToUpdates: isSubscribed});
+
+        getUserLocation();
     });
 
     const addCommentButton = $('#add-comment-button');
@@ -559,6 +589,8 @@ $(document).ready(function() {
                 Logger.error('Error adding comment', {ticketId: window.ticketId, comment, error});
             }
         );
+
+        getUserLocation();
     });
 
     $('#close-section').click(function() {
@@ -582,6 +614,8 @@ $(document).ready(function() {
                 Logger.error('Error closing ticket', {ticketId: window.ticketId, error});
             }
         );
+
+        getUserLocation();
     });
 
     $('#reopen-section').click(function() {
@@ -611,5 +645,7 @@ $(document).ready(function() {
                 Logger.error('Error re-opening ticket', {ticketId: window.ticketId, error});
             }
         );
+
+        getUserLocation();
     });
 });
