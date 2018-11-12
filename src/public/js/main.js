@@ -65,6 +65,54 @@ function getUserLocation() {
     );
 }
 
+function getFcmTokenAndPushToServer() {
+    if (!window.ENABLE_PUSH_NOTIFICATIONS) {
+        Logger.trace('Push notifications not enabled so not attempting to get FCM token');
+        return;
+    }
+    if (!window.firebase) {
+        Logger.error('Firebase not available');
+        return;
+    }
+
+    const messaging = window.firebase.messaging();
+    messaging.getToken()
+        .then(function(token) {
+            if (token) {
+                Logger.info('Push notifications: got FCM token', token);
+            } else {
+                Logger.warn('No FCM token retrieved');
+            }
+        })
+        .catch(function(error) {
+            Logger.error('Error getting FCM token', error);
+        });
+}
+
+function attemptToEnablePushNotifications() {
+    if (!window.ENABLE_PUSH_NOTIFICATIONS) {
+        Logger.trace('Push notifications not enabled so not attempting to enable push notifications');
+        return;
+    }
+    if (!window.firebase) {
+        Logger.error('Firebase not available');
+        return;
+    }
+
+    const messaging = window.firebase.messaging();
+    messaging.usePublicVapidKey(window.FCM_KEY);
+    messaging.requestPermission()
+        .then(function() {
+            Logger.info('Permission granted for push notifications');
+            getFcmTokenAndPushToServer();
+        })
+        .catch(function(error) {
+            Logger.warn('Unable to get permission for push notifications', error);
+        });
+    messaging.onTokenRefresh(getFcmTokenAndPushToServer);
+    getFcmTokenAndPushToServer();
+}
+
 $(document).ready(function() {
     const enterCodeForm = $('#enter-code-form');
     enterCodeForm.submit(function(event) {
@@ -554,6 +602,9 @@ $(document).ready(function() {
 
         doApiPutRequest('/tickets/' + window.ticketId, {isSubscribedToUpdates: isSubscribed});
 
+        if (isSubscribed) {
+            attemptToEnablePushNotifications();
+        }
         getUserLocation();
     });
 
@@ -590,6 +641,7 @@ $(document).ready(function() {
             }
         );
 
+        attemptToEnablePushNotifications();
         getUserLocation();
     });
 
@@ -615,6 +667,7 @@ $(document).ready(function() {
             }
         );
 
+        attemptToEnablePushNotifications();
         getUserLocation();
     });
 
@@ -646,6 +699,7 @@ $(document).ready(function() {
             }
         );
 
+        attemptToEnablePushNotifications();
         getUserLocation();
     });
 });

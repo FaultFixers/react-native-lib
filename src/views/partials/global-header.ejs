@@ -19,6 +19,8 @@
         <script>
             window.API_BASE_URL = 'https://<%= config.apiHostname %>';
             window.API_AUTHORIZATION = <%- cookies.authToken ? '"User ' + cookies.authToken + '"' : 'null' %>;
+            window.ENABLE_PUSH_NOTIFICATIONS = <%- config.enablePushNotifications ? 'true' : 'false' %>;
+            window.FCM_KEY = <%- config.fcmKey ? '"' + config.fcmKey + '"' : 'null' %>;
         </script>
         <script src="/js/all.js"></script>
     </head>

@@ -557,6 +557,7 @@ async function viewManifest(req, res) {
         display: 'standalone',
         scope: '/',
         theme_color: res.locals.account.primaryColorHex,
+        gcm_sender_id: '103953800507',
     });
 }
 
