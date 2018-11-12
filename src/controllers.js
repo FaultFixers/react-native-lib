@@ -451,7 +451,8 @@ async function viewReport(req, res) {
 
     let optionsUrl = '/new-ticket-options?',
         building,
-        location;
+        location,
+        againstAccount;
     if (req.query.building) {
         optionsUrl += '&building=' + req.query.building;
         const buildingResponse = await api.asIntegration().get('/buildings/' + req.query.building);
@@ -460,6 +461,7 @@ async function viewReport(req, res) {
         }
         res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
         building = buildingResponse.json.building;
+        againstAccount = false;
     } else if (req.query.location) {
         optionsUrl += '&location=' + req.query.location;
         const locationResponse = await api.asIntegration().get('/locations/' + req.query.location);
@@ -468,6 +470,10 @@ async function viewReport(req, res) {
         }
         res.locals.ensureIsCorrectAccount(locationResponse.json.account);
         location = locationResponse.json.location;
+        againstAccount = false;
+    } else if (req.query.againstAccount === '1') {
+        optionsUrl += '&account=' + res.locals.account.id;
+        againstAccount = true;
     } else {
         throw new Error('No building or location ID given');
     }
@@ -488,6 +494,7 @@ async function viewReport(req, res) {
         mainNavActiveTab: 'report',
         building,
         location,
+        againstAccount,
         buildingOptions: response.json.buildingOptions,
         locationOptions: response.json.locationOptions,
         faultCategoryOptions: response.json.faultCategoryOptions,

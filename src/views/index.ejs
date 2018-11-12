@@ -27,6 +27,8 @@
                 <h2>Enter Code</h2>
 
                 <%- include('partials/enter-code') %>
+            <% } else if (website.homeConfiguration === 'REPORT_AGAINST_ACCOUNT') { %>
+                <a href="/report?againstAccount=1" class="button">Report Fault</a>
             <% } %>
         <% } %>
     </div>
