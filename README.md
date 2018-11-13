@@ -34,3 +34,7 @@ The CNAME IPs are (as of 12 November 2018):
 reporter-websites.faultfixers.com: 35.177.198.241
 staging-reporter-websites.faultfixers.com: 35.178.27.94
 dev-reporter-websites.faultfixers.com: 52.56.175.217
+
+## Deployment
+
+To update: `git fetch origin && git reset origin/master --hard && yarn && killall node`
