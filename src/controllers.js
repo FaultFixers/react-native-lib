@@ -332,7 +332,7 @@ function setAuthTokenCookie(res, token) {
 
 async function doLogOut(req, res) {
     res.clearCookie('authToken');
-    res.redirect(301, '/');
+    res.redirect(302, '/');
 }
 
 async function viewBuildingOptions(req, res) {

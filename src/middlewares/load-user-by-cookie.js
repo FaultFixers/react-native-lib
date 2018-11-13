@@ -23,7 +23,7 @@ async function loadUserByCookie(req, res, next) {
         if (e.headers && e.headers['x-ff-logout'] === 'true') {
             console.warn('Forcing log out as instructed by the core API');
             res.clearCookie('authToken');
-            res.redirect(301, '/');
+            res.redirect(302, '/');
         } else {
             next(e);
         }
