@@ -710,3 +710,8 @@ function registerServiceWorker() {
 }
 
 registerServiceWorker();
+
+Logger.info('Page opened', {
+    url: window.location.href,
+    referrer: document.referrer ? document.referrer : null,
+});
