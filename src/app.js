@@ -82,6 +82,7 @@ async function sendConcatOfFiles(res, files) {
 app.use('/', router);
 
 app.use('/js/all.js', async (req, res) => {
+    res.set('Cache-Control', 'public, max-age=86400');
     sendConcatOfFiles(res, [
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/jquery-modal/jquery.modal.min.js',

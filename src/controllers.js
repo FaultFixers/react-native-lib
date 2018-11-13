@@ -6,6 +6,9 @@ const {promisify} = require('util');
 
 const readFile = promisify(fs.readFile);
 
+const ONE_DAY_IN_SECONDS = 86400;
+const ONE_DAY_IN_MS = ONE_DAY_IN_SECONDS * 1000;
+
 function hasHttpStatus(response, expectedStatus) {
     if (response && typeof response.statusCode === 'number') {
         return response.statusCode === expectedStatus;
@@ -330,7 +333,6 @@ function setAuthTokenCookie(res, token) {
         throw new Error('No token given');
     }
 
-    const ONE_DAY_IN_MS = 86400000;
     res.cookie('authToken', token, {maxAge: ONE_DAY_IN_MS * 365});
 }
 
@@ -552,6 +554,7 @@ async function viewManifest(req, res) {
         }
     }
 
+    res.set('Cache-Control', 'public, max-age=' + ONE_DAY_IN_SECONDS);
     res.json({
         name: res.locals.website.name,
         short_name: res.locals.website.name,
