@@ -640,9 +640,6 @@ $(document).ready(function() {
                 Logger.error('Error adding comment', {ticketId: window.ticketId, comment, error});
             }
         );
-
-        attemptToEnablePushNotifications();
-        getUserLocation();
     });
 
     $('#close-section').click(function() {
@@ -666,9 +663,6 @@ $(document).ready(function() {
                 Logger.error('Error closing ticket', {ticketId: window.ticketId, error});
             }
         );
-
-        attemptToEnablePushNotifications();
-        getUserLocation();
     });
 
     $('#reopen-section').click(function() {
@@ -698,8 +692,5 @@ $(document).ready(function() {
                 Logger.error('Error re-opening ticket', {ticketId: window.ticketId, error});
             }
         );
-
-        attemptToEnablePushNotifications();
-        getUserLocation();
     });
 });
