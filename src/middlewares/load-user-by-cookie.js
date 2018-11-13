@@ -18,8 +18,15 @@ async function loadUserByCookie(req, res, next) {
         console.log('Active user is', res.locals.user.email);
         next();
     } catch (e) {
-        console.error('Error getting user by auth token', req.cookies.authToken);
-        next(e);
+        console.error('Error getting user by auth token', req.cookies.authToken, e);
+
+        if (e.headers && e.headers['x-ff-logout'] === 'true') {
+            console.warn('Forcing log out as instructed by the core API');
+            res.clearCookie('authToken');
+            res.redirect(301, '/');
+        } else {
+            next(e);
+        }
     }
 }
 

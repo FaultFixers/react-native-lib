@@ -36,7 +36,10 @@ function doRequest(authorization, method, path, bodyData = null) {
                 let jsonString = '';
                 res.on('data', data => jsonString += data);
                 res.on('end', () => {
-                    let result;
+                    const result = {
+                        statusCode: res.statusCode,
+                        headers: res.headers,
+                    };
                     if (jsonString) {
                         let json;
                         try {
@@ -45,9 +48,7 @@ function doRequest(authorization, method, path, bodyData = null) {
                             console.error('Response body is not valid JSON:', jsonString);
                             throw e;
                         }
-                        result = {statusCode: res.statusCode, json};
-                    } else {
-                        result = {statusCode: res.statusCode};
+                        result.json = json;
                     }
 
                     console.debug('Got status code ' + res.statusCode + ': ' + jsonString.substring(0, 50) + '...');
