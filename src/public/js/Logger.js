@@ -40,4 +40,4 @@ window.Logger = {
     error(...args) {
         sendClientLogToApi('error', args);
     },
-}
+};
