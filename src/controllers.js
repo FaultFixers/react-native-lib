@@ -6,7 +6,8 @@ const {promisify} = require('util');
 
 const readFile = promisify(fs.readFile);
 
-const ONE_DAY_IN_SECONDS = 86400;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
+const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS * 24;
 const ONE_DAY_IN_MS = ONE_DAY_IN_SECONDS * 1000;
 
 function hasHttpStatus(response, expectedStatus) {
@@ -554,7 +555,7 @@ async function viewManifest(req, res) {
         }
     }
 
-    res.set('Cache-Control', 'public, max-age=' + ONE_DAY_IN_SECONDS);
+    res.set('Cache-Control', 'public, max-age=' + ONE_HOUR_IN_SECONDS);
     res.json({
         name: res.locals.website.name,
         short_name: res.locals.website.name,
@@ -578,6 +579,7 @@ async function viewFavicon(req, res) {
     const height = parseInt(req.query.height);
     const url = res.locals.favicon.compressedUrl;
 
+    res.set('Cache-Control', 'public, max-age=' + ONE_DAY_IN_SECONDS);
     res.type(`image/png`);
     const resized = await resize(url, width, height, 'png');
     resized.pipe(res);
@@ -585,6 +587,7 @@ async function viewFavicon(req, res) {
 
 async function viewServiceWorker(req, res) {
     const content = await readFile('src/service-worker.js', 'utf8');
+    res.set('Cache-Control', 'public, max-age=' + ONE_DAY_IN_SECONDS);
     res.type('.js').send(content);
 }
 
