@@ -694,3 +694,19 @@ $(document).ready(function() {
         );
     });
 });
+
+function registerServiceWorker() {
+    if (!navigator.serviceWorker) {
+        return;
+    }
+
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(function(registration){
+            Logger.trace('Registered service worker', registration);
+        })
+        .catch(function(err) {
+            Logger.error('Error registering service worker', err)
+        });
+}
+
+registerServiceWorker();

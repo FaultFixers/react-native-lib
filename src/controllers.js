@@ -1,6 +1,10 @@
 const api = require('./services/api');
 const resize = require('./services/resize');
 const config = require('../config/load');
+const fs = require('fs');
+const {promisify} = require('util');
+
+const readFile = promisify(fs.readFile);
 
 function hasHttpStatus(response, expectedStatus) {
     if (response && typeof response.statusCode === 'number') {
@@ -576,6 +580,11 @@ async function viewFavicon(req, res) {
     resized.pipe(res);
 }
 
+async function viewServiceWorker(req, res) {
+    const content = await readFile('src/service-worker.js', 'utf8');
+    res.type('.js').send(content);
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -595,6 +604,7 @@ module.exports = {
     viewMyTickets,
     viewManifest,
     viewFavicon,
+    viewServiceWorker,
     doCheckCode,
     doLogIn,
     doRegister,
