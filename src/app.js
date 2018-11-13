@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
 const moment = require('moment');
-const fs = require('fs');
-const {promisify} = require('util');
 const router = require('./router');
 const {
     formatLocalDateTime,
@@ -62,41 +60,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const readFile = promisify(fs.readFile);
-
-async function sendConcatOfFiles(res, files) {
-    let readPromises = files.map(async (file) => {
-        if (typeof file === 'string') {
-            return await readFile('./' + file, 'utf8');
-        } else if (typeof file === 'function') {
-            return file();
-        } else {
-            throw new Error('Unexpected type: ' + file);
-        }
-    });
-    readPromises = (await Promise.all(readPromises));
-    const concat = readPromises.join('\n');
-    res.type('.js').send(concat);
-}
-
 app.use('/', router);
-
-app.use('/js/all.js', async (req, res) => {
-    res.set('Cache-Control', 'public, max-age=86400');
-    sendConcatOfFiles(res, [
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/jquery-modal/jquery.modal.min.js',
-        async function() {
-            let content = await readFile('node_modules/bson-objectid/objectid.js', 'utf8');
-            content = content.replace('module.exports = ObjectID;', 'window.ObjectID = ObjectID;');
-            return content;
-        },
-        'src/public/js/device-session-id.js',
-        'src/public/js/http.js',
-        'src/public/js/Logger.js',
-        'src/public/js/main.js',
-    ]);
-});
 
 app.locals.config = config;
 app.locals.paragraphs = paragraphs;

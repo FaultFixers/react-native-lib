@@ -38,6 +38,7 @@ addRoute('GET', '/manifest.json', controllers.viewManifest);
 addRoute('GET', '/favicon.png', controllers.viewFavicon);
 addRoute('GET', '/api/check-code', controllers.doCheckCode);
 addRoute('GET', '/service-worker.js', controllers.viewServiceWorker);
+addRoute('GET', '/js/all.js', controllers.getMainJs);
 addRoute('POST', '/api/log-in', controllers.doLogIn);
 addRoute('POST', '/api/register', controllers.doRegister);
 addRoute('POST', '/api/personal-details', controllers.doUpdatePersonalDetails);

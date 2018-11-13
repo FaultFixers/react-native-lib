@@ -6,6 +6,21 @@ const {promisify} = require('util');
 
 const readFile = promisify(fs.readFile);
 
+async function sendConcatOfFiles(res, files) {
+    let readPromises = files.map(async (file) => {
+        if (typeof file === 'string') {
+            return await readFile('./' + file, 'utf8');
+        } else if (typeof file === 'function') {
+            return file();
+        } else {
+            throw new Error('Unexpected type: ' + file);
+        }
+    });
+    readPromises = (await Promise.all(readPromises));
+    const concat = readPromises.join('\n');
+    res.type('.js').send(concat);
+}
+
 const ONE_HOUR_IN_SECONDS = 60 * 60;
 const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS * 24;
 const ONE_DAY_IN_MS = ONE_DAY_IN_SECONDS * 1000;
@@ -591,6 +606,23 @@ async function viewServiceWorker(req, res) {
     res.type('.js').send(content);
 }
 
+async function getMainJs(req, res) {
+    res.set('Cache-Control', 'public, max-age=86400');
+    sendConcatOfFiles(res, [
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/jquery-modal/jquery.modal.min.js',
+        async function() {
+            let content = await readFile('node_modules/bson-objectid/objectid.js', 'utf8');
+            content = content.replace('module.exports = ObjectID;', 'window.ObjectID = ObjectID;');
+            return content;
+        },
+        'src/public/js/device-session-id.js',
+        'src/public/js/http.js',
+        'src/public/js/Logger.js',
+        'src/public/js/main.js',
+    ]);
+}
+
 module.exports = {
     viewIndex,
     viewBuilding,
@@ -611,6 +643,7 @@ module.exports = {
     viewManifest,
     viewFavicon,
     viewServiceWorker,
+    getMainJs,
     doCheckCode,
     doLogIn,
     doRegister,
