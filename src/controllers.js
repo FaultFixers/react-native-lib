@@ -3,6 +3,7 @@ const resize = require('./services/resize');
 const config = require('../config/load');
 const fs = require('fs');
 const {promisify} = require('util');
+const babel = require('babel-core');
 
 const readFile = promisify(fs.readFile);
 
@@ -606,6 +607,12 @@ async function viewServiceWorker(req, res) {
     res.type('.js').send(content);
 }
 
+function compileJsForBrowser(js) {
+    return babel.transform(js, {
+        presets: ['es2015-ie'],
+    }).code;
+}
+
 async function getMainJs(req, res) {
     const js = await getConcatOfFiles([
         'node_modules/jquery/dist/jquery.min.js',
@@ -620,10 +627,11 @@ async function getMainJs(req, res) {
         'src/public/js/Logger.js',
         'src/public/js/main.js',
     ]);
+    const transformed = compileJsForBrowser(js);
 
     res.set('Cache-Control', 'public, max-age=86400')
         .type('.js')
-        .send(js);
+        .send(transformed);
 }
 
 module.exports = {
