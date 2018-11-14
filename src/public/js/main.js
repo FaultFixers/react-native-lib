@@ -148,6 +148,11 @@ $(document).ready(function() {
                     showAlert('No longer in use', `The code you entered (${code}) is no longer in use.`);
                     hideLoadingAnimation();
                     break;
+                default:
+                    showAlert('Not supported', 'Sorry, the code you entered is not supported.');
+                    hideLoadingAnimation();
+                    Logger.error('Tag type not supported', {tag});
+                    break;
                 }
             })
             .catch(error => {

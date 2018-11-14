@@ -6,7 +6,7 @@ const {promisify} = require('util');
 
 const readFile = promisify(fs.readFile);
 
-async function sendConcatOfFiles(res, files) {
+async function getConcatOfFiles(files) {
     let readPromises = files.map(async (file) => {
         if (typeof file === 'string') {
             return await readFile('./' + file, 'utf8');
@@ -18,7 +18,7 @@ async function sendConcatOfFiles(res, files) {
     });
     readPromises = (await Promise.all(readPromises));
     const concat = readPromises.join('\n');
-    res.type('.js').send(concat);
+    return concat;
 }
 
 const ONE_HOUR_IN_SECONDS = 60 * 60;
@@ -607,8 +607,7 @@ async function viewServiceWorker(req, res) {
 }
 
 async function getMainJs(req, res) {
-    res.set('Cache-Control', 'public, max-age=86400');
-    sendConcatOfFiles(res, [
+    const js = await getConcatOfFiles([
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/jquery-modal/jquery.modal.min.js',
         async function() {
@@ -621,6 +620,10 @@ async function getMainJs(req, res) {
         'src/public/js/Logger.js',
         'src/public/js/main.js',
     ]);
+
+    res.set('Cache-Control', 'public, max-age=86400')
+        .type('.js')
+        .send(js);
 }
 
 module.exports = {

@@ -17,12 +17,16 @@ function sendClientLogToApi(level, details) {
 
     doApiPostRequest('/client-logs', [log]);
 
-    console[level](...details);
+    if (console[level]) { // eslint-disable-line no-console
+        console[level](...details); // eslint-disable-line no-console
+    }
 }
 
 window.Logger = {
-    trace(...args) {
-        console.debug(...args); // eslint-disable-line no-console
+    trace: function(...args) {
+        if (console.debug) { // eslint-disable-line no-console
+            console.debug(...args); // eslint-disable-line no-console
+        }
     },
 
     debug(...args) {
