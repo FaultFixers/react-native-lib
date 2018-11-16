@@ -51,7 +51,14 @@ async function loadWebsiteByDomain(req, res, next) {
     res.locals.website = response.reportingWebsite;
     res.locals.account = response.account;
     res.locals.favicon = response.favicon;
-    res.locals.squareLogo = response.squareLogo;
+
+    if (response.rectangleLogo) {
+        res.locals.logo = response.rectangleLogo;
+    } else if (response.squareLogo) {
+        res.locals.logo = response.squareLogo;
+    } else {
+        res.locals.logo = null;
+    }
 
     res.locals.ensureIsCorrectAccount = function ensureIsCorrectAccount(otherAccount) {
         if (!otherAccount) {
