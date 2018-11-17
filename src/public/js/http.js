@@ -5,8 +5,9 @@ window.doApiRequest = function(method, path, config, success, error) {
     config.error = error;
     config.headers = {
         'Accept': 'application/vnd.faultfixers.v5+json',
+        'X-FF-SessionId': window.sessionId,
+        'X-FF-DeviceId': window.deviceId,
         'X-FF-ApiClient': 'REPORTER_WEB',
-        // @todo - add session/device ID.
     };
 
     if (window.API_AUTHORIZATION) {
