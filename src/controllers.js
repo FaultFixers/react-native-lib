@@ -524,6 +524,7 @@ async function viewReport(req, res) {
         additionalQuestions: response.json.additionalQuestions,
         promptForTicketPrivacy: !!response.json.promptForTicketPrivacy,
         promptForLocationDescription: !!response.json.promptForLocationDescription,
+        promptForReporterPhoneNumber: !!response.json.promptForReporterPhoneNumber,
         locationDescriptionLabel,
         locationDescriptionPlaceholder,
     });
