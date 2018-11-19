@@ -494,6 +494,9 @@ $(document).ready(function() {
             return;
         }
 
+        let phoneNumber = reportForm.find('input[name="phoneNumber"]').val();
+        phoneNumber = phoneNumber ? phoneNumber : null;
+
         const additionalQuestionAnswers = reportForm.find('input[type="hidden"].questionId')
             .toArray()
             .map(questionId => {
@@ -534,6 +537,7 @@ $(document).ready(function() {
                 building: buildingId ? buildingId : null,
                 account: accountId ? accountId : null,
                 faultCategory: faultCategoryId ? faultCategoryId : null,
+                reporterPhoneNumber: phoneNumber,
                 timeToCreateTicketInMs: Date.now() - openedAt,
             };
 

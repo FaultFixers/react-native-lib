@@ -70,6 +70,14 @@
             </div>
         <% }) %>
 
+        <% if (promptForReporterPhoneNumber) { %>
+            <div class="fieldset bordered-box">
+                <h3>Your Phone Number</h3>
+
+                <input name="phoneNumber" type="tel" placeholder="Optional..." />
+            </div>
+        <% } %>
+
         <input type="submit" value="Report It!" />
 
         <input type="hidden" name="accountId" value="<%= account.id %>" />
