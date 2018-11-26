@@ -116,6 +116,9 @@ app.locals.getUpdateTitle = update => {
     if (update.hasPriorityChanged) {
         return 'Priority set';
     }
+    if (update.hasBuildingChanged) {
+        return 'Building set';
+    }
     return null;
 };
 app.locals.getUpdateIcon = update => {
@@ -161,6 +164,9 @@ app.locals.getUpdateIcon = update => {
     }
     if (update.hasPriorityChanged) {
         return 'ff-priority-circled';
+    }
+    if (update.hasBuildingChanged) {
+        return 'ff-building-circled';
     }
 
     return null;

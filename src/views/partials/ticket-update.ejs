@@ -41,6 +41,13 @@
         </p>
     <% } %>
 
+    <% if (update.hasBuildingChanged) { %>
+        <p class="update-content comment-text">
+            Building is:
+            <%= (update.newBuilding ? update.newBuilding.name : 'none') %>
+        </p>
+    <% } %>
+
     <% if (update.hasInternalAction && update.internalActionValue) { %>
         <p class="update-content comment-text"><%= update.internalActionValue %></p>
     <% } %>
