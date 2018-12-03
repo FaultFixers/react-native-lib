@@ -1,3 +1,5 @@
+@backIconWidth: 20px;
+
 * {
     box-sizing: border-box;
 }
@@ -46,6 +48,11 @@ body {
     font-size: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
+
+    i.ff-back {
+        display: none;
+        font-size: 16px;
+    }
 
     .container {
         display: flex;
@@ -159,7 +166,15 @@ i, em {
         max-height: 55px;
         padding-top: 0;
         padding-bottom: 0;
+        align-items: center;
+
+        i.ff-back {
+            display: block;
+            margin-left: 10px;
+        }
         .container {
+            padding-left: 10px;
+            padding-right: @backIconWidth + 20px;
             justify-content: center;
         }
         h1 {
