@@ -547,7 +547,6 @@ async function viewMyTickets(req, res) {
             ticket.location = result.location;
             ticket.building = result.building;
             ticket.images = result.images;
-            ticket.updates = result.updates;
             ticket.account = result.account;
             return ticket;
         })
