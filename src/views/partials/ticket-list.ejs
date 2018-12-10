@@ -1,26 +1,32 @@
 <% if (tickets.length) { %>
-    <%
-    newAndInProgress = tickets.filter(t => t.status === 'NEW' || t.status === 'IN_PROGRESS');
-    closed = tickets.filter(t => t.status === 'CLOSED');
-    %>
+    <% if (account.areTicketStatusesEnabled) { %>
+        <%
+        newAndInProgress = tickets.filter(t => t.status === 'NEW' || t.status === 'IN_PROGRESS');
+        closed = tickets.filter(t => t.status === 'CLOSED');
+        %>
 
-    <div class="ticket-list">
-        <% if (newAndInProgress.length) { %>
-            <em class="title">Tickets Awaiting Resolution</em>
+        <div class="ticket-list">
+            <% if (newAndInProgress.length) { %>
+                <em class="title">Tickets Awaiting Resolution</em>
 
-            <% newAndInProgress.forEach(ticket => { %>
-                <%- include('ticket-list-item', {ticket}) %>
-            <% }) %>
-        <% } %>
+                <% newAndInProgress.forEach(ticket => { %>
+                    <%- include('ticket-list-item', {ticket}) %>
+                <% }) %>
+            <% } %>
 
-        <% if (closed.length) { %>
-            <em class="title">Closed Tickets</em>
+            <% if (closed.length) { %>
+                <em class="title">Closed Tickets</em>
 
-            <% closed.forEach(ticket => { %>
-                <%- include('ticket-list-item', {ticket}) %>
-            <% }) %>
-        <% } %>
-    </div>
+                <% closed.forEach(ticket => { %>
+                    <%- include('ticket-list-item', {ticket}) %>
+                <% }) %>
+            <% } %>
+        </div>
+    <% } else { %>
+        <% tickets.forEach(ticket => { %>
+            <%- include('ticket-list-item', {ticket}) %>
+        <% }) %>
+    <% } %>
 <% } else if (showNoTicketsMessage) { %>
     <p class="no-tickets-message"><%= showNoTicketsMessage %></p>
 <% } %>
