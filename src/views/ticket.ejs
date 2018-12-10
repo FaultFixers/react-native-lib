@@ -83,40 +83,42 @@
         <% } %>
     </div>
 
-    <div class="updates-section bordered-box <%= updates.length > 0 ? 'has-updates' : 'no-updates' %>">
-        <h3>Updates</h3>
+    <% if (updates.length > 0 || (isOwnTicket && areCommentsEnabled)) { %>
+        <div class="updates-section bordered-box <%= updates.length > 0 ? 'has-updates' : 'no-updates' %>">
+            <h3>Updates</h3>
 
-        <% if (updates.length === 0) { %>
-            <p>There aren't any updates yet!</p>
-        <% } else { %>
-            <%- include('partials/ticket-update-list', {updates, isOwnTicket}) %>
-        <% } %>
+            <% if (updates.length === 0) { %>
+                <p>There aren't any updates yet!</p>
+            <% } else { %>
+                <%- include('partials/ticket-update-list', {updates, isOwnTicket}) %>
+            <% } %>
 
-        <% if (isOwnTicket && areCommentsEnabled) { %>
-            <div id="add-comment-form">
-                <button id="add-comment-button">
-                    <i class="ff-icon ff-comment"></i>
-                    Add Comment
-                </button>
-
-                <form id="add-comment-form-inputs">
-                    <label for="add-comment-text-value">
-                        Comment (private between you and the repairs team):
-                    </label>
-
-                    <textarea
-                        id="add-comment-text-value"
-                        placeholder='Comment here...'
-                        autofocus></textarea>
-
-                    <button id="send-comment-button">
+            <% if (isOwnTicket && areCommentsEnabled) { %>
+                <div id="add-comment-form">
+                    <button id="add-comment-button">
                         <i class="ff-icon ff-comment"></i>
-                        Send Comment
+                        Add Comment
                     </button>
-                </form>
-            </div>
-        <% } %>
-    </div>
+
+                    <form id="add-comment-form-inputs">
+                        <label for="add-comment-text-value">
+                            Comment (private between you and the repairs team):
+                        </label>
+
+                        <textarea
+                            id="add-comment-text-value"
+                            placeholder='Comment here...'
+                            autofocus></textarea>
+
+                        <button id="send-comment-button">
+                            <i class="ff-icon ff-comment"></i>
+                            Send Comment
+                        </button>
+                    </form>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
 
     <% if (canBeReopened && isStatusEnabled) { %>
         <div id="reopen-section">
