@@ -3,4 +3,5 @@ module.exports = {
     apiKey: '',
     enablePushNotifications: false,
     fcmKey: null,
+    blockSearchEngines: false,
 };

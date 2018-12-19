@@ -17,6 +17,10 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, viewport-fit=cover" />
         <link rel="manifest" href="/manifest.json" />
 
+        <% if (config.blockSearchEngines) { %>
+            <meta name="robots" content="noindex" />
+        <% } %>
+
         <script>
             window.API_BASE_URL = 'https://<%= config.apiHostname %>';
             window.API_AUTHORIZATION = <%- cookies.authToken ? '"User ' + cookies.authToken + '"' : 'null' %>;
