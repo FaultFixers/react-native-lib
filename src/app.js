@@ -119,6 +119,9 @@ app.locals.getUpdateTitle = update => {
     if (update.hasBuildingChanged) {
         return 'Building set';
     }
+    if (update.hasNewFormInstance) {
+        return 'Form attached';
+    }
     return null;
 };
 app.locals.getUpdateIcon = update => {
@@ -167,6 +170,9 @@ app.locals.getUpdateIcon = update => {
     }
     if (update.hasBuildingChanged) {
         return 'ff-building-circled';
+    }
+    if (update.hasNewFormInstance) {
+        return 'ff-form-circled';
     }
 
     return null;

@@ -48,6 +48,12 @@
         </p>
     <% } %>
 
+    <% if (update.hasNewFormInstance) { %>
+        <p class="update-content comment-text">
+            Form has been named "<%= update.newFormInstance.name %>"
+        </p>
+    <% } %>
+
     <% if (update.hasInternalAction && update.internalActionValue) { %>
         <p class="update-content comment-text"><%= update.internalActionValue %></p>
     <% } %>

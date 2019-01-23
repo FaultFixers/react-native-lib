@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="25px" viewBox="0 0 26 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>form-circled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="form-circled" transform="translate(0.066845, 0.000000)">
+            <circle id="circle" fill="#11BF96" cx="12.5" cy="12.5" r="12.5"></circle>
+            <g id="form" transform="translate(4.976803, 5.555510)" fill="#FFFFFF" fill-rule="nonzero">
+                <path d="M1.125,0 C0.504609375,0 0,0.588710937 0,1.3125 L0,3.0625 C0,3.30421875 0.1678125,3.5 0.375,3.5 L2.25,3.5 L2.25,1.3125 C2.25,0.588710937 1.74539062,0 1.125,0 Z M6,11.2812109 L6,9.625 L12.75,9.625 L12.75,2.625 C12.75,1.17742188 11.7407812,0 10.5,0 L2.61539062,0 C2.85328125,0.366679688 3,0.818125 3,1.3125 L3,11.375 C3,12.4378516 3.81210937,13.2794922 4.75195312,13.1009375 C5.48953125,12.9609375 6,12.1532031 6,11.2812109 Z M6.75,10.5 L6.75,11.375 C6.75,12.8223047 5.74078125,14 4.5,14 L12.375,14 C13.8248437,14 15,12.6289844 15,10.9375 C15,10.6957812 14.8321875,10.5 14.625,10.5 L6.75,10.5 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>
