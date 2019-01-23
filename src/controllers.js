@@ -89,7 +89,7 @@ async function viewBuilding(req, res) {
 
     const apiAuth = res.locals.isLoggedIn ? api.asUser(req) : api.asIntegration();
 
-    const buildingResponse = await apiAuth.get('/buildings/' + buildingId + '?includeTickets=1');
+    const buildingResponse = await apiAuth.get('/buildings/' + buildingId + '?includeTickets=1&includeLocations=1');
     res.locals.ensureIsCorrectAccount(buildingResponse.json.account);
 
     const building = buildingResponse.json.building;
@@ -99,12 +99,19 @@ async function viewBuilding(req, res) {
         ticket.images = row.images;
         return ticket;
     });
+    const locations = buildingResponse.json.locations
+        ? buildingResponse.json.locations
+            .map(row => row.location)
+            .filter(location => location.status === 'ACTIVE')
+            .sort((l1, l2) => l1.name.localeCompare(l2.name))
+        : [];
 
     const view = building.status === 'ACTIVE' ? 'building' : 'inactive-building';
     res.render(view, {
         mainNavActiveTab: 'report',
         building,
         tickets,
+        locations,
     });
 }
 
@@ -123,7 +130,12 @@ async function viewLocation(req, res) {
 
     const location = locationResponse.json.location;
     const building = locationResponse.json.building;
-    const tickets = locationResponse.json.tickets.map(row => row.ticket);
+    const tickets = locationResponse.json.tickets.map(row => {
+        const ticket = row.ticket;
+        ticket.faultCategory = row.faultCategory;
+        ticket.images = row.images;
+        return ticket;
+    });
 
     const view = location.status === 'ACTIVE' ? 'location' : 'inactive-location';
     res.render(view, {

@@ -15,6 +15,18 @@
         <a href="/report?building=<%= building.id %>" class="button">Report Issue</a>
     </div>
 
+    <% if (locations.length > 0) { %>
+        <div class="bordered-box">
+            <h2>Sub-Locations</h2>
+
+            <ul>
+                <% for (location of locations) { %>
+                    <li><a href="/locations/<%= location.id %>"><%= location.name %></a></li>
+                <% } %>
+            </ul>
+        </div>
+    <% } %>
+
     <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No issues have been reported here yet.'}) %>
 </div>
 
