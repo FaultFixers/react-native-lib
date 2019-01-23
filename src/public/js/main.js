@@ -477,20 +477,20 @@ $(document).ready(function() {
         if (!locationId) {
             locationDescription = reportForm.find('textarea[name="locationDescription"]').val();
             if (!locationDescription) {
-                showAlert('Not yet!', 'Please enter where the fault is located.');
+                showAlert('Not yet!', 'Please enter where the issue is located.');
                 return;
             }
         }
 
         const description = reportForm.find('textarea[name="description"]').val();
         if (!description) {
-            showAlert('Not yet!', 'Please enter a quick description of the fault.');
+            showAlert('Not yet!', 'Please enter a quick description of the issue.');
             return;
         }
 
         const faultCategoryId = reportForm.find('select[name="faultCategoryId"]').val();
         if (!faultCategoryId) {
-            showAlert('Not yet!', 'Please choose a fault category. Tap "Other" if you can\'t decide which is most approriate.');
+            showAlert('Not yet!', 'Please choose a category. Tap "Other" if you can\'t decide which is most approriate.');
             return;
         }
 
@@ -564,13 +564,13 @@ $(document).ready(function() {
                 function(error) {
                     let errorMessage;
                     if (error.status === -1) {
-                        errorMessage = 'We couldn\'t report the fault. Please check you are connected to the Internet.';
+                        errorMessage = 'We couldn\'t create the ticket. Please check you are connected to the Internet.';
                     } else {
                         errorMessage = 'An unexpected error occurred - please try again.';
                     }
-                    showAlert('Problem Reporting Fault', errorMessage);
+                    showAlert('Problem Creating Ticket', errorMessage);
                     hideLoadingAnimation();
-                    Logger.error('Error reporting fault', error);
+                    Logger.error('Error creating ticket', error);
                 }
             );
         }
@@ -578,12 +578,12 @@ $(document).ready(function() {
         showLoadingAnimation();
 
         if (imageFile) {
-            Logger.debug('User has chosen a fault image to upload');
+            Logger.debug('User has chosen a image to upload');
             doApiFileUpload(
                 imageFile,
                 response => {
                     imageId = response.image.id;
-                    Logger.info('Uploaded fault image', {imageId});
+                    Logger.info('Uploaded image', {imageId});
                     createTicket();
                 },
                 error => {
@@ -598,7 +598,7 @@ $(document).ready(function() {
                 }
             );
         } else {
-            Logger.debug('No fault image to upload');
+            Logger.debug('No image to upload');
             createTicket();
         }
     });

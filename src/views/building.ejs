@@ -12,10 +12,10 @@
             <p><%= building.formattedAddress %></p>
         <% } %>
 
-        <a href="/report?building=<%= building.id %>" class="button">Report Fault</a>
+        <a href="/report?building=<%= building.id %>" class="button">Report Issue</a>
     </div>
 
-    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No faults have been reported here yet.'}) %>
+    <%- include('partials/ticket-list', {tickets, showNoTicketsMessage: 'No issues have been reported here yet.'}) %>
 </div>
 
 <%- include('partials/copyright-footer') %>

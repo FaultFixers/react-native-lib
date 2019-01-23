@@ -10,7 +10,7 @@
 <div class="page-content" id="ticket-page">
     <div class="details-section bordered-box">
         <p>
-            <b>Fault Category:</b> <%= faultCategory.name %>
+            <b>Category:</b> <%= faultCategory.name %>
         </p>
 
         <p>
@@ -74,12 +74,12 @@
     <% } %>
 
     <div class="image-section">
-        <h3>Fault Photo</h3>
+        <h3>Photo</h3>
 
         <% if (images.length > 0) { %>
             <img src="<%= images[0].compressedUrl %>" />
         <% } else { %>
-            <p>No photo was taken of this fault.</p>
+            <p>No photo was taken for this ticket.</p>
         <% } %>
     </div>
 
