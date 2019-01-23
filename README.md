@@ -11,13 +11,26 @@ cp config/example.js config/local.js
 
 To run in dev mode: `FF_ENV=local DEBUG=reporter-web:* npm start`
 
-## Development
+Add this line to your `/etc/hosts`:
+
+```
+127.0.0.1    wework.faultfixers.local islington.faultfixers.local dundermifflin.faultfixers.local
+```
 
 Set up the Git pre-commit hook to prevent committing simple mistakes:
 
 ```
 ln -s ../../bin/pre-commit .git/hooks/pre-commit
 ```
+
+The API contains some fixture websites:
+* wework.faultfixers.local
+* islington.faultfixers.local
+* dundermifflin.faultfixers.local
+
+## Development
+
+If you add an icon in `src/public/images`, re-generate the icon font with `grunt webfont`.
 
 ## Setting up a new website
 
