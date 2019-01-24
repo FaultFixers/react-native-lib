@@ -22,44 +22,46 @@
     </div>
 
     <% if (update.hasComment) { %>
-        <p class="update-content comment-text">
-            "<i><%= update.comment %></i>"
-        </p>
+        <div class="update-content">
+            <%- paragraphs(update.comment) %>
+        </div>
     <% } %>
 
     <% if (update.hasDueDateOrTimeChanged) { %>
-        <p class="update-content comment-text">
+        <div class="update-content">
             Due:
             <%= formatLocalDateTime(update.newDueDate, update.newDueTime) %>
-        </p>
+        </div>
     <% } %>
 
     <% if (update.hasPriorityChanged) { %>
-        <p class="update-content comment-text">
+        <div class="update-content">
             Priority is:
             <%= formatTicketPriority(update.newPriority).toLowerCase() %>
-        </p>
+        </div>
     <% } %>
 
     <% if (update.hasBuildingChanged) { %>
-        <p class="update-content comment-text">
+        <div class="update-content">
             Building is:
             <%= (update.newBuilding ? update.newBuilding.name : 'none') %>
-        </p>
+        </div>
     <% } %>
 
     <% if (update.hasNewFormInstance) { %>
-        <p class="update-content comment-text">
+        <div class="update-content">
             Form has been named "<%= update.newFormInstance.name %>"
-        </p>
+        </div>
     <% } %>
 
     <% if (update.hasInternalAction && update.internalActionValue) { %>
-        <p class="update-content comment-text"><%= update.internalActionValue %></p>
+        <div class="update-content">
+            <%- paragraphs(update.internalActionValue) %>
+        </div>
     <% } %>
 
     <% if (update.hasInternalAction && update.internalActionImage) { %>
-        <div class="update-content comment-image-container">
+        <div class="update-content">
             <a href="<%= update.internalActionImage.untouchedUrl %>" target="_blank">
                 <img height="100" class="comment-image" src="<%= update.internalActionImage.compressedUrl %>" />
             </a>
