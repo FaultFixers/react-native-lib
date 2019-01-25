@@ -95,6 +95,8 @@ app.locals.getUpdateTitle = update => {
             return 'Expense recorded';
         case 'RECORD_TRAVEL_MILEAGE':
             return 'Travel mileage recorded';
+        case 'RECORD_WASTE':
+            return 'Waste recorded';
         }
     }
     if (update.hasAssigneeChanged) {
@@ -153,6 +155,8 @@ app.locals.getUpdateIcon = update => {
             return 'ff-expense-circled';
         case 'RECORD_TRAVEL_MILEAGE':
             return 'ff-mileage-circled';
+        case 'RECORD_WASTE':
+            return 'ff-waste-circled';
         }
     }
     if (update.hasAssigneeChanged) {
