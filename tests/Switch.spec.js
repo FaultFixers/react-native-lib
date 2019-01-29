@@ -7,6 +7,9 @@ describe('Switch', function() {
     const noop = () => null;
 
     const numberFromHex = (hex) => {
+        if (typeof hex !== 'string') {
+            throw new Error('Expected hex to be a string, but got: ' + hex);
+        }
         return Number('0x' + hex.replace(/^#/, ''));
     };
 

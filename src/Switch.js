@@ -21,9 +21,8 @@ export default class Switch extends Component {
             <NativeSwitch
                 value={this.props.value}
                 onValueChange={this.props.onValueChange}
-                tintColor={DEFAULT_OFF_COLOR}
-                onTintColor={onColor}
-                thumbTintColor={getTint(this.props.value ? onColor : DEFAULT_OFF_COLOR, 40)}
+                trackColor={{true: onColor, false: DEFAULT_OFF_COLOR}}
+                thumbColor={getTint(this.props.value ? onColor : DEFAULT_OFF_COLOR, 40)}
                 style={this.props.style}
             />
         );
