@@ -452,6 +452,18 @@ $(document).ready(function() {
     let uploadedImage;
 
     const uploadImageButton = reportForm.find('button#report-image');
+    if (uploadImageButton) {
+        // If on a mobile device (which we'll assume based on there being multiple cameras), change the
+        // button text to be 'Choose/take a photo'.
+        if (navigator.mediaDevices && typeof navigator.mediaDevices.enumerateDevices === 'function') {
+            navigator.mediaDevices.enumerateDevices().then(devices => {
+                const videoInputs = devices.filter(device => device.kind === 'videoinput');
+                if (videoInputs.length > 1) {
+                    uploadImageButton.text('Choose/take a photo');
+                }
+            });
+        }
+    }
     uploadImageButton.click(function() {
         reportForm.find('input[type="file"]').click();
     });
