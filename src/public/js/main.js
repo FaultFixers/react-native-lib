@@ -448,6 +448,45 @@ $(document).ready(function() {
     });
 
     const reportForm = $('#report-form');
+
+    let uploadedImage;
+
+    const uploadImageButton = reportForm.find('button#report-image');
+    uploadImageButton.click(function() {
+        reportForm.find('input[type="file"]').click();
+    });
+
+    reportForm.find('input[type="file"]').change(function() {
+        const fileList = document.querySelector('input[name="image"]').files;
+        if (fileList.length === 0) {
+            Logger.debug('No image chosen');
+            return;
+        }
+
+        showLoadingAnimation();
+
+        Logger.debug('User has chosen a image to upload');
+        doApiFileUpload(
+            fileList[0],
+            response => {
+                uploadedImage = response.image;
+                $('#report-image-preview').html(`<img src="${response.image.compressedUrl}" />`);
+                Logger.info('Uploaded image', {imageId: response.image.id});
+                hideLoadingAnimation();
+            },
+            error => {
+                let message;
+                if (error.responseJSON.exception === 'MaxUploadSizeExceededException') {
+                    message = 'Sorry, the photo you added is too large.';
+                } else {
+                    message = 'Sorry, something went wrong. Please try again.';
+                }
+                showAlert('Error!', message);
+                hideLoadingAnimation();
+            }
+        );
+    });
+
     const privacyOptionButtons = reportForm.find('button.ticket-privacy-option');
     privacyOptionButtons.click(function(event) {
         privacyOptionButtons.removeClass('active');
@@ -457,6 +496,7 @@ $(document).ready(function() {
 
         $('.ticket-privacy-note').text(button.attr('note'));
     });
+
     reportForm.submit(function(event) {
         event.preventDefault();
 
@@ -510,11 +550,7 @@ $(document).ready(function() {
                 };
             });
 
-        const fileList = document.querySelector('input[name="image"]').files;
-        let imageFile;
-        if (fileList.length > 0) {
-            imageFile = fileList[0];
-        } else {
+        if (!uploadedImage) {
             const confirmToContinue = window.confirm('Are you sure you want to continue without adding a photo?');
             if (!confirmToContinue) {
                 Logger.debug('User chose to not continue without adding an image');
@@ -524,83 +560,54 @@ $(document).ready(function() {
 
         const openedAt = Number(reportForm.find('input[name="openedAt"]').val());
 
-        let imageId;
-
-        function createTicket() {
-            const postBody = {
-                description: description ? description : null,
-                locationDescription: locationDescription ? locationDescription : null,
-                additionalQuestionAnswers: additionalQuestionAnswers ? additionalQuestionAnswers : [],
-                privacy: privacy ? privacy : null,
-                images: imageId ? [imageId] : null,
-                location: locationId ? locationId : null,
-                building: buildingId ? buildingId : null,
-                account: accountId ? accountId : null,
-                faultCategory: faultCategoryId ? faultCategoryId : null,
-                reporterPhoneNumber: phoneNumber,
-                timeToCreateTicketInMs: Date.now() - openedAt,
-            };
-
-            doApiPostRequest(
-                '/tickets',
-                postBody,
-                function(response) {
-                    hideLoadingAnimation();
-
-                    const successModal = $('#report-success-modal');
-                    if (response.textAfterTicketCreation) {
-                        const newHtml = '<p>' + response.textAfterTicketCreation.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br />') + '</p>';
-                        successModal.html(newHtml);
-                    }
-                    successModal.modal();
-
-                    Logger.info('Created ticket', response.ticket.id);
-
-                    const goToTicket = () => window.location = '/tickets/' + response.ticket.friendlyId;
-
-                    setTimeout(goToTicket, 3000);
-                    successModal.click(goToTicket);
-                },
-                function(error) {
-                    let errorMessage;
-                    if (error.status === -1) {
-                        errorMessage = 'We couldn\'t create the ticket. Please check you are connected to the Internet.';
-                    } else {
-                        errorMessage = 'An unexpected error occurred - please try again.';
-                    }
-                    showAlert('Problem Creating Ticket', errorMessage);
-                    hideLoadingAnimation();
-                    Logger.error('Error creating ticket', error);
-                }
-            );
-        }
-
         showLoadingAnimation();
 
-        if (imageFile) {
-            Logger.debug('User has chosen a image to upload');
-            doApiFileUpload(
-                imageFile,
-                response => {
-                    imageId = response.image.id;
-                    Logger.info('Uploaded image', {imageId});
-                    createTicket();
-                },
-                error => {
-                    let message;
-                    if (error.responseJSON.exception === 'MaxUploadSizeExceededException') {
-                        message = 'Sorry, the photo you added is too large.';
-                    } else {
-                        message = 'Sorry, something went wrong. Please try again.';
-                    }
-                    showAlert('Error!', message);
-                    hideLoadingAnimation();
+        const postBody = {
+            description: description ? description : null,
+            locationDescription: locationDescription ? locationDescription : null,
+            additionalQuestionAnswers: additionalQuestionAnswers ? additionalQuestionAnswers : [],
+            privacy: privacy ? privacy : null,
+            images: uploadedImage ? [uploadedImage.id] : null,
+            location: locationId ? locationId : null,
+            building: buildingId ? buildingId : null,
+            account: accountId ? accountId : null,
+            faultCategory: faultCategoryId ? faultCategoryId : null,
+            reporterPhoneNumber: phoneNumber,
+            timeToCreateTicketInMs: Date.now() - openedAt,
+        };
+
+        doApiPostRequest(
+            '/tickets',
+            postBody,
+            function(response) {
+                hideLoadingAnimation();
+
+                const successModal = $('#report-success-modal');
+                if (response.textAfterTicketCreation) {
+                    const newHtml = '<p>' + response.textAfterTicketCreation.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br />') + '</p>';
+                    successModal.html(newHtml);
                 }
-            );
-        } else {
-            Logger.debug('No image to upload');
-            createTicket();
-        }
+                successModal.modal();
+
+                Logger.info('Created ticket', response.ticket.id);
+
+                const goToTicket = () => window.location = '/tickets/' + response.ticket.friendlyId;
+
+                setTimeout(goToTicket, 3000);
+                successModal.click(goToTicket);
+            },
+            function(error) {
+                let errorMessage;
+                if (error.status === -1) {
+                    errorMessage = 'We couldn\'t create the ticket. Please check you are connected to the Internet.';
+                } else {
+                    errorMessage = 'An unexpected error occurred - please try again.';
+                }
+                showAlert('Problem Creating Ticket', errorMessage);
+                hideLoadingAnimation();
+                Logger.error('Error creating ticket', error);
+            }
+        );
     });
 
     $('#is-subscribed-to-updates input').change(event => {

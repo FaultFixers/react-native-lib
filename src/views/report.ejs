@@ -12,7 +12,10 @@
         <div class="fieldset bordered-box">
             <h3>Add Photo</h3>
 
-            <input name="image" type="file" accept="image/*" />
+            <button type="button" id="report-image">Choose a photo</button>
+            <input id="report-image-hidden-input" name="image" type="file" accept="image/*" />
+
+            <div id="report-image-preview"></div>
         </div>
 
         <% if (promptForTicketPrivacy) { %>
