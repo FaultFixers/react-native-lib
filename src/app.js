@@ -202,6 +202,9 @@ app.locals.getUpdateCommentVisibility = update => {
     }
     return null;
 };
+app.locals.getCurrentYear = function() {
+    return moment().format('YYYY');
+};
 
 // Catch 404 and forward to error handler.
 app.use(function(req, res, next) {
