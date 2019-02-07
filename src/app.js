@@ -86,7 +86,9 @@ app.locals.getUpdateTitle = update => {
     if (update.hasInternalAction) {
         switch (update.internalActionType) {
         case 'ADD_IMAGE':
-            return 'Image added';
+            return 'Photo added';
+        case 'ADD_FILE':
+            return 'File added';
         case 'CHECK_IN':
             return 'Checked in';
         case 'CHECK_OUT':
@@ -147,6 +149,8 @@ app.locals.getUpdateIcon = update => {
         switch (update.internalActionType) {
         case 'ADD_IMAGE':
             return 'ff-camera-circled';
+        case 'ADD_FILE':
+            return 'ff-attach-circled';
         case 'CHECK_IN':
             return 'ff-check-in-circled';
         case 'CHECK_OUT':

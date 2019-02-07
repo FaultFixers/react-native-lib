@@ -67,4 +67,12 @@
             </a>
         </div>
     <% } %>
+
+    <% if (update.internalActionType === 'ADD_FILE' && update.internalActionUploadedFile) { %>
+        <div class="update-content">
+            <a href="<%= update.internalActionUploadedFile.url %>" target="_blank">
+                Open file "<%= update.internalActionUploadedFile.originalName %>"
+            </a>
+        </div>
+    <% } %>
 </div>
