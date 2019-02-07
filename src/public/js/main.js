@@ -694,7 +694,7 @@ $(document).ready(function() {
     });
 
     $('#reopen-section').click(function() {
-        const reopenComment = window.prompt('We\'re sorry that the repair isn\'t satisfactory. Please describe what is wrong so we can re-open the ticket.');
+        const reopenComment = window.prompt('We\'re sorry that the fix isn\'t satisfactory. Please describe what is wrong so we can re-open the ticket.');
         if (!reopenComment) {
             return;
         }

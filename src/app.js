@@ -187,7 +187,7 @@ app.locals.getUpdateUpdaterDescription = (update, isOwnTicket) => {
     } else if (update.isByReporter) {
         return 'the reporter';
     } else if (update.isByFacilityManager) {
-        return 'the repairs team';
+        return 'the maintenance team';
     }
     return null;
 };

@@ -520,7 +520,7 @@ async function viewReport(req, res) {
 
     const locationDescriptionLabel = response.json.locationDescriptionLabel
         ? response.json.locationDescriptionLabel
-        : 'Where Is The Fault?';
+        : 'Where Is The Issue?';
     const locationDescriptionPlaceholder = response.json.locationDescriptionPlaceholder
         ? response.json.locationDescriptionPlaceholder
         : 'For example \'Flat 34\' or \'Stairwell B\'...';
