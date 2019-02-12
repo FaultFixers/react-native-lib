@@ -13,9 +13,12 @@
             <b>Category:</b> <%= category.name %>
         </p>
 
-        <p>
-            <b>Description:</b> <%= ticket.description %>
-        </p>
+        <div class="description">
+            <b>Description:</b>
+            <div>
+                <%- paragraphs(ticket.description) %>
+            </div>
+        </div>
 
         <p>
             <b>Location:</b>

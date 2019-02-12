@@ -48,6 +48,19 @@
         </div>
     <% } %>
 
+    <% if (update.hasCategoryChanged) { %>
+        <div class="update-content">
+            Changed from "<%= update.oldCategory.name %>" to "<%= update.newCategory.name %>"
+        </div>
+    <% } %>
+
+    <% if (update.hasDescriptionChanged) { %>
+        <div class="update-content">
+            Was:
+            <%- paragraphs(update.oldDescription) %>
+        </div>
+    <% } %>
+
     <% if (update.hasNewFormInstance) { %>
         <div class="update-content">
             Form has been named "<%= update.newFormInstance.name %>"

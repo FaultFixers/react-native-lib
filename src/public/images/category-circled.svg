@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>category-circled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="category-circled">
+            <circle id="circle" fill="#11BF96" cx="12.5" cy="12.5" r="12.5"></circle>
+            <g id="category" transform="translate(3.616065, 5.513978)" stroke="#FFFFFF">
+                <g id="whitelabel" transform="translate(-0.390244, -2.666667)">
+                    <path d="M5.23203651,5.0554369 C5.11204727,5.17755361 5.04463801,5.34317942 5.04463801,5.51587852 L5.24907649,16.5700123 C5.24907649,16.9296395 5.63864872,17.2952576 5.9920107,17.2952576 L13.7193399,17.5898145 C14.0727019,17.5898145 14.2051136,17.2367178 14.2051136,16.8770906 L14.2299174,5.51587852 C14.2299174,5.34317942 14.1966334,5.2108663 14.0766441,5.08874959 L10.0247237,1.13330343 C9.77485901,0.879008538 9.55705583,0.823014847 9.30719117,1.07730973 L5.23203651,5.0554369 Z" id="Rectangle-17" stroke-width="2" transform="translate(9.637285, 9.251913) rotate(45.000000) translate(-9.637285, -9.251913) "></path>
+                    <ellipse id="Oval-11" cx="12.3570315" cy="6.50286274" rx="1.14970276" ry="1.17008756"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -80,9 +80,6 @@ app.locals.getUpdateTitle = update => {
             return 'Resolved';
         }
     }
-    if (update.hasComment) {
-        return 'Comment';
-    }
     if (update.hasInternalAction) {
         switch (update.internalActionType) {
         case 'ADD_IMAGE':
@@ -123,8 +120,17 @@ app.locals.getUpdateTitle = update => {
     if (update.hasBuildingChanged) {
         return 'Building set';
     }
+    if (update.hasCategoryChanged) {
+        return 'Category changed';
+    }
+    if (update.hasDescriptionChanged) {
+        return 'Description changed';
+    }
     if (update.hasNewFormInstance) {
         return 'Form attached';
+    }
+    if (update.hasComment) {
+        return 'Comment';
     }
     return null;
 };
@@ -141,9 +147,6 @@ app.locals.getUpdateIcon = update => {
         } else if (update.newStatus === 'CLOSED') {
             return 'ff-ticket-closed-circled';
         }
-    }
-    if (update.hasComment) {
-        return 'ff-ticket-comment-circled';
     }
     if (update.hasInternalAction) {
         switch (update.internalActionType) {
@@ -179,8 +182,17 @@ app.locals.getUpdateIcon = update => {
     if (update.hasBuildingChanged) {
         return 'ff-building-circled';
     }
+    if (update.hasCategoryChanged) {
+        return 'ff-category-circled';
+    }
+    if (update.hasDescriptionChanged) {
+        return 'ff-rename-circled';
+    }
     if (update.hasNewFormInstance) {
         return 'ff-form-circled';
+    }
+    if (update.hasComment) {
+        return 'ff-ticket-comment-circled';
     }
 
     return null;
