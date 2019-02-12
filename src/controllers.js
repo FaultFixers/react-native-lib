@@ -95,7 +95,7 @@ async function viewBuilding(req, res) {
     const building = buildingResponse.json.building;
     const tickets = buildingResponse.json.tickets.map(row => {
         const ticket = row.ticket;
-        ticket.faultCategory = row.faultCategory;
+        ticket.category = row.category;
         ticket.images = row.images;
         return ticket;
     });
@@ -132,7 +132,7 @@ async function viewLocation(req, res) {
     const building = locationResponse.json.building;
     const tickets = locationResponse.json.tickets.map(row => {
         const ticket = row.ticket;
-        ticket.faultCategory = row.faultCategory;
+        ticket.category = row.category;
         ticket.images = row.images;
         return ticket;
     });
@@ -404,7 +404,7 @@ async function viewAccountTicketsOptions(req, res) {
             const ticket = result.ticket;
             ticket.building = result.building;
             ticket.location = result.location;
-            ticket.faultCategory = result.faultCategory;
+            ticket.category = result.category;
             ticket.images = result.images;
             return ticket;
         });
@@ -437,7 +437,7 @@ async function viewTicket(req, res) {
     res.locals.ensureIsCorrectAccount(ticketResponse.json.account);
 
     const ticket = ticketResponse.json.ticket;
-    const faultCategory = ticketResponse.json.faultCategory;
+    const category = ticketResponse.json.category;
     const images = ticketResponse.json.images;
     const building = ticketResponse.json.building;
     const location = ticketResponse.json.location;
@@ -462,7 +462,7 @@ async function viewTicket(req, res) {
     res.render('ticket', {
         mainNavActiveTab: 'report',
         ticket,
-        faultCategory,
+        category,
         images,
         building,
         location,
@@ -532,7 +532,7 @@ async function viewReport(req, res) {
         againstAccount,
         buildingOptions: response.json.buildingOptions,
         locationOptions: response.json.locationOptions,
-        faultCategoryOptions: response.json.faultCategoryOptions,
+        categoryOptions: response.json.categoryOptions,
         additionalQuestions: response.json.additionalQuestions,
         promptForTicketPrivacy: !!response.json.promptForTicketPrivacy,
         promptForLocationDescription: !!response.json.promptForLocationDescription,
@@ -555,7 +555,7 @@ async function viewMyTickets(req, res) {
     const tickets = response.json.results
         .map(result => {
             const ticket = result.ticket;
-            ticket.faultCategory = result.faultCategory;
+            ticket.category = result.category;
             ticket.location = result.location;
             ticket.building = result.building;
             ticket.images = result.images;

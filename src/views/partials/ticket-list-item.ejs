@@ -1,6 +1,6 @@
 <a href="/tickets/<%= ticket.friendlyId %>" class="ticket-list-item">
     <div class="left-view">
-        <p class="fault-category"><%= ticket.faultCategory.name %></p>
+        <p class="category"><%= ticket.category.name %></p>
 
         <p class="created-at">
             Reported <%= formatDateTime(ticket.createdAt) %>

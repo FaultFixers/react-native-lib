@@ -540,8 +540,8 @@ $(document).ready(function() {
             return;
         }
 
-        const faultCategoryId = reportForm.find('select[name="faultCategoryId"]').val();
-        if (!faultCategoryId) {
+        const categoryId = reportForm.find('select[name="categoryId"]').val();
+        if (!categoryId) {
             showAlert('Not yet!', 'Please choose a category. Tap "Other" if you can\'t decide which is most approriate.');
             return;
         }
@@ -583,7 +583,7 @@ $(document).ready(function() {
             location: locationId ? locationId : null,
             building: buildingId ? buildingId : null,
             account: accountId ? accountId : null,
-            faultCategory: faultCategoryId ? faultCategoryId : null,
+            category: categoryId ? categoryId : null,
             reporterPhoneNumber: phoneNumber,
             timeToCreateTicketInMs: Date.now() - openedAt,
         };

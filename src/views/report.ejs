@@ -57,9 +57,9 @@
         <div class="fieldset bordered-box">
             <h3>Category</h3>
 
-            <select name="faultCategoryId">
+            <select name="categoryId">
                 <option value="">Choose a category...</option>
-                <% faultCategoryOptions.forEach(category => { %>
+                <% categoryOptions.forEach(category => { %>
                     <option value="<%= category.id %>"><%= category.name %></option>
                 <% }) %>
             </select>
