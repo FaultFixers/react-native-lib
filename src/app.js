@@ -7,6 +7,7 @@ const logger = require('morgan');
 const moment = require('moment');
 const router = require('./router');
 const {
+    conjoinWithCommasAndWord,
     formatLocalDateTime,
     formatQuestionLabel,
     formatTicketPriority,
@@ -98,11 +99,15 @@ app.locals.getUpdateTitle = update => {
             return 'Waste recorded';
         }
     }
-    if (update.hasAssigneeChanged) {
-        if (update.newAssignee) {
-            return `Assigned to ${getShortUserDescription(update.newAssignee)}`;
+    if (update.haveAssigneesChanged) {
+        if (update.newAssignees.hasUsers) {
+            const names = update.newAssignees.users.map(getShortUserDescription);
+            const conjoined = conjoinWithCommasAndWord(names, 'and');
+            return `Assigned to ${conjoined}`;
         } else {
-            return `Un-assigned from ${getShortUserDescription(update.oldAssignee)}`;
+            const names = update.oldAssignees.users.map(getShortUserDescription);
+            const conjoined = conjoinWithCommasAndWord(names, 'and');
+            return `Un-assigned from ${conjoined}`;
         }
     }
     if (update.hasDueDateOrTimeChanged) {
@@ -166,8 +171,8 @@ app.locals.getUpdateIcon = update => {
             return 'ff-waste-circled';
         }
     }
-    if (update.hasAssigneeChanged) {
-        if (update.newAssignee) {
+    if (update.haveAssigneesChanged) {
+        if (update.newAssignees.hasUsers) {
             return 'ff-ticket-assigned-circled';
         } else {
             return 'ff-ticket-unassigned-circled';
