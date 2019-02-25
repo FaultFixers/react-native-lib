@@ -100,12 +100,14 @@ app.locals.getUpdateTitle = update => {
         }
     }
     if (update.haveAssigneesChanged) {
-        if (update.newAssignees.hasUsers) {
-            const names = update.newAssignees.users.map(getShortUserDescription);
+        if (update.newAssignees.isSet) {
+            const names = update.newAssignees.users.map(getShortUserDescription)
+                .concat(update.newAssignees.accounts.map(account => account.name));
             const conjoined = conjoinWithCommasAndWord(names, 'and');
             return `Assigned to ${conjoined}`;
         } else {
-            const names = update.oldAssignees.users.map(getShortUserDescription);
+            const names = update.oldAssignees.users.map(getShortUserDescription)
+                .concat(update.oldAssignees.accounts.map(account => account.name));
             const conjoined = conjoinWithCommasAndWord(names, 'and');
             return `Un-assigned from ${conjoined}`;
         }
@@ -172,7 +174,7 @@ app.locals.getUpdateIcon = update => {
         }
     }
     if (update.haveAssigneesChanged) {
-        if (update.newAssignees.hasUsers) {
+        if (update.newAssignees.isSet) {
             return 'ff-ticket-assigned-circled';
         } else {
             return 'ff-ticket-unassigned-circled';
