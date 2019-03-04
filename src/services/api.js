@@ -14,7 +14,7 @@ function doRequest(authorization, method, path, bodyData = null) {
             path: path,
             method: method,
             headers: {
-                'Accept': 'application/vnd.faultfixers.v11+json',
+                'Accept': 'application/vnd.faultfixers.v12+json',
                 'User-Agent': 'FaultFixers Reporting Websites',
             },
         };
