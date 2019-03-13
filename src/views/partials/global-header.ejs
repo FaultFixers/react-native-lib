@@ -26,6 +26,7 @@
             window.API_AUTHORIZATION = <%- cookies.authToken ? '"User ' + cookies.authToken + '"' : 'null' %>;
             window.ENABLE_PUSH_NOTIFICATIONS = <%- config.enablePushNotifications ? 'true' : 'false' %>;
             window.FCM_KEY = <%- config.fcmKey ? '"' + config.fcmKey + '"' : 'null' %>;
+            window.API_VERSION = <%- API_VERSION %>;
 
             <% if (isLoggedIn) { %>
                 window.userId = '<%= user.id %>';

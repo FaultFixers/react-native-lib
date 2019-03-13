@@ -4,7 +4,7 @@ window.doApiRequest = function(method, path, config, success, error) {
     config.success = success;
     config.error = error;
     config.headers = {
-        'Accept': 'application/vnd.faultfixers.v12+json',
+        'Accept': 'application/vnd.faultfixers.v' + window.API_VERSION + '+json',
         'X-FF-SessionId': window.sessionId,
         'X-FF-DeviceId': window.deviceId,
         'X-FF-ApiClient': 'REPORTER_WEB',

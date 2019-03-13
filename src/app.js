@@ -17,6 +17,7 @@ const {
 const config = require('../config/load');
 const loadWebsiteByDomain = require('./middlewares/load-website-by-domain');
 const loadUserByCookie = require('./middlewares/load-user-by-cookie');
+const api = require('./services/api');
 
 console.debug('Config:', config);
 
@@ -58,6 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(loadUserByCookie);
 app.use((req, res, next) => {
     res.locals.cookies = req.cookies;
+    res.locals.API_VERSION = api.API_VERSION;
     next();
 });
 

@@ -1,6 +1,8 @@
 const https = require('https');
 const config = require('../../config/load.js');
 
+const API_VERSION = 13;
+
 function doRequest(authorization, method, path, bodyData = null) {
     if (!path.startsWith('/')) {
         throw new Error('Path must start with /');
@@ -14,7 +16,7 @@ function doRequest(authorization, method, path, bodyData = null) {
             path: path,
             method: method,
             headers: {
-                'Accept': 'application/vnd.faultfixers.v12+json',
+                'Accept': 'application/vnd.faultfixers.v' + API_VERSION + '+json',
                 'User-Agent': 'FaultFixers Reporting Websites',
             },
         };
@@ -100,4 +102,5 @@ module.exports = {
     asIntegration,
     asUser,
     withoutAuth,
+    API_VERSION,
 };
