@@ -449,22 +449,22 @@ $(document).ready(function() {
 
     const reportForm = $('#report-form');
 
-    let uploadedImage;
+    let reportUploadedImage;
 
-    const uploadImageButton = reportForm.find('button#report-image');
-    if (uploadImageButton) {
+    const reportUploadImageButton = reportForm.find('button#report-image');
+    if (reportUploadImageButton) {
         // If on a mobile device (which we'll assume based on there being multiple cameras), change the
         // button text to be 'Choose/take a photo'.
         if (navigator.mediaDevices && typeof navigator.mediaDevices.enumerateDevices === 'function') {
             navigator.mediaDevices.enumerateDevices().then(devices => {
                 const videoInputs = devices.filter(device => device.kind === 'videoinput');
                 if (videoInputs.length > 1) {
-                    uploadImageButton.text('Choose/take a photo');
+                    reportUploadImageButton.text('Choose/take a photo');
                 }
             });
         }
     }
-    uploadImageButton.click(function() {
+    reportUploadImageButton.click(function() {
         reportForm.find('input[type="file"]').click();
     });
 
@@ -481,7 +481,7 @@ $(document).ready(function() {
         doApiFileUpload(
             fileList[0],
             response => {
-                uploadedImage = response.image;
+                reportUploadedImage = response.image;
                 $('#report-image-preview').html(`<img src="${response.image.compressedUrl}" />`);
                 Logger.info('Uploaded image', {imageId: response.image.id});
                 hideLoadingAnimation();
@@ -562,7 +562,7 @@ $(document).ready(function() {
                 };
             });
 
-        if (!uploadedImage) {
+        if (!reportUploadedImage) {
             const confirmToContinue = window.confirm('Are you sure you want to continue without adding a photo?');
             if (!confirmToContinue) {
                 Logger.debug('User chose to not continue without adding an image');
@@ -579,7 +579,7 @@ $(document).ready(function() {
             locationDescription: locationDescription ? locationDescription : null,
             additionalQuestionAnswers: additionalQuestionAnswers ? additionalQuestionAnswers : [],
             privacy: privacy ? privacy : null,
-            images: uploadedImage ? [uploadedImage.id] : null,
+            images: reportUploadedImage ? [reportUploadedImage.id] : null,
             location: locationId ? locationId : null,
             building: buildingId ? buildingId : null,
             account: accountId ? accountId : null,
@@ -618,6 +618,155 @@ $(document).ready(function() {
                 showAlert('Problem Creating Ticket', errorMessage);
                 hideLoadingAnimation();
                 Logger.error('Error creating ticket', error);
+            }
+        );
+    });
+
+    const quoteForm = $('#quote-form');
+
+    let quoteUploadedImage;
+
+    const quoteUploadImageButton = quoteForm.find('button#report-image');
+    if (quoteUploadImageButton) {
+        // If on a mobile device (which we'll assume based on there being multiple cameras), change the
+        // button text to be 'Choose/take a photo'.
+        if (navigator.mediaDevices && typeof navigator.mediaDevices.enumerateDevices === 'function') {
+            navigator.mediaDevices.enumerateDevices().then(devices => {
+                const videoInputs = devices.filter(device => device.kind === 'videoinput');
+                if (videoInputs.length > 1) {
+                    quoteUploadImageButton.text('Choose/take a photo');
+                }
+            });
+        }
+    }
+    quoteUploadImageButton.click(function() {
+        quoteForm.find('input[type="file"]').click();
+    });
+
+    quoteForm.find('input[type="file"]').change(function() {
+        const fileList = document.querySelector('input[name="image"]').files;
+        if (fileList.length === 0) {
+            Logger.debug('No image chosen');
+            return;
+        }
+
+        showLoadingAnimation();
+
+        Logger.debug('User has chosen a image to upload');
+        doApiFileUpload(
+            fileList[0],
+            response => {
+                quoteUploadedImage = response.image;
+                $('#report-image-preview').html(`<img src="${response.image.compressedUrl}" />`);
+                Logger.info('Uploaded image', {imageId: response.image.id});
+                hideLoadingAnimation();
+            },
+            error => {
+                let message;
+                if (error.responseJSON.exception === 'MaxUploadSizeExceededException') {
+                    message = 'Sorry, the photo you added is too large.';
+                } else {
+                    message = 'Sorry, something went wrong. Please try again.';
+                }
+                showAlert('Error!', message);
+                hideLoadingAnimation();
+            }
+        );
+    });
+
+    quoteForm.submit(function(event) {
+        event.preventDefault();
+
+        const accountId = quoteForm.find('input[name="accountId"]').val();
+
+        const locationDescription = quoteForm.find('input[name="locationDescription"]').val();
+        if (!locationDescription) {
+            showAlert('Not yet!', 'Please enter the job address or location.');
+            return;
+        }
+
+        const companyName = quoteForm.find('input[name="companyName"]').val();
+        if (!companyName) {
+            showAlert('Not yet!', 'Please enter your company name.');
+            return;
+        }
+
+        const description = quoteForm.find('textarea[name="description"]').val();
+        if (!description) {
+            showAlert('Not yet!', 'Please enter a quick description of the issue.');
+            return;
+        }
+
+        const latestCompletionDate = quoteForm.find('input[name="latestCompletionDate"]').val();
+
+        const categoryId = quoteForm.find('select[name="categoryId"]').val();
+        if (!categoryId) {
+            showAlert('Not yet!', 'Please choose a category. Tap "Other" if you can\'t decide which is most approriate.');
+            return;
+        }
+
+        let phoneNumber = quoteForm.find('input[name="phoneNumber"]').val();
+        phoneNumber = phoneNumber ? phoneNumber : null;
+
+        if (!quoteUploadedImage) {
+            const confirmToContinue = window.confirm('Are you sure you want to continue without adding a photo?');
+            if (!confirmToContinue) {
+                Logger.debug('User chose to not continue without adding an image');
+                return;
+            }
+        }
+
+        const openedAt = Number(quoteForm.find('input[name="openedAt"]').val());
+
+        const sentDescription = `Quote requested.\n\n` +
+            `Company name: ${companyName}\n\n` +
+            `Latest completion date: ${latestCompletionDate}\n\n` +
+            `Customer phone number: ${phoneNumber}\n\n` +
+            `Job description: ${description}`;
+
+        showLoadingAnimation();
+
+        const postBody = {
+            description: sentDescription,
+            locationDescription: locationDescription,
+            privacy: 'PRIVATE',
+            images: quoteUploadedImage ? [quoteUploadedImage.id] : null,
+            account: accountId,
+            category: categoryId,
+            reporterPhoneNumber: phoneNumber,
+            timeToCreateTicketInMs: Date.now() - openedAt,
+        };
+
+        doApiPostRequest(
+            '/tickets',
+            postBody,
+            function(response) {
+                hideLoadingAnimation();
+
+                const successModal = $('#report-success-modal');
+                if (response.textAfterTicketCreation) {
+                    const newHtml = '<p>' + response.textAfterTicketCreation.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br />') + '</p>';
+                    successModal.html(newHtml);
+                }
+                successModal.modal();
+
+                Logger.info('Created quote ticket', response.ticket.id);
+
+                const goToTicket = () => window.location = '/tickets/' + response.ticket.friendlyId;
+
+                setTimeout(goToTicket, 3000);
+                successModal.click(goToTicket);
+            },
+            function(error) {
+                let errorMessage;
+                if (error.status === -1) {
+                    errorMessage = 'We couldn\'t request this quote. Please check you are connected to the Internet.';
+                } else {
+                    errorMessage = 'An unexpected error occurred - please try again.';
+                }
+                showAlert('Problem Requesting Quote', errorMessage);
+                hideLoadingAnimation();
+                Logger.error('Error creating quote ticket', error);
             }
         );
     });

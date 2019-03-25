@@ -1,0 +1,78 @@
+<%- include('partials/global-header') %>
+
+<%- include('partials/page-header', {title: 'Request Quote'}) %>
+
+<script>
+    getUserLocation();
+    attemptToEnablePushNotifications();
+</script>
+
+<div class="page-content" id="report-page">
+    <form id="quote-form" enctype="multipart/form-data">
+        <div class="fieldset bordered-box">
+            <h3>Add Photo</h3>
+
+            <button type="button" id="report-image">Choose a photo</button>
+            <input id="report-image-hidden-input" name="image" type="file" accept="image/*" />
+
+            <div id="report-image-preview"></div>
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Your Company Name</h3>
+
+            <input name="companyName" type="text" size="50" required />
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Job Address</h3>
+
+            <input name="locationDescription" type="text" placeholder="Please include the postcode..." size="50" required />
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Job Description</h3>
+
+            <textarea name="description" placeholder="Enter details of what you need quoted..." required></textarea>
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Category</h3>
+
+            <select name="categoryId" required>
+                <option value="">Choose a category...</option>
+                <% categoryOptions.forEach(category => { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Latest Completion Date</h3>
+
+            <input name="latestCompletionDate" type="text" size="30" required />
+        </div>
+
+        <div class="fieldset bordered-box">
+            <h3>Your Phone Number</h3>
+
+            <input name="phoneNumber" type="tel" placeholder="Incase we need to contact you..." size="30" required />
+        </div>
+
+        <input type="submit" value="Request Quote" />
+
+        <input type="hidden" name="accountId" value="<%= account.id %>" />
+        <input type="hidden" name="openedAt" value="<%= Date.now() %>" />
+    </form>
+</div>
+
+<div id="report-success-modal" class="modal">
+    <i class="ff-icon ff-tick"></i>
+
+    <div id="report-success-modal-text">
+        <p>The quote has been requested.</p>
+        <p>We'll keep you updated!</p>
+    </div>
+</div>
+
+<%- include('partials/copyright-footer') %>

@@ -4,4 +4,5 @@ module.exports = {
     enablePushNotifications: false,
     fcmKey: null,
     blockSearchEngines: false,
+    forceQuotesEnabled: false,
 };

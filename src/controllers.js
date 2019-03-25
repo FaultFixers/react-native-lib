@@ -542,6 +542,23 @@ async function viewReport(req, res) {
     });
 }
 
+async function requestQuote(req, res) {
+    if (!res.locals.isLoggedIn) {
+        return res.redirect('/log-in?continueTo=' + req.url);
+    }
+
+    const optionsUrl = '/new-ticket-options?account=' + res.locals.account.id;
+    const response = await api.asUser(req).get(optionsUrl);
+    if (response.statusCode !== 200) {
+        throw new Error('Could not get new ticket options from ' + optionsUrl);
+    }
+
+    res.render('quote', {
+        mainNavActiveTab: 'report',
+        categoryOptions: response.json.categoryOptions,
+    });
+}
+
 async function viewMyTickets(req, res) {
     if (!res.locals.isLoggedIn) {
         return res.redirect('/log-in?continueTo=' + req.url);
@@ -662,6 +679,7 @@ module.exports = {
     viewAccountTicketsOptions,
     viewTicket,
     viewReport,
+    requestQuote,
     viewMyTickets,
     viewManifest,
     viewFavicon,

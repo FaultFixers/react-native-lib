@@ -33,6 +33,7 @@ addRoute('GET', '/building-options', controllers.viewBuildingOptions);
 addRoute('GET', '/account-tickets', controllers.viewAccountTicketsOptions);
 addRoute('GET', '/tickets/:ticketId', controllers.viewTicket);
 addRoute('GET', '/report', controllers.viewReport);
+addRoute('GET', '/quote', controllers.requestQuote);
 addRoute('GET', '/my-tickets', controllers.viewMyTickets);
 addRoute('GET', '/manifest.json', controllers.viewManifest);
 addRoute('GET', '/favicon.png', controllers.viewFavicon);
