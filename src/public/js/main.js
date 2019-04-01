@@ -685,9 +685,9 @@ $(document).ready(function() {
             return;
         }
 
-        const companyName = quoteForm.find('input[name="companyName"]').val();
-        if (!companyName) {
-            showAlert('Not yet!', 'Please enter your company name.');
+        const userOrCompanyName = quoteForm.find('input[name="userOrCompanyName"]').val();
+        if (!userOrCompanyName) {
+            showAlert('Not yet!', 'Please enter your name or company name.');
             return;
         }
 
@@ -719,7 +719,7 @@ $(document).ready(function() {
         const openedAt = Number(quoteForm.find('input[name="openedAt"]').val());
 
         const sentDescription = `Quote requested.\n\n` +
-            `Company name: ${companyName}\n\n` +
+            `Name: ${userOrCompanyName}\n\n` +
             `Latest completion date: ${latestCompletionDate}\n\n` +
             `Customer phone number: ${phoneNumber}\n\n` +
             `Job description: ${description}`;

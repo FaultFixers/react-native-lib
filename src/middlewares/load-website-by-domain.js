@@ -1,6 +1,5 @@
 const api = require('../services/api');
 const faultfixersLib = require('faultfixers-js-lib');
-const config = require('../../config/load');
 
 const DEFAULT_BRANDING = {
     primaryColorHex: faultfixersLib.coreColors.blue,
@@ -71,9 +70,7 @@ async function loadWebsiteByDomain(req, res, next) {
         }
     };
 
-    res.locals.areQuotesEnabled = config.forceQuotesEnabled ||
-        // This ID is Mikey Locks.
-        response.account.id === '5c7f887e547dbd346c9f7c42';
+    res.locals.isRequestQuoteEnabled = !!res.locals.website.isRequestQuoteEnabled;
 
     console.log('Account for ' + res.locals.website.domain + ' is ' + res.locals.account.name);
 
