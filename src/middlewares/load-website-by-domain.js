@@ -57,7 +57,7 @@ async function loadWebsiteByDomain(req, res, next) {
     } else if (response.squareLogo) {
         res.locals.logo = response.squareLogo;
     } else {
-        res.locals.logo = null;
+        return next(new Error('No logo has been added for this account/webiste'));
     }
 
     res.locals.ensureIsCorrectAccount = function ensureIsCorrectAccount(otherAccount) {
