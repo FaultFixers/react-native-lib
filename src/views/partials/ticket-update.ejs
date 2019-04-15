@@ -27,10 +27,14 @@
         </div>
     <% } %>
 
-    <% if (update.hasDueDateOrTimeChanged) { %>
+    <% if (update.hasDueChanged) { %>
         <div class="update-content">
             Due:
-            <%= formatLocalDateTime(update.newDueDate, update.newDueTime) %>
+            <% if (update.isDueSet) { %>
+                <%= formatTicketUpdateNewDueRange(update) %>
+            <% } else { %>
+                -
+            <% } %>
         </div>
     <% } %>
 

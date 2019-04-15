@@ -8,9 +8,9 @@ const moment = require('moment');
 const router = require('./router');
 const {
     conjoinWithCommasAndWord,
-    formatLocalDateTime,
     formatQuestionLabel,
     formatTicketPriority,
+    formatTicketUpdateNewDueRange,
     getShortUserDescription,
     paragraphs,
 } = require('faultfixers-js-lib');
@@ -69,9 +69,9 @@ app.locals.config = config;
 app.locals.paragraphs = paragraphs;
 app.locals.moment = moment;
 app.locals.formatDateTime = date => moment(date).format('D MMM YYYY, h:mma');
-app.locals.formatLocalDateTime = formatLocalDateTime;
 app.locals.formatTicketPriority = formatTicketPriority;
 app.locals.formatQuestionLabel = formatQuestionLabel;
+app.locals.formatTicketUpdateNewDueRange = formatTicketUpdateNewDueRange;
 app.locals.getUpdateTitle = update => {
     if (update.hasStatusChanged) {
         switch (update.newStatus) {
@@ -114,13 +114,11 @@ app.locals.getUpdateTitle = update => {
             return `Un-assigned from ${conjoined}`;
         }
     }
-    if (update.hasDueDateOrTimeChanged) {
-        if (update.hasDueDateChanged && update.hasDueTimeChanged) {
-            return 'Due date & time set';
-        } else if (update.hasDueDateChanged) {
+    if (update.hasDueChanged) {
+        if (update.isDueSet) {
             return 'Due date set';
-        } else if (update.hasDueTimeChanged) {
-            return 'Due time set';
+        } else {
+            return 'Due date removed';
         }
     }
     if (update.hasPriorityChanged) {
@@ -182,7 +180,7 @@ app.locals.getUpdateIcon = update => {
             return 'ff-ticket-unassigned-circled';
         }
     }
-    if (update.hasDueDateOrTimeChanged) {
+    if (update.hasDueChanged) {
         return 'ff-due-date-time-circled';
     }
     if (update.hasPriorityChanged) {

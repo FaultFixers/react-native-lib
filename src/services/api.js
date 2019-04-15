@@ -1,7 +1,7 @@
 const https = require('https');
 const config = require('../../config/load.js');
 
-const API_VERSION = 13;
+const API_VERSION = 15;
 
 function doRequest(authorization, method, path, bodyData = null) {
     if (!path.startsWith('/')) {
