@@ -71,6 +71,12 @@
         </div>
     <% } %>
 
+    <% if (update.expenseCategory) { %>
+        <div class="update-content">
+            Category: <%= update.expenseCategory.name %>
+        </div>
+    <% } %>
+
     <% if (update.hasInternalAction && update.internalActionValue) { %>
         <div class="update-content">
             <%- paragraphs(update.internalActionValue) %>
