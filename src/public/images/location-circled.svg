@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>location-circled copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="location-circled-copy">
+            <circle id="circle" fill="#11BF96" cx="12.5" cy="12.5" r="12.5"></circle>
+            <g id="location" transform="translate(2.244634, 2.111840)" fill="#FFFFFF" fill-rule="nonzero">
+                <path d="M10.5,1.6771192 C7.25626788,1.6771192 4.63278427,4.43868089 4.63278427,7.85313576 C4.63278427,12.4851482 10.5,19.3228808 10.5,19.3228808 C10.5,19.3228808 16.3672157,12.4851482 16.3672157,7.85313576 C16.3672157,4.43868089 13.7437321,1.6771192 10.5,1.6771192 Z M10.5,10.058856 C9.34332033,10.058856 8.40456581,9.07069331 8.40456581,7.85313576 C8.40456581,6.63557821 9.34332033,5.64741556 10.5,5.64741556 C11.6566797,5.64741556 12.5954342,6.63557821 12.5954342,7.85313576 C12.5954342,9.07069331 11.6566797,10.058856 10.5,10.058856 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

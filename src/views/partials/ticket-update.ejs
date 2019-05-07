@@ -45,10 +45,27 @@
         </div>
     <% } %>
 
-    <% if (update.hasBuildingChanged) { %>
+    <% if (update.hasPrimaryRelationChanged) { %>
         <div class="update-content">
-            Building is:
-            <%= (update.newBuilding ? update.newBuilding.name : 'none') %>
+            <% if (update.newPrimaryRelationType === 'ACCOUNT') { %>
+                Account set to <%= update.newAccount.name %>.
+            <% } else if (update.newPrimaryRelationType === 'BUILDING') { %>
+                Building set to <%= update.newBuilding.name %>.
+            <% } else if (update.newPrimaryRelationType === 'LOCATION') { %>
+                Location set to <%= update.newLocation.name %>.
+            <% } else if (update.newPrimaryRelationType === 'ASSET') { %>
+                Asset set to <%= update.newAsset.name %>.
+            <% } %>
+
+            <% if (update.oldPrimaryRelationType === 'ACCOUNT') { %>
+                Was for account <%= update.oldAccount.name %>.
+            <% } else if (update.oldPrimaryRelationType === 'BUILDING') { %>
+                Was for building <%= update.oldBuilding.name %>.
+            <% } else if (update.oldPrimaryRelationType === 'LOCATION') { %>
+                Was for location <%= update.oldLocation.name %>.
+            <% } else if (update.oldPrimaryRelationType === 'ASSET') { %>
+                Was for asset <%= update.oldAsset.name %>.
+            <% } %>
         </div>
     <% } %>
 

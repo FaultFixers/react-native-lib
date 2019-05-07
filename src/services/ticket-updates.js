@@ -3,6 +3,11 @@ const {
     getShortUserDescription,
 } = require('faultfixers-js-lib');
 
+function hasChangedPrimaryRelationAndHasType(update, type) {
+    return update.hasPrimaryRelationChanged === true &&
+        update.newPrimaryRelationType === type;
+}
+
 function getUpdateTitle(update) {
     if (update.hasStatusChanged) {
         switch (update.newStatus) {
@@ -55,8 +60,17 @@ function getUpdateTitle(update) {
     if (update.hasPriorityChanged) {
         return 'Priority set';
     }
-    if (update.hasBuildingChanged) {
+    if (hasChangedPrimaryRelationAndHasType(update, 'ACCOUNT')) {
+        return 'Account set';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'BUILDING')) {
         return 'Building set';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'LOCATION')) {
+        return 'Location set';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'ASSET')) {
+        return 'Asset set';
     }
     if (update.hasCategoryChanged) {
         return 'Category changed';
@@ -118,8 +132,17 @@ function getUpdateIcon(update) {
     if (update.hasPriorityChanged) {
         return 'ff-priority-circled';
     }
-    if (update.hasBuildingChanged) {
+    if (hasChangedPrimaryRelationAndHasType(update, 'ACCOUNT')) {
+        return 'ff-account-circled';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'BUILDING')) {
         return 'ff-building-circled';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'LOCATION')) {
+        return 'ff-location-circled';
+    }
+    if (hasChangedPrimaryRelationAndHasType(update, 'ASSET')) {
+        return 'ff-asset-circled';
     }
     if (update.hasCategoryChanged) {
         return 'ff-category-circled';
