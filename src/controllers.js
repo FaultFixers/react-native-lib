@@ -441,6 +441,7 @@ async function viewTicket(req, res) {
     const images = ticketResponse.json.images;
     const building = ticketResponse.json.building;
     const location = ticketResponse.json.location;
+    const asset = ticketResponse.json.asset;
     const updates = ticketResponse.json.updates;
 
     let locationText = location ? location.name : ticket.locationDescription;
@@ -466,6 +467,7 @@ async function viewTicket(req, res) {
         images,
         building,
         location,
+        asset,
         updates,
         locationText,
         locationLink,

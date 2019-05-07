@@ -10,7 +10,8 @@
 <div class="page-content" id="ticket-page">
     <div class="details-section bordered-box">
         <p>
-            <b>Category:</b> <%= category.name %>
+            <b>Category:</b>
+            <%= category.name %>
         </p>
 
         <div class="description">
@@ -20,14 +21,23 @@
             </div>
         </div>
 
-        <p>
-            <b>Location:</b>
-            <% if (locationLink) { %>
-                <a href="<%= locationLink %>"><%= locationText %></a>
-            <% } else { %>
-                <%= locationText %>
-            <% } %>
-        </p>
+        <% if (locationText) { %>
+            <p>
+                <b>Location:</b>
+                <% if (locationLink) { %>
+                    <a href="<%= locationLink %>"><%= locationText %></a>
+                <% } else { %>
+                    <%= locationText %>
+                <% } %>
+            </p>
+        <% } %>
+
+        <% if (asset) { %>
+            <p>
+                <b>Asset:</b>
+                <%= asset.name %>
+            </p>
+        <% } %>
 
         <% additionalQuestionAnswers.filter(a => a.hasAnswer).forEach(answer => { %>
             <p>
