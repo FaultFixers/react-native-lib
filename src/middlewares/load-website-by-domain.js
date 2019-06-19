@@ -29,6 +29,10 @@ async function getActiveWebsite(req) {
     if (json.reportingWebsite.status !== 'ACTIVE') {
         throw new Error('The website ' + domain + ' is not active');
     }
+    if (json.account.status !== 'ACTIVE') {
+        throw new Error('Sorry - the ' + json.account.name
+            + ' portal is no longer active. Please get in touch with your account manager or hello@faultfixers.com if you believe this is incorrect.');
+    }
 
     addMissingBranding(json.account);
 
