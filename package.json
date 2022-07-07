@@ -23,7 +23,7 @@
     "less-middleware": "~2.2.1",
     "load-grunt-tasks": "^4.0.0",
     "md5": "^2.2.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "morgan": "~1.9.0",
     "sharp": "^0.21.0"
   }
