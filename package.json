@@ -13,7 +13,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
-    "express": "~4.16.0",
+    "express": "~4.17.3",
     "faultfixers-js-lib": "0.0.35",
     "grunt": "^1.0.3",
     "grunt-webfont": "^1.7.2",
